@@ -36,11 +36,18 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.5.4\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,52 +58,61 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Database\Game.cs">
-      <DependentUpon>XSmsGame.tt</DependentUpon>
+      <DependentUpon>XSmsContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\XSmsGame.Context.cs">
+    <Compile Include="Database\XSmsContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>XSmsGame.Context.tt</DependentUpon>
+      <DependentUpon>XSmsContext.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\XSmsGame.cs">
+    <Compile Include="Database\XSmsContext.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>XSmsGame.tt</DependentUpon>
+      <DependentUpon>XSmsContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Database\XSmsGame.Designer.cs">
+    <Compile Include="Database\XSmsContext.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>XSmsGame.edmx</DependentUpon>
+      <DependentUpon>XSmsContext.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="Database\XSmsGame.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>XSmsGame.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Compile Include="Services\GameService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <None Include="Database\XSmsGame.edmx.diagram">
-      <DependentUpon>XSmsGame.edmx</DependentUpon>
+    <Content Include="Database\XSmsContext.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XSmsContext.edmx</DependentUpon>
+      <LastGenOutput>XSmsContext.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Database\XSmsContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>XSmsContext.edmx</DependentUpon>
+      <LastGenOutput>XSmsContext.cs</LastGenOutput>
+    </Content>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Database\XSmsContext.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>XSmsContext.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Database\XSmsContext.edmx.diagram">
+      <DependentUpon>XSmsContext.edmx</DependentUpon>
+    </None>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Database\XSmsGame.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>XSmsGame.Context.cs</LastGenOutput>
-      <DependentUpon>XSmsGame.edmx</DependentUpon>
-    </Content>
-    <Content Include="Database\XSmsGame.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>XSmsGame.edmx</DependentUpon>
-      <LastGenOutput>XSmsGame.cs</LastGenOutput>
-    </Content>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <ProjectReference Include="..\X-SMS-REP\X-SMS-REP.csproj">
+      <Project>{fa564d09-c8c9-4192-a94e-ccc7966cefbf}</Project>
+      <Name>X-SMS-REP</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,3 +4,7 @@
 
 /.vs
 /X-SMS/.vs
+/X-SMS/X-SMS-REP/bin/Debug
+/X-SMS/X-SMS-DAL/bin/Debug
+/X-SMS/X-SMS-API/bin
+/X-SMS/X-SMS/bin

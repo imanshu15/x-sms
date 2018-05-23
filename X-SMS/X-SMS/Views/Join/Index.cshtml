@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Join A Game";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<input class="form-control" type="number" id="playersCount">
+
+<input class="form-control" type="text" id="playerName">
+
+<button onclick="createAGame()"> Create A Game </button>
+
+<button> Join A Private Game</button>
+
+<button> Join A Public Game</button>
+
+<script src="~/Scripts/App/JoinController.js"></script>
