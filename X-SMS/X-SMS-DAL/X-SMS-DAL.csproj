@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.2.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.2.2\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -56,8 +59,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Database\BankAccount.cs">
+      <DependentUpon>XSmsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Event.cs">
+      <DependentUpon>XSmsContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\Game.cs">
+      <DependentUpon>XSmsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Player.cs">
+      <DependentUpon>XSmsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Sector.cs">
+      <DependentUpon>XSmsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Stock.cs">
+      <DependentUpon>XSmsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Transcation.cs">
+      <DependentUpon>XSmsContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Trend.cs">
       <DependentUpon>XSmsContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Database\XSmsContext.Context.cs">
@@ -75,6 +98,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>XSmsContext.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Mapper\Mapping.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GameService.cs" />
   </ItemGroup>

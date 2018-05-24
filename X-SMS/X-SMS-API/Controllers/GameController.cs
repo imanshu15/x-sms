@@ -13,10 +13,18 @@ namespace X_SMS_API.Controllers
     {
         private const int MaxPlayersCount = 4;
 
+        public IHttpActionResult Get() {
+            using (GameService gameService = new GameService())
+            {
+                var result = gameService.GetOpenGameList();
+                return Json(result);
+            }
+        }
+
         public ResultToken Post([FromBody] GameDTO game)
         {
             using (GameService gameService = new GameService()) {
-                var result = gameService.CreateGame(game.playerName, game.PlayersCount);
+                var result = gameService.CreateGame(game.CreatedPlayer, game.PlayersCount,game.IsPublic);
                 return result;
             }
         }

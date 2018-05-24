@@ -44,10 +44,10 @@ namespace X_SMS.Services
             return result;
         }
 
-        public object MakePostRequest(string transaction,object parameters)
+        public ResultToken MakePostRequest(string transaction,object parameters)
         {
 
-            object result = null;
+            ResultToken result = new ResultToken();
 
             try
             {
@@ -55,7 +55,7 @@ namespace X_SMS.Services
 
                 if (response.IsSuccessStatusCode)
                 {
-                    result = response.Content.ReadAsAsync<object>();
+                    result = response.Content.ReadAsAsync<ResultToken>().Result;
                 }
                 else
                 {
@@ -71,6 +71,9 @@ namespace X_SMS.Services
             return result;
         }
 
+        public ResultToken ConvertObjectToToken(object input) {
+            return (ResultToken) input;
+        }
 
         public void Dispose()
         {

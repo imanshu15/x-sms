@@ -14,6 +14,12 @@ namespace X_SMS_DAL.Database
     
     public partial class Game
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Game()
+        {
+            this.Players = new HashSet<Player>();
+        }
+    
         public int GameId { get; set; }
         public string GameCode { get; set; }
         public Nullable<System.DateTime> StartTime { get; set; }
@@ -24,5 +30,8 @@ namespace X_SMS_DAL.Database
         public bool IsActive { get; set; }
         public bool IsStarted { get; set; }
         public bool IsCanceled { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Player> Players { get; set; }
     }
 }

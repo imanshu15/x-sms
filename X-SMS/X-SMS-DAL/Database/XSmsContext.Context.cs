@@ -25,6 +25,13 @@ namespace X_SMS_DAL.Database
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<BankAccount> BankAccounts { get; set; }
+        public virtual DbSet<Transcation> Transcations { get; set; }
         public virtual DbSet<Game> Games { get; set; }
+        public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<Event> Events { get; set; }
+        public virtual DbSet<Sector> Sectors { get; set; }
+        public virtual DbSet<Stock> Stocks { get; set; }
+        public virtual DbSet<Trend> Trends { get; set; }
     }
 }

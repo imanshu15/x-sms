@@ -3,16 +3,60 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="col-md-6">
+    <form>
+        <div class="form-group">
+            <label for="txtPlayerName"> Player Name </label>
+            <input type="text" class="form-control" id="txtPlayerName" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label for="txtPlayerCount">Player Count</label>
+            <input type="number" class="form-control" id="txtPlayerCount" placeholder="Max number of players">
+        </div>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="chkIsPrivateGame">
+            <label class="form-check-label" for="chkIsPrivateGame">Create as a private game? </label>
+        </div>
+        <button class="btn btn-primary" id="btnCreateGame">Create</button>
+    </form>
+</div>
 
-<input class="form-control" type="number" id="playersCount">
+<div class="col-md-6">
+    <table id="tblGameList" class="table table-striped table-bordered" style="width:100%"  data-page-length='5'>
+        <thead>
+            <tr>
+                <th>Game Code</th>
+                <th>Created Player</th>
+                <th>Maximum Players</th>
+                <th>Joined Players</th>
+                <th>Started Time</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
 
-<input class="form-control" type="text" id="playerName">
+<div id="mdlJoinConfirmation" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Join Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure that you want to join this game created by <b><span id="lblCreatedPlayer"></span></b> ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnJoinGame">Join</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
 
-<button onclick="createAGame()"> Create A Game </button>
+    </div>
+</div>
 
-<button> Join A Private Game</button>
+<link href="~/Content/dataTables/dataTables.bootstrap.min.css" rel="stylesheet" />
+<script src="~/Content/dataTables/jquery.dataTables.min.js"></script>
+<script src="~/Content/dataTables/dataTables.bootstrap.min.js"></script>
 
-<button> Join A Public Game</button>
-
-<script src="~/Scripts/App/JoinController.js"></script>
+<script src="~/Scripts/App/Join.js"></script>

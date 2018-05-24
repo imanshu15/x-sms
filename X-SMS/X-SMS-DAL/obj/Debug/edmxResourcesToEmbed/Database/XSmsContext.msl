@@ -1,19 +1,94 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="XSmsModelStoreContainer" CdmEntityContainer="XSmsEntities">
+    <EntitySetMapping Name="BankAccounts">
+      <EntityTypeMapping TypeName="XSmsModel.BankAccount">
+        <MappingFragment StoreEntitySet="BankAccount">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="Balance" ColumnName="Balance" />
+          <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+          <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transcations">
+      <EntityTypeMapping TypeName="XSmsModel.Transcation">
+        <MappingFragment StoreEntitySet="Transcation">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="Receiver" ColumnName="Receiver" />
+          <ScalarProperty Name="Sender" ColumnName="Sender" />
+          <ScalarProperty Name="IsDeposit" ColumnName="IsDeposit" />
+          <ScalarProperty Name="IsWithdraw" ColumnName="IsWithdraw" />
+          <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+          <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Games">
       <EntityTypeMapping TypeName="XSmsModel.Game">
         <MappingFragment StoreEntitySet="Game">
-          <ScalarProperty Name="GameId" ColumnName="GameId" />
-          <ScalarProperty Name="GameCode" ColumnName="GameCode" />
-          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
-          <ScalarProperty Name="CreatedPlayer" ColumnName="CreatedPlayer" />
-          <ScalarProperty Name="PlayersCount" ColumnName="PlayersCount" />
-          <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
-          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-          <ScalarProperty Name="IsStarted" ColumnName="IsStarted" />
           <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
+          <ScalarProperty Name="IsStarted" ColumnName="IsStarted" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="IsPublic" ColumnName="IsPublic" />
+          <ScalarProperty Name="PlayersCount" ColumnName="PlayersCount" />
+          <ScalarProperty Name="CreatedPlayer" ColumnName="CreatedPlayer" />
+          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+          <ScalarProperty Name="GameCode" ColumnName="GameCode" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Players">
+      <EntityTypeMapping TypeName="XSmsModel.Player">
+        <MappingFragment StoreEntitySet="Player">
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="ConnectionId" ColumnName="ConnectionId" />
+          <ScalarProperty Name="SecondaryName" ColumnName="SecondaryName" />
+          <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+          <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Events">
+      <EntityTypeMapping TypeName="XSmsModel.Event">
+        <MappingFragment StoreEntitySet="Event">
+          <ScalarProperty Name="IsStock" ColumnName="IsStock" />
+          <ScalarProperty Name="IsSector" ColumnName="IsSector" />
+          <ScalarProperty Name="MaxEffect" ColumnName="MaxEffect" />
+          <ScalarProperty Name="MinEffect" ColumnName="MinEffect" />
+          <ScalarProperty Name="EventName" ColumnName="EventName" />
+          <ScalarProperty Name="EventId" ColumnName="EventId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sectors">
+      <EntityTypeMapping TypeName="XSmsModel.Sector">
+        <MappingFragment StoreEntitySet="Sector">
+          <ScalarProperty Name="SectorName" ColumnName="SectorName" />
+          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stocks">
+      <EntityTypeMapping TypeName="XSmsModel.Stock">
+        <MappingFragment StoreEntitySet="Stock">
+          <ScalarProperty Name="StartingPrice" ColumnName="StartingPrice" />
+          <ScalarProperty Name="StockName" ColumnName="StockName" />
+          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+          <ScalarProperty Name="StockId" ColumnName="StockId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Trends">
+      <EntityTypeMapping TypeName="XSmsModel.Trend">
+        <MappingFragment StoreEntitySet="Trend">
+          <ScalarProperty Name="MinEffect" ColumnName="MinEffect" />
+          <ScalarProperty Name="MaxEffect" ColumnName="MaxEffect" />
+          <ScalarProperty Name="TrendName" ColumnName="TrendName" />
+          <ScalarProperty Name="TrendId" ColumnName="TrendId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

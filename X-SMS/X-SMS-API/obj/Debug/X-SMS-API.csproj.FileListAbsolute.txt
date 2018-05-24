@@ -52,6 +52,8 @@ F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\vbc.rsp
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\VBCSCompiler.exe
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\VBCSCompiler.exe.config
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Antlr3.Runtime.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\EntityFramework.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\EntityFramework.SqlServer.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Microsoft.Web.Infrastructure.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Newtonsoft.Json.dll
@@ -70,7 +72,7 @@ F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\WebGrease.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\X-SMS-DAL.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\X-SMS-REP.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\X-SMS.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\EntityFramework.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\AutoMapper.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Microsoft.Owin.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Owin.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Microsoft.AspNet.SignalR.Core.dll
@@ -81,6 +83,8 @@ F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\X-SMS-REP.pdb
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\X-SMS.pdb
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\X-SMS.dll.config
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Antlr3.Runtime.pdb
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\EntityFramework.xml
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\EntityFramework.SqlServer.xml
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\NLog.xml
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\System.Web.Helpers.xml
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\System.Web.Mvc.xml
@@ -94,7 +98,7 @@ F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\System.Net.Http.Formatting.xml
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\System.Web.Http.xml
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\System.Web.Http.WebHost.xml
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\EntityFramework.xml
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\AutoMapper.xml
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Microsoft.Owin.xml
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Microsoft.AspNet.SignalR.Core.xml
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Microsoft.Owin.Security.xml
@@ -103,5 +107,3 @@ F:\Final Year\x-sms\X-SMS\X-SMS-API\obj\Debug\X-SMS-API.csproj.CoreCompileInputs
 F:\Final Year\x-sms\X-SMS\X-SMS-API\obj\Debug\X-SMS-API.csproj.CopyComplete
 F:\Final Year\x-sms\X-SMS\X-SMS-API\obj\Debug\X-SMS-API.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\obj\Debug\X-SMS-API.pdb
-F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\EntityFramework.SqlServer.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\EntityFramework.SqlServer.xml

@@ -1,10 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="XSmsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BankAccount">
+    <Key>
+      <PropertyRef Name="AccountId" />
+    </Key>
+    <Property Name="AccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AccountName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Balance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Transcation">
+    <Key>
+      <PropertyRef Name="TransactionId" />
+    </Key>
+    <Property Name="TransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AccountId" Type="int" Nullable="false" />
+    <Property Name="IsWithdraw" Type="bit" Nullable="false" />
+    <Property Name="IsDeposit" Type="bit" Nullable="false" />
+    <Property Name="Sender" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Receiver" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
   <EntityType Name="Game">
     <Key>
       <PropertyRef Name="GameId" />
     </Key>
-    <Property Name="GameId" Type="int" Nullable="false" />
+    <Property Name="GameId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="GameCode" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="StartTime" Type="datetime" />
     <Property Name="EndTime" Type="datetime" />
@@ -15,7 +36,115 @@
     <Property Name="IsStarted" Type="bit" Nullable="false" />
     <Property Name="IsCanceled" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="Player">
+    <Key>
+      <PropertyRef Name="PlayerId" />
+    </Key>
+    <Property Name="PlayerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlayerName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SecondaryName" Type="nvarchar" MaxLength="100" />
+    <Property Name="ConnectionId" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="GameId" Type="int" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Event">
+    <Key>
+      <PropertyRef Name="EventId" />
+    </Key>
+    <Property Name="EventId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EventName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="MinEffect" Type="int" Nullable="false" />
+    <Property Name="MaxEffect" Type="int" Nullable="false" />
+    <Property Name="IsSector" Type="bit" Nullable="false" />
+    <Property Name="IsStock" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Sector">
+    <Key>
+      <PropertyRef Name="SectorId" />
+    </Key>
+    <Property Name="SectorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SectorName" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Stock">
+    <Key>
+      <PropertyRef Name="StockId" />
+    </Key>
+    <Property Name="StockId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SectorId" Type="int" Nullable="false" />
+    <Property Name="StockName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="StartingPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Trend">
+    <Key>
+      <PropertyRef Name="TrendId" />
+    </Key>
+    <Property Name="TrendId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TrendName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="MaxEffect" Type="int" Nullable="false" />
+    <Property Name="MinEffect" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Account">
+    <End Role="BankAccount" Type="Self.BankAccount" Multiplicity="1" />
+    <End Role="Transcation" Type="Self.Transcation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BankAccount">
+        <PropertyRef Name="AccountId" />
+      </Principal>
+      <Dependent Role="Transcation">
+        <PropertyRef Name="AccountId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Game">
+    <End Role="Game" Type="Self.Game" Multiplicity="1" />
+    <End Role="Player" Type="Self.Player" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="GameId" />
+      </Principal>
+      <Dependent Role="Player">
+        <PropertyRef Name="GameId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Receiver' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Receiver" />-->
+  <Association Name="FK_Sector">
+    <End Role="Sector" Type="Self.Sector" Multiplicity="1" />
+    <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sector">
+        <PropertyRef Name="SectorId" />
+      </Principal>
+      <Dependent Role="Stock">
+        <PropertyRef Name="SectorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_Sender' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_Sender" />-->
   <EntityContainer Name="XSmsModelStoreContainer">
-    <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BankAccount" EntityType="Self.BankAccount" Schema="Detail" store:Type="Tables" />
+    <EntitySet Name="Transcation" EntityType="Self.Transcation" Schema="Detail" store:Type="Tables" />
+    <EntitySet Name="Game" EntityType="Self.Game" Schema="Game" store:Type="Tables" />
+    <EntitySet Name="Player" EntityType="Self.Player" Schema="Game" store:Type="Tables" />
+    <EntitySet Name="Event" EntityType="Self.Event" Schema="Master" store:Type="Tables" />
+    <EntitySet Name="Sector" EntityType="Self.Sector" Schema="Master" store:Type="Tables" />
+    <EntitySet Name="Stock" EntityType="Self.Stock" Schema="Master" store:Type="Tables" />
+    <EntitySet Name="Trend" EntityType="Self.Trend" Schema="Master" store:Type="Tables" />
+    <AssociationSet Name="FK_Account" Association="Self.FK_Account">
+      <End Role="BankAccount" EntitySet="BankAccount" />
+      <End Role="Transcation" EntitySet="Transcation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Game" Association="Self.FK_Game">
+      <End Role="Game" EntitySet="Game" />
+      <End Role="Player" EntitySet="Player" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Sector" Association="Self.FK_Sector">
+      <End Role="Sector" EntitySet="Sector" />
+      <End Role="Stock" EntitySet="Stock" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>
