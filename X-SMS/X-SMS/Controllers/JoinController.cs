@@ -14,24 +14,14 @@ namespace X_SMS.Controllers
 {
     public class JoinController : Controller
     {
-        private static IHubContext _hubContext = GlobalHost.ConnectionManager.GetHubContext<GameHub>();
-
         public ActionResult Index()
         {
-            return View();
+            return PartialView("_Join");
         }
-
-        [HttpPost]
-        public ActionResult CreateAGame(string playerName,int noOfPlayers)
+        [Route("Join/Wait")]
+        public ActionResult Wait()
         {
-            GameDTO game = new GameDTO();
-            game.CreatedPlayer = playerName;
-            game.PlayersCount = noOfPlayers;
-            using (APIService client = new APIService()) {
-                var result = client.MakePostRequest("api/Game", game);
-                _hubContext.Clients.All.GameCreated(result);
-                return Json(result);
-            }           
+            return PartialView("_Wait");
         }
     }
 }

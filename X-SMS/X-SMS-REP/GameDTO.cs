@@ -19,5 +19,6 @@ namespace X_SMS_REP
         public bool IsStarted { get; set; }
         public bool IsCanceled { get; set; }
 
+        public List<PlayerDTO> Players { get; set; }
     }
 }

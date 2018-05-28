@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using X_SMS_DAL.Services;
+using X_SMS_REP;
+using X_SMS_REP.RequestModel;
 
 namespace X_SMS_API.Controllers
 {
@@ -16,6 +18,15 @@ namespace X_SMS_API.Controllers
             {
                 var result = gameService.GetGamePlayerList(gameId);
                 return Json(result);
+            }
+        }
+
+        public ResultToken Post([FromBody] JoinRequestModel request)
+        {
+            using (GameService gameService = new GameService())
+            {
+                var result = gameService.JoinGame(request);
+                return result;
             }
         }
 

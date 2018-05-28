@@ -2,32 +2,24 @@
 var gameId;
 
 $(document).ready(function () {
-
+    $("#hdnScreen").val("WAIT");
     gameId = $("#hdnGameId").val();
 
     // ----- Player TABLE ------
     playerTable = $('#tblPlayersList').DataTable();
 
-    getPlayerList();
-    
-    game.client.startGame = function () {
-        window.location.href = "/Game/" + gameId;
-    };
+    setTimeout(function () {
+        getPlayerList();
+    }, 1000);
+  
+
 });
 
 function getPlayerList() {
-    playerTable.clear().draw();
-    $.ajax({
-        type: "GET",
-        url: getAPIUrl() + "GamePlayer",
-        dataType: "json",
-        success: function (data) {
-            setUpPlayerTable(data);
-        },
-        failure: function (errMsg) {
-            console.log(errMsg);
-        }
-    });
+    if ($("#hdnGameId").val() != undefined) {
+        playerTable.clear().draw();
+        game.server.requestPlayerList($("#hdnGameId").val());
+    }
 }
 
 function setUpPlayerTable(data) {

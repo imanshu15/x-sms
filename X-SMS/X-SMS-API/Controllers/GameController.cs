@@ -13,7 +13,8 @@ namespace X_SMS_API.Controllers
     {
         private const int MaxPlayersCount = 4;
 
-        public IHttpActionResult Get() {
+        [Route("api/Game")]
+        public IHttpActionResult GetGameList() {
             using (GameService gameService = new GameService())
             {
                 var result = gameService.GetOpenGameList();
@@ -21,10 +22,23 @@ namespace X_SMS_API.Controllers
             }
         }
 
-        public ResultToken Post([FromBody] GameDTO game)
+        [Route("api/Game/CreateGame")]
+        [HttpPost]
+        public ResultToken CreateGame([FromBody] GameDTO game)
         {
             using (GameService gameService = new GameService()) {
                 var result = gameService.CreateGame(game.CreatedPlayer, game.PlayersCount,game.IsPublic);
+                return result;
+            }
+        }
+
+        [Route("api/Game/StartGame")]
+        [HttpPost] 
+        public ResultToken StartGame(int gameId)
+        {
+            using (GameService gameService = new GameService())
+            {
+                var result = gameService.StartGame(gameId);
                 return result;
             }
         }

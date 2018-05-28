@@ -1,3 +1,9 @@
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\System.IO.Compression.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\VBCSCompiler.exe
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\NLog.config
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\ApplicationInsights.config
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\X-SMS-API.dll.config
@@ -10,13 +16,9 @@ F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\csi.exe
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\csi.exe.config
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\csi.rsp
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.CodeAnalysis.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.CSharp.Core.targets
-F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.VisualBasic.Core.targets
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\Microsoft.Win32.Primitives.dll
@@ -26,7 +28,6 @@ F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\System.Console.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\System.Diagnostics.Process.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\System.Diagnostics.StackTrace.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\System.IO.Compression.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\System.IO.FileSystem.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\System.IO.FileSystem.Primitives.dll
@@ -49,7 +50,6 @@ F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\System.Xml.XPath.XDocument.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\vbc.exe
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\vbc.exe.config
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\vbc.rsp
-F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\VBCSCompiler.exe
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\roslyn\VBCSCompiler.exe.config
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\Antlr3.Runtime.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-API\bin\EntityFramework.dll
