@@ -26,5 +26,13 @@ namespace X_SMS.Controllers
 
             return View();
         }
+
+        /// <summary>
+        /// Add the Game Board View
+        /// </summary>
+        public ActionResult GameBoard()
+        {
+            return View();
+        }
     }
 }

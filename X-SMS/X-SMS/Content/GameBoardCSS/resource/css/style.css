@@ -1,0 +1,229 @@
+.container-fluid{
+    background-color: #2d3436;
+
+}
+
+#balance{
+    height: 200px;
+    width: 400px;
+    font-size: 12px;
+    border:1px solid white;
+}
+
+#clock{
+
+    border:1px solid white;
+    height: 75px;
+    width: 400px;
+}
+
+#other_player_details{
+    border:1px solid white;
+    height: 361px;
+    width: 400px;
+}
+
+#title {
+
+    height: 100px;
+    font-size: 30px;
+    font-family: sans-serif;
+    color: #fff;
+    border:1px solid white;
+    padding-top: 18px;
+}
+
+#buttons{
+
+    border:1px solid white;
+    height: 637px;
+
+}
+
+#bank {
+    margin-top: 35px;
+    width: 206px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    border: 2px solid white;
+
+}
+
+#portfolio {
+    margin-top: 35px;
+    width: 206px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    border: 2px solid white;
+
+
+}
+
+#help {
+    margin-top: 35px;
+    width: 206px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    border: 2px solid white;
+}
+
+#buy {
+    margin-top: 35px;
+    width: 206px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    background-color: #d98108;
+    border: 2px solid white;
+}
+
+
+#events {
+    margin-top: 35px;
+    width: 206px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    border: 2px solid white;
+}
+
+#players_info {
+    margin-top: 35px;
+    width: 206px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    border: 2px solid white;
+}
+
+
+#logout {
+    margin-top: 35px;
+    width: 206px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    border: 2px solid white;
+}
+
+
+
+.modal-content {
+
+    height: auto;
+    width: 400px;
+    background-color: #c4b9b9;
+    border: 2px solid white;
+    background-size:auto;
+    font-family: serif;
+
+}
+
+#sell {
+    margin-top: 35px;
+    width: 206px;
+    margin-left: 10px;
+    margin-right: 10px;
+    position: relative;
+    background-color: #d98108;
+    border: 2px solid white;
+}
+
+.fa-user {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.eventScroll {
+    overflow-y: scroll;
+    height: 350px;
+}
+
+.fa-money-bill-alt {
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+.fa-hire-a-helper {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.fa-spinner {
+    font-size: 20px;
+    margin-right: 10px;  
+}
+
+.fa-info {
+    font-size: 20px;
+    margin-right: 10px; 
+}
+
+#opdLabel {
+    color: white;
+    margin-bottom: 2px;
+    margin-left: 8px;
+}
+
+.opdScroll {
+    overflow-y: scroll;
+    height: 310px;
+    margin-right: 4px;
+    margin-left: 4px;
+}
+
+
+h5 {
+    color: black;
+}
+
+
+
+.form-bank {
+    margin-left: 80px;
+}
+
+
+
+#btn_submit {
+    margin-left: 25px;
+    width: 150px;
+}
+
+.alert-success {
+    background-color: #6f6f6f;
+    border: 2px solid white;
+    color: black;
+    margin-right: 2px;
+    margin-left: 10px;
+    font-family: cursive;
+
+}
+
+#alert_other_player {
+    background-color: #bababa;
+
+}
+
+.form-player_stock_details {
+    color: white;
+    margin-left: 10px;
+    margin-top: 8px;
+    font-size: 15px;
+}
+
+
+
+.cssScroll {
+    overflow-y: scroll;
+    height: 120px;
+    width: 322px;
+}
+
+#cssLabel {
+    color: white;
+    margin-bottom: 2px;
+}
