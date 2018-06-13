@@ -131,6 +131,10 @@ html.no-csstransitions .home-content__main {
     color: #9e9e9e;
 }
 
+.padding-top-20 {
+    padding-top: 20px;
+}
+
 .padding-top-50 {
     padding-top: 50px;
 }

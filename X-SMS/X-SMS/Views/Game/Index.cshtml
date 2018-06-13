@@ -9,5 +9,24 @@
 </div>
 
 <input type="hidden" id="hdnGameId">
+<input type="hidden" id="hdnGameCode">
 <input type="hidden" id="hdnScreen">
+
+<div id="mdlComfirmation" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><span id="msgConfirmTitle"> </span></h4>
+            </div>
+            <div class="modal-body">
+                <p><span id="msgConfirmBody"></span></p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" id="btnJoinGame">Confirm</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+        </div>
+    </div>
+</div>
+
 <script src="~/Scripts/App/GameLoad.js"></script>

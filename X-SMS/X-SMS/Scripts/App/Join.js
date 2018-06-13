@@ -7,13 +7,11 @@ $(document).ready(function () {
     gameTable = $('#tblGameList').DataTable({
         select: true
     });
-    getOpenGameList();
-    setUpGameTableSelect();
-
     setTimeout(function () {
-        setUpSignalRMethods();
-    }, 1000);
-
+        getOpenGameList();
+    }, 500);
+    setUpGameTableSelect();
+    setUpSignalRMethods();
 });
 
 function setUpSignalRMethods() {
@@ -38,17 +36,7 @@ function createGameAction() {
 
 function getOpenGameList() {
     gameTable.clear().draw();
-    $.ajax({
-        type: "GET",
-        url: getAPIUrl() + "game",
-        dataType: "json",
-        success: function (data) {
-            setUpGameTable(data);
-        },
-        failure: function (errMsg) {
-            console.log(errMsg);
-        }
-    });
+    game.server.getCurrentGameList();
 }
 
 function setUpGameTable(data) {
@@ -82,9 +70,17 @@ function joinGameAction() {
 
     $("#btnJoinGame").click(function (e) {
         e.preventDefault();
+        $("#mdlJoinConfirmation").modal("hide");
         var playerName = $("#txtJoinPlayerName").val();
         var gameId = $("#hdnSelectedGameId").val();
-        game.server.joinGame(playerName, gameId);
+        game.server.joinGame(playerName, gameId,"");
     });
 
+    $("#btnJoinPrivateGame").click(function (e) {
+        e.preventDefault();
+        var playerName = $("#txtJoinPrivatePlayer").val();
+        var gameCode = $("#txtJoinGameCode").val();
+        game.server.joinPrivateGame(playerName, 0, gameCode);
+    });
 }
+

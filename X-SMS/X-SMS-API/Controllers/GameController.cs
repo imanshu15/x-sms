@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using X_SMS_DAL.Services;
 using X_SMS_REP;
+using X_SMS_REP.RequestModel;
 
 namespace X_SMS_API.Controllers
 {
@@ -34,7 +35,7 @@ namespace X_SMS_API.Controllers
 
         [Route("api/Game/StartGame")]
         [HttpPost] 
-        public ResultToken StartGame(int gameId)
+        public ResultToken StartGame([FromBody] int gameId)
         {
             using (GameService gameService = new GameService())
             {
@@ -42,5 +43,39 @@ namespace X_SMS_API.Controllers
                 return result;
             }
         }
+
+        [Route("api/Game/GetPlayerList")]
+        [HttpPost]
+        public IHttpActionResult GetPlayerList(int gameId)
+        {
+            using (GameService gameService = new GameService())
+            {
+                var result = gameService.GetGamePlayerList(gameId);
+                return Json(result);
+            }
+        }
+
+        [Route("api/Game/JoinGame")]
+        [HttpPost]
+        public ResultToken JoinGame([FromBody] JoinRequestModel request)
+        {
+            using (GameService gameService = new GameService())
+            {
+                var result = gameService.JoinGame(request);
+                return result;
+            }
+        }
+
+        [Route("api/Game/RemovePlayer")]
+        [HttpPost]
+        public ResultToken RemovePlayer([FromBody] int playerId)
+        {
+            using (GameService gameService = new GameService())
+            {
+                var result = gameService.RemovePlayer(playerId);
+                return result;
+            }
+        }
+
     }
 }

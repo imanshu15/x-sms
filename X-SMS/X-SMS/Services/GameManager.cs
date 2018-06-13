@@ -52,7 +52,7 @@ namespace X_SMS.Services
             {
                 using (APIService apiClient = new APIService())
                 {
-                    var temp = apiClient.MakePostRequest("api/GamePlayer", request);
+                    var temp = apiClient.MakePostRequest("api/Game/JoinGame", request);
                     ResultToken result = apiClient.ConvertObjectToToken(temp);
                     if (result.Success && result.Data != null)
                     {
@@ -90,6 +90,30 @@ namespace X_SMS.Services
                 logger.Error(ex);
             }
             return game;
+        }
+
+        public bool DisconnectPlayer(int playerId) {
+
+            bool success = true;
+            try
+            {
+                using (APIService apiClient = new APIService())
+                {
+                    var temp = apiClient.MakePostRequest("api/Game/RemovePlayer", playerId);
+                    ResultToken result = apiClient.ConvertObjectToToken(temp);
+                    if (!result.Success)
+                    {
+                        success = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex);
+            }
+
+            return success;
         }
 
     }

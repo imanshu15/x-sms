@@ -13,5 +13,11 @@ namespace X_SMS.Controllers
         {
             return View();
         }
+
+        public ActionResult GameBoard()
+        {
+            return PartialView("_GameBoard");
+        }
+
     }
 }

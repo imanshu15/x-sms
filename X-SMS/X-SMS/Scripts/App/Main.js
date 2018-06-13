@@ -1,22 +1,19 @@
 ﻿var game;
 $(document).ready(function () {
     game = $.connection.gameHub;
-    game.client.gameCreated = function (response) {
-        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "JOIN") {
-            console.log("Game Created Response");
-            console.log(response);
-            if (response !== null) {
-                $("#hdnGameId").val(response.GameId);
-                loadMainScreen("Join/Wait");
-            }
-        }
-    };
+
     setUpClientMethods();
 
     $.connection.hub.start().done(function () {
         console.log("ConId : %o", $.connection.hub.id);
     });
     clPreloader();
+});
+
+
+$(window).on('beforeunload', function () {
+    var gameId = $("#hdnSelectedGameId").val();
+    game.server.disconnectPlayer(gameId);
 });
 
 var clPreloader = function () {
@@ -47,6 +44,12 @@ function getAPIUrl() {
 
 function setUpClientMethods() {
 
+    setupJoinClientMethods();
+    setUpWaitClientMethods();
+
+}
+
+function setupJoinClientMethods() {
     // JOIN - GameCreated
     game.client.gameCreated = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "JOIN") {
@@ -54,15 +57,23 @@ function setUpClientMethods() {
             console.log(response);
             if (response !== null) {
                 $("#hdnGameId").val(response.GameId);
+                $("#hdnGameCode").val(response.GameCode);
                 loadMainScreen("Join/Wait");
             }
         }
     };
 
     // JOIN - UpdateGameLIst
-    game.client.updateGameList = function () {
+    game.client.updateGameList = function (data) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "JOIN") {
-            console.log("Update Game Response");
+            setUpGameTable(data);
+        }
+    };
+
+    // JOIN - UpdateGameLIst
+    game.client.currentGameList = function (data) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "JOIN") {
+            setUpGameTable(data);
         }
     };
 
@@ -78,6 +89,11 @@ function setUpClientMethods() {
         }
     };
 
+
+}
+
+function setUpWaitClientMethods() {
+
     //WAIT - PlayerList
     game.client.playerList = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
@@ -90,6 +106,7 @@ function setUpClientMethods() {
 
     //WAIT - GameStarted
     game.client.gameStarted = function () {
+        console.log("Game Started");
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
             $("#msgTitle").text("Game Starting..");
             $("#msgBody").text("All players connected. Please wait till we get everything ready");
@@ -97,7 +114,8 @@ function setUpClientMethods() {
             setTimeout(function () {
                 showPreloader(400);
                 setTimeout(function () {
-                    window.location.href = "/Game/" + gameId;
+                    $("#mdlMessage").modal("hide");
+                    loadMainScreen("Game/GameBoard");
                 }, 400);
             }, 800);
         }
@@ -107,7 +125,21 @@ function setUpClientMethods() {
     game.client.notifyJoinedPlayers = function (data) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
             playerTable.row.add([data, "Connected"]).draw();
-            game.server.IsGameStarted($("#hdnGameId").val());
+            game.server.isGameStarted($("#hdnGameId").val());
         }
     };
+
+    //Player - Disconnected
+    game.client.playerDisconnected = function (response) {
+        $("#msgTitle").text("Player Disconnected");
+        $("#msgBody").text("Sorry, A Player disconnected from the game.");
+        $("#mdlMessage").modal("show");
+        setTimeout(function () {
+            showPreloader(400);
+            setTimeout(function () {
+                window.location.href = "/Game";
+            }, 400);
+        }, 1000);
+    };
 }
+

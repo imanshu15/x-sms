@@ -5,13 +5,11 @@ $(document).ready(function () {
     $("#hdnScreen").val("WAIT");
     gameId = $("#hdnGameId").val();
 
+    var gameCode = $("#hdnGameCode").val();
+    $("#lblPrivateGameCode").text(gameCode);
     // ----- Player TABLE ------
     playerTable = $('#tblPlayersList').DataTable();
-
-    setTimeout(function () {
-        getPlayerList();
-    }, 1000);
-  
+    getPlayerList();
 
 });
 
@@ -23,9 +21,11 @@ function getPlayerList() {
 }
 
 function setUpPlayerTable(data) {
+   
     data.forEach(function (entry) {
         if (entry != null) {
             playerTable.row.add([entry.PlayerName, "Connected"]).draw();
         }
     });
 }
+

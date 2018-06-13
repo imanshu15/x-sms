@@ -125,6 +125,34 @@ namespace X_SMS_DAL.Services
             return result;
         }
 
+
+        public ResultToken RemovePlayer(int playerId)
+        {
+
+            ResultToken result = new ResultToken();
+            result.Success = true;
+            try
+            { 
+                var player = gameEntities.Players.FirstOrDefault(a => a.PlayerId == playerId);
+                if (player != null)
+                {
+                    player.IsActive = false;
+                    gameEntities.SaveChanges();
+                    PlayerDTO playerDTO = Mapping.Mapper.Map<PlayerDTO>(player);
+                    result.Data = playerDTO;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex);
+            }
+
+            return result;
+
+        }
+
         public string GenerateGameCode()
         {
             Guid g = Guid.NewGuid();
