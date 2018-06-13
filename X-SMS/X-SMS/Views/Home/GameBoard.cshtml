@@ -1,0 +1,513 @@
+﻿@{
+    ViewBag.Title = "GameBoard Main Page";
+    Layout = "~/Views/Shared/_GameBoardLayout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-md-3">
+
+        <div class="row">
+            <div id="balance">
+
+                <!---------------------------------------------------- form-player_stock_details--------------------------------------------------------------------->
+                <!-- Large modal -->
+                <form class="form-player_stock_details">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Current Balance :</label>
+                        <label id="lbl_balance" for="exampleFormControlInput1"></label>Rs.20 000<br>
+                        <div id="current_stock_summary">
+                            <h6 class="modal-title" id="cssLabel">Current Stock Summary</h6>
+                            <div class="cssScroll">
+                                <div class="alert alert-success" id="alert_other_player" role="alert">
+                                    You successfully read this important alert message
+                                </div>
+                                <div class="alert alert-success" id="alert_other_player" role="alert">
+                                    You successfully read this important alert message
+                                </div>
+                                <div class="alert alert-success" id="alert_other_player" role="alert">
+                                    You successfully read this important alert message
+                                </div>
+                                <div class="alert alert-success" id="alert_other_player" role="alert">
+                                    You successfully read this important alert message
+                                </div>
+                                <div class="alert alert-success" id="alert_other_player" role="alert">
+                                    You successfully read this important alert message
+                                </div>
+                                <div class="alert alert-success" id="alert_other_player" role="alert">
+                                    You successfully read this important alert message
+                                </div>
+                                <div class="alert alert-success" id="alert_other_player" role="alert">
+                                    You successfully read this important alert message
+                                </div>
+                                <div class="alert alert-success" id="alert_other_player" role="alert">
+                                    You successfully read this important alert message
+                                </div>
+                                <div class="alert alert-success" id="alert_other_player" role="alert">
+                                    You successfully read this important alert message
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </form>
+                <!---------------------------------------------------- End form-player_stock_details--------------------------------------------------------------------->
+
+
+            </div>
+        </div>
+        <!---------------------------------------------------- clock--------------------------------------------------------------------->
+        <div class="row">
+            <div id="clock">
+                <form class="form-player_stock_details">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Current Turn :</label>
+                        <label id="lbl_balance" for="exampleFormControlInput1"></label>2<br>
+
+                        <label for="exampleFormControlInput1">Total Turn :</label>
+                        <label id="lbl_balance" for="exampleFormControlInput1"></label>4<br>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <!---------------------------------------------------- End clock--------------------------------------------------------------------->
+        <!---------------------------------------------------- Other player details----------------------------------------------------------------->
+
+        <div class="row">
+            <div id="other_player_details">
+                <h6 class="modal-title" id="opdLabel">Other Player Details</h6>
+                <div class="opdScroll">
+                    <div class="alert alert-success" id="alert_other_player" role="alert">
+                        You successfully read this important alert message
+                    </div>
+                    <div class="alert alert-success" id="alert_other_player" role="alert">
+                        You successfully read this important alert message
+                    </div>
+                    <div class="alert alert-success" id="alert_other_player" role="alert">
+                        You successfully read this important alert message
+                    </div>
+                    <div class="alert alert-success" id="alert_other_player" role="alert">
+                        You successfully read this important alert message
+                    </div>
+                    <div class="alert alert-success" id="alert_other_player" role="alert">
+                        You successfully read this important alert message
+                    </div>
+                    <div class="alert alert-success" id="alert_other_player" role="alert">
+                        You successfully read this important alert message
+                    </div>
+                    <div class="alert alert-success" id="alert_other_player" role="alert">
+                        You successfully read this important alert message
+                    </div>
+                    <div class="alert alert-success" id="alert_other_player" role="alert">
+                        You successfully read this important alert message
+                    </div>
+                    <div class="alert alert-success" id="alert_other_player" role="alert">
+                        You successfully read this important alert message
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!---------------------------------------------------- End Other player details----------------------------------------------------------------->
+
+
+    </div>
+    <!---------------------------------------------------- Title----------------------------------------------------------------->
+    <div class="col-md-7">
+
+        <div class="row">
+            <div class="col-md-12" id="title">
+                <h1 class="text-center">STOCK SIMULATION GAME</h1>
+            </div>
+        </div>
+
+        <!---------------------------------------------------- End Title----------------------------------------------------------------->
+        <!---------------------------------------------------- Graph----------------------------------------------------------------->
+
+        <div class="row">
+            <div class="col-xs-12" id="graph">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+            </div>
+        </div>
+
+        <!---------------------------------------------------- End Graph----------------------------------------------------------------->
+
+    </div>
+
+    <div class="col-md-2">
+        <div class="row">
+            <div class="col-xs-12" id="buttons">
+                <!---------------------------------------------------- Button Logout--------------------------------------------------------------------------->
+                <button type="button" id="logout" class="btn btn-danger">
+                    LOGOUT
+                </button>
+                <!---------------------------------------------------- Button Bank--------------------------------------------------------------------------->
+                <!-- Large modal -->
+                <button type="button" id="bank" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalBank"><i class="fas fa-money-bill-alt"></i>BANK</button>
+
+                <div class="modal fade" id="exampleModalBank" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Bank Deposit or Withdraw</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <form class="form-bank">
+                                            <div class="form-group">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioDeposit" value="sender">
+                                                    <label class="form-check-label" for="inlineRadioDeposit">Deposit</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadioWithdraw" value="receiver">
+                                                    <label class="form-check-label" for="inlineRadioWithdraw">Withdraw</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlSelect1">Select Turn</label>
+                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                    <option>---- Select a Turn ----</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlInput1">Name</label>
+                                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlInput1">Amount</label>
+                                                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Enter the Amount">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary" id="btn_submit">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!---------------------------------------------------- Button Portfolio---------------------------------------------------------------------->
+                <!-- Large modal -->
+                <button type="button" id="portfolio" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalPORTFOLIO"><i class="fa fa-user"></i>PORTFOLIO</button>
+
+                <div class="modal fade" id="exampleModalPORTFOLIO" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">PORTFOLIO</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <table class="table table-dark">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Stocks Owned</th>
+                                                    <th scope="col">Quantity</th>
+                                                    <th scope="col">Purchase Price (Rs.)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Mark</td>
+                                                    <td>20</td>
+                                                    <td>20,000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jacob</td>
+                                                    <td>50</td>
+                                                    <td>5,000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Larry</td>
+                                                    <td>100</td>
+                                                    <td>42,000</td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!----------------------------------------------- Button Help ------------------------------------------------------------------------------->
+                <!-- Large modal -->
+                <button type="button" id="help" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fab fa-hire-a-helper"></i>HELP</button>
+
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the lea
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!------------------------------------------------------ Button Buy Stocks ------------------------------------------------------------------>
+                <!-- Large modal -->
+                <button type="button" id="buy" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalBUY">BUY STOCKS</button>
+
+                <div class="modal fade" id="exampleModalBUY" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Buy New Stocks</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="eventScroll">
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Buy</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Buy</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Buy</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Buy</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Buy</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Buy</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Buy</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Buy</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!------------------------------------------------------ Button Sell Stocks ------------------------------------------------------------------>
+                <!-- Large modal -->
+                <button type="button" id="sell" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalSELL">SELL STOCKS</button>
+
+                <div class="modal fade" id="exampleModalSELL" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Sell Stocks</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="eventScroll">
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Sell</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Sell</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Sell</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Sell</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Sell</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Sell</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Sell</a>
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                                <a class="btn btn-primary" href="#" role="button">Sell</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------------------------- Button Events --------------------------------------------------------------------->
+                <!-- Large modal -->
+                <button type="button" id="events" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalEVENTS"><i class="fas fa-spinner"></i>EVENTS</button>
+
+                <div class="modal fade" id="exampleModalEVENTS" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Events</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="eventScroll">
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!---------------------------------------------------------- Button Player's Info --------------------------------------------------------->
+                <!-- Large modal -->
+                <button type="button" id="players_info" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalINFO"><i class="fas fa-info"></i>PLAYER'S INFO</button>
+
+                <div class="modal fade" id="exampleModalINFO" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Other Players Transaction Details</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="eventScroll">
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                            <div class="alert alert-success" role="alert">
+                                                You successfully read this important alert message
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!---------------------------------------------------------- End of Buttons --------------------------------------------------------->
+
+            </div>
+        </div>
+    </div>
+</div>
