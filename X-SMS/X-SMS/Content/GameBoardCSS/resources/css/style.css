@@ -1,3 +1,4 @@
+/*--------------------------------------------------- Game Board CSS -----------------------------------------------------------------------*/
 html{
     min-width: 100%;
     min-height: 100%;
@@ -6,10 +7,10 @@ html{
 
 body {
 
-/*
+    /*
     width: 1349px;
     height: 636px;
-*/
+    */
     background-color: #ffffff;
 }
 
@@ -183,7 +184,6 @@ body {
     margin-right: 4px;
     margin-left: 4px;
 
-
 }
 
 
@@ -239,16 +239,85 @@ h5 {
     margin-top: 8px;
     font-size: 15px;
 }
-
-
-
-
-
-
-
-
 #exampleFormControlSelect1 {
     width: auto;
     height: auto;
     position: relative;
+}
+
+/*--------------------------------------------------- History CSS -----------------------------------------------------------------------*/
+
+.row-history {
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+h1{
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.table-history {
+
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 300px;
+    margin-right: 300px;
+}
+
+.modal-content-history {
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 5px;
+}
+
+#btn-close {
+    border: 1px solid #000000;
+}
+
+td {
+    text-align: justify;
+}
+
+.modal-body-history {
+    padding-left: 40px;
+    padding-right: 10px;
+}
+
+#gameID {
+    padding-left: 40px;
+}
+
+#gameCode {
+    padding-left: 20px;
+}
+
+#winner {
+    padding-left: 50px;
+}
+
+#gameInformation {
+    text-align: left;
+}
+
+.modal-table {
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
+
+
+
+
+
+
+
+
+#table-main-history {
+    margin: auto;
+    width:75% ;
 }
