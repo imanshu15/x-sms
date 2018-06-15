@@ -24,8 +24,10 @@ namespace X_SMS_DAL.Database
         public string AccountName { get; set; }
         public decimal Balance { get; set; }
         public bool IsActive { get; set; }
+        public int PlayerId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transcation> Transcations { get; set; }
+        public virtual Player Player { get; set; }
     }
 }

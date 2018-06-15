@@ -71,6 +71,9 @@
     <Compile Include="Database\Player.cs">
       <DependentUpon>XSmsContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\PlayerStock.cs">
+      <DependentUpon>XSmsContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\Sector.cs">
       <DependentUpon>XSmsContext.tt</DependentUpon>
     </Compile>
@@ -104,6 +107,7 @@
     <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\GameTrendService.cs" />
+    <Compile Include="Services\PlayerService.cs" />
     <Compile Include="Services\TrendService.cs" />
   </ItemGroup>
   <ItemGroup>

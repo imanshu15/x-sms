@@ -46,6 +46,7 @@
     <Compile Include="GameDetail.cs" />
     <Compile Include="GameDTO.cs" />
     <Compile Include="PlayerDTO.cs" />
+    <Compile Include="PlayerTransactionsDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestModel\JoinRequestModel.cs" />
     <Compile Include="ResultToken.cs" />

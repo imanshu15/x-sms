@@ -5,9 +5,20 @@
       <PropertyRef Name="AccountId" />
     </Key>
     <Property Name="AccountId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PlayerId" Type="int" Nullable="false" />
     <Property Name="AccountName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Balance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PlayerStock">
+    <Key>
+      <PropertyRef Name="PlayerStockId" />
+    </Key>
+    <Property Name="PlayerStockId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StockId" Type="int" Nullable="false" />
+    <Property Name="TransactionId" Type="int" Nullable="false" />
+    <Property Name="PlayerId" Type="int" Nullable="false" />
+    <Property Name="Quantity" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Transcation">
     <Key>
@@ -57,6 +68,10 @@
     <Property Name="MaxEffect" Type="int" Nullable="false" />
     <Property Name="IsSector" Type="bit" Nullable="false" />
     <Property Name="IsStock" Type="bit" Nullable="false" />
+    <Property Name="MinDuration" Type="int" Nullable="false" />
+    <Property Name="MaxDuration" Type="int" Nullable="false" />
+    <Property Name="Probability" Type="float" Nullable="false" />
+    <Property Name="Chance" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Sector">
     <Key>
@@ -95,6 +110,54 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_BankAccount_Player">
+    <End Role="Player" Type="Self.Player" Multiplicity="1" />
+    <End Role="BankAccount" Type="Self.BankAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="PlayerId" />
+      </Principal>
+      <Dependent Role="BankAccount">
+        <PropertyRef Name="PlayerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detail_PlayerStock_Player">
+    <End Role="Player" Type="Self.Player" Multiplicity="1" />
+    <End Role="PlayerStock" Type="Self.PlayerStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="PlayerId" />
+      </Principal>
+      <Dependent Role="PlayerStock">
+        <PropertyRef Name="PlayerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detail_PlayerStock_Stock">
+    <End Role="Stock" Type="Self.Stock" Multiplicity="1" />
+    <End Role="PlayerStock" Type="Self.PlayerStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stock">
+        <PropertyRef Name="StockId" />
+      </Principal>
+      <Dependent Role="PlayerStock">
+        <PropertyRef Name="StockId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detail_PlayerStock_Transcation">
+    <End Role="Transcation" Type="Self.Transcation" Multiplicity="1" />
+    <End Role="PlayerStock" Type="Self.PlayerStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transcation">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="PlayerStock">
+        <PropertyRef Name="TransactionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Game">
     <End Role="Game" Type="Self.Game" Multiplicity="1" />
     <End Role="Player" Type="Self.Player" Multiplicity="*" />
@@ -125,8 +188,23 @@ warning 6035: The relationship 'FK_Receiver' has columns that are not part of th
   <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_Sender' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_Sender" />-->
+  <Function Name="BuyStocks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="playerID" Type="int" Mode="In" />
+    <Parameter Name="playerAccID" Type="int" Mode="In" />
+    <Parameter Name="quantity" Type="int" Mode="In" />
+    <Parameter Name="stockID" Type="int" Mode="In" />
+    <Parameter Name="price" Type="decimal" Mode="In" />
+  </Function>
+  <Function Name="SellStocks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="playerID" Type="int" Mode="In" />
+    <Parameter Name="playerAccID" Type="int" Mode="In" />
+    <Parameter Name="quantity" Type="int" Mode="In" />
+    <Parameter Name="stockID" Type="int" Mode="In" />
+    <Parameter Name="price" Type="decimal" Mode="In" />
+  </Function>
   <EntityContainer Name="XSmsModelStoreContainer">
     <EntitySet Name="BankAccount" EntityType="Self.BankAccount" Schema="Detail" store:Type="Tables" />
+    <EntitySet Name="PlayerStock" EntityType="Self.PlayerStock" Schema="Detail" store:Type="Tables" />
     <EntitySet Name="Transcation" EntityType="Self.Transcation" Schema="Detail" store:Type="Tables" />
     <EntitySet Name="Game" EntityType="Self.Game" Schema="Game" store:Type="Tables" />
     <EntitySet Name="Player" EntityType="Self.Player" Schema="Game" store:Type="Tables" />
@@ -137,6 +215,22 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
     <AssociationSet Name="FK_Account" Association="Self.FK_Account">
       <End Role="BankAccount" EntitySet="BankAccount" />
       <End Role="Transcation" EntitySet="Transcation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BankAccount_Player" Association="Self.FK_BankAccount_Player">
+      <End Role="Player" EntitySet="Player" />
+      <End Role="BankAccount" EntitySet="BankAccount" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detail_PlayerStock_Player" Association="Self.FK_Detail_PlayerStock_Player">
+      <End Role="Player" EntitySet="Player" />
+      <End Role="PlayerStock" EntitySet="PlayerStock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detail_PlayerStock_Stock" Association="Self.FK_Detail_PlayerStock_Stock">
+      <End Role="Stock" EntitySet="Stock" />
+      <End Role="PlayerStock" EntitySet="PlayerStock" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detail_PlayerStock_Transcation" Association="Self.FK_Detail_PlayerStock_Transcation">
+      <End Role="Transcation" EntitySet="Transcation" />
+      <End Role="PlayerStock" EntitySet="PlayerStock" />
     </AssociationSet>
     <AssociationSet Name="FK_Game" Association="Self.FK_Game">
       <End Role="Game" EntitySet="Game" />

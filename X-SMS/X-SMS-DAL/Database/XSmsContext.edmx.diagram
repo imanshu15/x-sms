@@ -16,6 +16,11 @@
         <AssociationConnector Association="XSmsModel.FK_Account" />
         <AssociationConnector Association="XSmsModel.FK_Game" />
         <AssociationConnector Association="XSmsModel.FK_Sector" />
+        <EntityTypeShape EntityType="XSmsModel.PlayerStock" Width="1.5" PointX="10.25" PointY="2.75" />
+        <AssociationConnector Association="XSmsModel.FK_BankAccount_Player" />
+        <AssociationConnector Association="XSmsModel.FK_Detail_PlayerStock_Player" />
+        <AssociationConnector Association="XSmsModel.FK_Detail_PlayerStock_Stock" />
+        <AssociationConnector Association="XSmsModel.FK_Detail_PlayerStock_Transcation" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

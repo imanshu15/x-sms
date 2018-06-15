@@ -14,6 +14,13 @@ namespace X_SMS_DAL.Database
     
     public partial class Player
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Player()
+        {
+            this.BankAccounts = new HashSet<BankAccount>();
+            this.PlayerStocks = new HashSet<PlayerStock>();
+        }
+    
         public int PlayerId { get; set; }
         public string PlayerName { get; set; }
         public string SecondaryName { get; set; }
@@ -22,5 +29,9 @@ namespace X_SMS_DAL.Database
         public bool IsActive { get; set; }
     
         public virtual Game Game { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BankAccount> BankAccounts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlayerStock> PlayerStocks { get; set; }
     }
 }

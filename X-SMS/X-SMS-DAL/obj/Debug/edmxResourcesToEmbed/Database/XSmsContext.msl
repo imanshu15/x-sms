@@ -4,6 +4,7 @@
     <EntitySetMapping Name="BankAccounts">
       <EntityTypeMapping TypeName="XSmsModel.BankAccount">
         <MappingFragment StoreEntitySet="BankAccount">
+          <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           <ScalarProperty Name="Balance" ColumnName="Balance" />
           <ScalarProperty Name="AccountName" ColumnName="AccountName" />
@@ -55,6 +56,10 @@
     <EntitySetMapping Name="Events">
       <EntityTypeMapping TypeName="XSmsModel.Event">
         <MappingFragment StoreEntitySet="Event">
+          <ScalarProperty Name="Chance" ColumnName="Chance" />
+          <ScalarProperty Name="Probability" ColumnName="Probability" />
+          <ScalarProperty Name="MaxDuration" ColumnName="MaxDuration" />
+          <ScalarProperty Name="MinDuration" ColumnName="MinDuration" />
           <ScalarProperty Name="IsStock" ColumnName="IsStock" />
           <ScalarProperty Name="IsSector" ColumnName="IsSector" />
           <ScalarProperty Name="MaxEffect" ColumnName="MaxEffect" />
@@ -92,5 +97,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="PlayerStocks">
+      <EntityTypeMapping TypeName="XSmsModel.PlayerStock">
+        <MappingFragment StoreEntitySet="PlayerStock">
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+          <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+          <ScalarProperty Name="StockId" ColumnName="StockId" />
+          <ScalarProperty Name="PlayerStockId" ColumnName="PlayerStockId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="BuyStocks" FunctionName="XSmsModel.Store.BuyStocks" />
+    <FunctionImportMapping FunctionImportName="SellStocks" FunctionName="XSmsModel.Store.SellStocks" />
   </EntityContainerMapping>
 </Mapping>

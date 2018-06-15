@@ -21,6 +21,37 @@
       <End Role="Sector" EntitySet="Sectors" />
       <End Role="Stock" EntitySet="Stocks" />
     </AssociationSet>
+    <EntitySet Name="PlayerStocks" EntityType="XSmsModel.PlayerStock" />
+    <AssociationSet Name="FK_BankAccount_Player" Association="XSmsModel.FK_BankAccount_Player">
+      <End Role="Player" EntitySet="Players" />
+      <End Role="BankAccount" EntitySet="BankAccounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detail_PlayerStock_Player" Association="XSmsModel.FK_Detail_PlayerStock_Player">
+      <End Role="Player" EntitySet="Players" />
+      <End Role="PlayerStock" EntitySet="PlayerStocks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detail_PlayerStock_Stock" Association="XSmsModel.FK_Detail_PlayerStock_Stock">
+      <End Role="Stock" EntitySet="Stocks" />
+      <End Role="PlayerStock" EntitySet="PlayerStocks" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Detail_PlayerStock_Transcation" Association="XSmsModel.FK_Detail_PlayerStock_Transcation">
+      <End Role="Transcation" EntitySet="Transcations" />
+      <End Role="PlayerStock" EntitySet="PlayerStocks" />
+    </AssociationSet>
+    <FunctionImport Name="BuyStocks">
+      <Parameter Name="playerID" Mode="In" Type="Int32" />
+      <Parameter Name="playerAccID" Mode="In" Type="Int32" />
+      <Parameter Name="quantity" Mode="In" Type="Int32" />
+      <Parameter Name="stockID" Mode="In" Type="Int32" />
+      <Parameter Name="price" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="SellStocks">
+      <Parameter Name="playerID" Mode="In" Type="Int32" />
+      <Parameter Name="playerAccID" Mode="In" Type="Int32" />
+      <Parameter Name="quantity" Mode="In" Type="Int32" />
+      <Parameter Name="stockID" Mode="In" Type="Int32" />
+      <Parameter Name="price" Mode="In" Type="Decimal" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="BankAccount">
     <Key>
@@ -31,6 +62,8 @@
     <Property Name="Balance" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Transcations" Relationship="XSmsModel.FK_Account" FromRole="BankAccount" ToRole="Transcation" />
+    <Property Name="PlayerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Player" Relationship="XSmsModel.FK_BankAccount_Player" FromRole="BankAccount" ToRole="Player" />
   </EntityType>
   <EntityType Name="Transcation">
     <Key>
@@ -44,6 +77,7 @@
     <Property Name="Receiver" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
     <NavigationProperty Name="BankAccount" Relationship="XSmsModel.FK_Account" FromRole="Transcation" ToRole="BankAccount" />
+    <NavigationProperty Name="PlayerStocks" Relationship="XSmsModel.FK_Detail_PlayerStock_Transcation" FromRole="Transcation" ToRole="PlayerStock" />
   </EntityType>
   <EntityType Name="Game">
     <Key>
@@ -72,6 +106,8 @@
     <Property Name="GameId" Type="Int32" Nullable="false" />
     <Property Name="IsActive" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Game" Relationship="XSmsModel.FK_Game" FromRole="Player" ToRole="Game" />
+    <NavigationProperty Name="BankAccounts" Relationship="XSmsModel.FK_BankAccount_Player" FromRole="Player" ToRole="BankAccount" />
+    <NavigationProperty Name="PlayerStocks" Relationship="XSmsModel.FK_Detail_PlayerStock_Player" FromRole="Player" ToRole="PlayerStock" />
   </EntityType>
   <EntityType Name="Event">
     <Key>
@@ -83,6 +119,10 @@
     <Property Name="MaxEffect" Type="Int32" Nullable="false" />
     <Property Name="IsSector" Type="Boolean" Nullable="false" />
     <Property Name="IsStock" Type="Boolean" Nullable="false" />
+    <Property Name="MinDuration" Type="Int32" Nullable="false" />
+    <Property Name="MaxDuration" Type="Int32" Nullable="false" />
+    <Property Name="Probability" Type="Double" Nullable="false" />
+    <Property Name="Chance" Type="Int32" Nullable="false" />
   </EntityType>
   <EntityType Name="Sector">
     <Key>
@@ -101,6 +141,7 @@
     <Property Name="StockName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="StartingPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
     <NavigationProperty Name="Sector" Relationship="XSmsModel.FK_Sector" FromRole="Stock" ToRole="Sector" />
+    <NavigationProperty Name="PlayerStocks" Relationship="XSmsModel.FK_Detail_PlayerStock_Stock" FromRole="Stock" ToRole="PlayerStock" />
   </EntityType>
   <EntityType Name="Trend">
     <Key>
@@ -144,6 +185,67 @@
       </Principal>
       <Dependent Role="Stock">
         <PropertyRef Name="SectorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PlayerStock">
+    <Key>
+      <PropertyRef Name="PlayerStockId" />
+    </Key>
+    <Property Name="PlayerStockId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StockId" Type="Int32" Nullable="false" />
+    <Property Name="TransactionId" Type="Int32" Nullable="false" />
+    <Property Name="PlayerId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Player" Relationship="XSmsModel.FK_Detail_PlayerStock_Player" FromRole="PlayerStock" ToRole="Player" />
+    <NavigationProperty Name="Stock" Relationship="XSmsModel.FK_Detail_PlayerStock_Stock" FromRole="PlayerStock" ToRole="Stock" />
+    <NavigationProperty Name="Transcation" Relationship="XSmsModel.FK_Detail_PlayerStock_Transcation" FromRole="PlayerStock" ToRole="Transcation" />
+  </EntityType>
+  <Association Name="FK_BankAccount_Player">
+    <End Type="XSmsModel.Player" Role="Player" Multiplicity="1" />
+    <End Type="XSmsModel.BankAccount" Role="BankAccount" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="PlayerId" />
+      </Principal>
+      <Dependent Role="BankAccount">
+        <PropertyRef Name="PlayerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detail_PlayerStock_Player">
+    <End Type="XSmsModel.Player" Role="Player" Multiplicity="1" />
+    <End Type="XSmsModel.PlayerStock" Role="PlayerStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Player">
+        <PropertyRef Name="PlayerId" />
+      </Principal>
+      <Dependent Role="PlayerStock">
+        <PropertyRef Name="PlayerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detail_PlayerStock_Stock">
+    <End Type="XSmsModel.Stock" Role="Stock" Multiplicity="1" />
+    <End Type="XSmsModel.PlayerStock" Role="PlayerStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stock">
+        <PropertyRef Name="StockId" />
+      </Principal>
+      <Dependent Role="PlayerStock">
+        <PropertyRef Name="StockId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Detail_PlayerStock_Transcation">
+    <End Type="XSmsModel.Transcation" Role="Transcation" Multiplicity="1" />
+    <End Type="XSmsModel.PlayerStock" Role="PlayerStock" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transcation">
+        <PropertyRef Name="TransactionId" />
+      </Principal>
+      <Dependent Role="PlayerStock">
+        <PropertyRef Name="TransactionId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

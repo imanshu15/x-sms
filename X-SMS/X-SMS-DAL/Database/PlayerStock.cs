@@ -12,17 +12,16 @@ namespace X_SMS_DAL.Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Event
+    public partial class PlayerStock
     {
-        public int EventId { get; set; }
-        public string EventName { get; set; }
-        public int MinEffect { get; set; }
-        public int MaxEffect { get; set; }
-        public bool IsSector { get; set; }
-        public bool IsStock { get; set; }
-        public int MinDuration { get; set; }
-        public int MaxDuration { get; set; }
-        public double Probability { get; set; }
-        public int Chance { get; set; }
+        public int PlayerStockId { get; set; }
+        public int StockId { get; set; }
+        public int TransactionId { get; set; }
+        public int PlayerId { get; set; }
+        public int Quantity { get; set; }
+    
+        public virtual Player Player { get; set; }
+        public virtual Stock Stock { get; set; }
+        public virtual Transcation Transcation { get; set; }
     }
 }
