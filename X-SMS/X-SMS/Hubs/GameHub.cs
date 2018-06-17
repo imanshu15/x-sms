@@ -190,7 +190,7 @@ namespace X_SMS.Hubs
             var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
             gameObj.CurrentRound = 1;
             var firstTurn = gameObj.GameDetail.TurnDetail[0];
-
+            firstTurn
             Clients.Group(gameObj.GameCode).firstRound(firstTurn);
 
             System.Threading.Timer timer = null;
@@ -198,7 +198,7 @@ namespace X_SMS.Hubs
             {
                 try
                 {
-                    var isFinished = NextRound(gameObj);
+                    var isFinished = NextRound(gameObj.GameId);
                     if (isFinished)
                     {
                         timer.Dispose();
@@ -212,9 +212,26 @@ namespace X_SMS.Hubs
             timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(30));
         }
 
-        private bool NextRound(GameDTO gameObj) {
+        private bool NextRound(int gameId) {
 
-            return true;
+            bool isFinished = false;
+            var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
+
+            if (gameObj.CurrentRound > EntityStateManager.NumberOfRounds)
+            {
+                isFinished = true;
+                //GAME OVER
+            }
+            else {
+               var currentTurn = gameObj.CurrentRound;
+               gameObj.CurrentRound += 1;
+               
+                var turnDetails = gameObj.GameDetail.TurnDetail[currentTurn];
+                Clients.Group(gameObj.GameCode).startRound(firstTurn);
+
+            }
+
+            return isFinished;
         }
     }
 }

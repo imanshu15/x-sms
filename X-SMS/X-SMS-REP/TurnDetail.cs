@@ -11,5 +11,6 @@ namespace X_SMS_REP
         public SectorDTO Sector { get; set; }
         public int Score { get; set; }
         public List<StockDetail> Stocks { get; set; }
+        public int Turn { get; set; }
     }
 }
