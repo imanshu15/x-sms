@@ -23,29 +23,32 @@ namespace X_SMS_DAL.Services
 
         //}
 
-        public ResultToken createBankAccount(string playerName)
+        public ResultToken createBankAccount(int playerId,string playerName)
         {
             ResultToken result = new ResultToken();
             result.Success = true;
 
             try
             {
-                var accounts = playerEntities.BankAccounts.Where(c => c.AccountName == playerName).FirstOrDefault();
+                //var accounts = playerEntities.BankAccounts.Where(c => c.AccountName == playerName && c.IsActive == true).FirstOrDefault();
 
-                if (accounts == null)
-                {
+                //if (accounts == null)
+                //{
                     BankAccount newAccount = new BankAccount();
                     newAccount.AccountName = playerName;
+                    newAccount.PlayerId = playerId;
                     newAccount.Balance = (decimal)1000;
                     newAccount.IsActive = true;
                     playerEntities.BankAccounts.Add(newAccount);
                     playerEntities.SaveChanges();
-                }
-                else
-                {
-                    result.Success = false;
-                    result.Message = "Account name already exists";
-                }
+
+                    result.Data = newAccount;
+                //}
+                //else
+                //{
+                //    result.Success = false;
+                //    result.Message = "Account name already exists";
+                //}
             }
             catch (Exception e)
             {
@@ -63,7 +66,6 @@ namespace X_SMS_DAL.Services
             ResultToken result = new ResultToken();
             result.Success = true;
             bool gotMoney = false;
-            bool priceIsrightForBuy = false;
 
             decimal currentAccBalance = checkBankBalance(playerID);
             if (currentAccBalance >= quantity * price)
@@ -73,14 +75,13 @@ namespace X_SMS_DAL.Services
             else
             {
                 result.Success = false;
-                result.Message = "Not enough money";
+                result.Message = "Account balance insufficient";
                 return result;
             }
-            //price is right?
 
-            int accID = getAccountID(playerID); //acc id for update bank acc details
+            int accID = getAccountID(playerID);
 
-            if (gotMoney && priceIsrightForBuy && accID > 0)
+            if (gotMoney && accID > 0)
             {
                 try
                 {
@@ -109,7 +110,6 @@ namespace X_SMS_DAL.Services
             ResultToken result = new ResultToken();
             result.Success = true;
             bool gotSupply = false;
-            bool priceIsrightForSell = false;
 
             int quantityBalance = checkStockQuantity(playerID, stockID);
             if (quantityBalance >= quantity)
@@ -119,15 +119,13 @@ namespace X_SMS_DAL.Services
             else
             {
                 result.Success = false;
-                result.Message = "Not enough stocks";
+                result.Message = "Insufficient Stocks";
                 return result;
             }
-            // price is right?
-
 
             int accID = getAccountID(playerID); //acc id for update bank acc details
 
-            if (gotSupply && priceIsrightForSell && accID > 0)
+            if (gotSupply && accID > 0)
             {
                 try
                 {

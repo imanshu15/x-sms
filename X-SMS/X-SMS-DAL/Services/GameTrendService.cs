@@ -56,9 +56,9 @@ namespace X_SMS_DAL.Services
             return result;
         }
 
-        private List<TurnDetail>[] calculateTurnScore(GameDetail gameDetail)
+        private List<TurnDetail> calculateTurnScore(GameDetail gameDetail)
         {
-            List<TurnDetail>[] turnDetails = new List<TurnDetail>[noOfTurns];
+            List<TurnDetail> turnDetails = new List<TurnDetail>();
             int[] randomTrend = (int[])gameDetail.RandomTrend;
             int[] marketTrend = (int[])gameDetail.MarketTrend;
             Dictionary<int, int>[] sectorTrend = (Dictionary<int, int>[])gameDetail.SectorTrend;
@@ -68,33 +68,45 @@ namespace X_SMS_DAL.Services
 
             for (int i = 0; i < noOfTurns; i++)
             {
-                List<TurnDetail> turnDetailList = new List<TurnDetail>();
+                TurnDetail tempTurn = new TurnDetail();
+                tempTurn.Turn = i + 1;
+                List<SectorDetail> sectoreDetailList = new List<SectorDetail>();
                 foreach (var st in sectorTrend[i])
                 {
-                    TurnDetail turnDetail = new TurnDetail();
+                    SectorDetail sectoreDetail = new SectorDetail();
 
                     var tempSector = sectors.FirstOrDefault(x => x.SectorId == st.Key);
 
-                    turnDetail.Sector = Mapping.Mapper.Map < SectorDTO > (tempSector);
+                    sectoreDetail.Sector = Mapping.Mapper.Map < SectorDTO > (tempSector);
 
-                    var value=(st.Value + randomTrend[i] + marketTrend[i] + (((eventTrend[i] != null)&& ((eventTrend[i].IsStock) || ((eventTrend[i].IsSector) && (eventTrend[i].SectorId == turnDetail.Sector.SectorId)))) ? eventTrend[i].Effect : 0));
-                    turnDetail.Score = value<0?0:value;
+                    var value=(st.Value + randomTrend[i] + marketTrend[i] + (((eventTrend[i] != null)&& ((eventTrend[i].IsStock) || ((eventTrend[i].IsSector) && (eventTrend[i].SectorId == sectoreDetail.Sector.SectorId)))) ? eventTrend[i].Effect : 0));
+                    sectoreDetail.Score = value<0?0:value;
 
-                    var stocks = eventEntities.Stocks.Where(a => a.SectorId == turnDetail.Sector.SectorId).ToList();
+                    var stocks = eventEntities.Stocks.Where(a => a.SectorId == sectoreDetail.Sector.SectorId).ToList();
                     List<StockDetail> stockDetailList = new List<StockDetail>();
                     foreach (var stock in stocks)
                     {
                         StockDetail stockDetail = new StockDetail();
                         stockDetail.StockId = stock.StockId;
                         stockDetail.StockName = stock.StockName;
-                        stockDetail.StartingPrice = stock.StartingPrice;
-                        stockDetail.CurrentPrice = Decimal.Round(Decimal.Add(stock.StartingPrice, Decimal.Multiply(stock.StartingPrice, Decimal.Divide(turnDetail.Score,100))),2);
+                        if (i == 0)
+                        {
+                            stockDetail.StartingPrice = stock.StartingPrice;
+                        }
+                        else
+                        {
+                            var tempObj = turnDetails.FirstOrDefault(z => z.Turn == i);
+                            stockDetail.StartingPrice = tempObj.Sectors.FirstOrDefault(x => x.Sector.SectorId == sectoreDetail.Sector.SectorId).Stocks.FirstOrDefault(y => y.StockId == stockDetail.StockId).CurrentPrice;
+                        }
+                        stockDetail.CurrentPrice = Decimal.Round(Decimal.Add(stockDetail.StartingPrice, Decimal.Multiply(stockDetail.StartingPrice, Decimal.Divide(sectoreDetail.Score, 100))), 2);
                         stockDetailList.Add(stockDetail);
                     }
-                    turnDetail.Stocks = new List<StockDetail>(stockDetailList);
-                    turnDetailList.Add(turnDetail);
+                    sectoreDetail.Stocks = new List<StockDetail>(stockDetailList);
+                    sectoreDetailList.Add(sectoreDetail);
                 }
-                turnDetails[i] = new List<TurnDetail>(turnDetailList);
+                tempTurn.Sectors = sectoreDetailList;
+
+                turnDetails.Add(tempTurn);
             }
             return turnDetails;
         }

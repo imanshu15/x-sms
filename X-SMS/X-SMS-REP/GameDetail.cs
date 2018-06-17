@@ -12,7 +12,7 @@ namespace X_SMS_REP
         public int[] MarketTrend { get; set; }
         public Dictionary<int, int>[] SectorTrend { get; set; }
         public EventDetail[] EventDetail { get; set; }
-        public List<TurnDetail>[] TurnDetail { get; set; }
+        public List<TurnDetail> TurnDetail { get; set; }
 
     }
 }

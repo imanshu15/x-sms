@@ -57,11 +57,47 @@ namespace X_SMS.Services
                     if (result.Success && result.Data != null)
                     {
                         returnObj = JsonConvert.DeserializeObject<PlayerDTO>(result.Data.ToString());
+                        if (returnObj != null) {
+                            var tempAccount = CreateBankAccount(returnObj);
+                            if (tempAccount != null)
+                            {
+                                returnObj.BankAccount = tempAccount;
+                            }
+                            else {
+                                returnObj = null;
+                            }
+                        }
                     }
 
                 }
             }  
             catch (Exception ex) {
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex);
+            }
+
+            return returnObj;
+        }
+
+        public BankAccountDTO CreateBankAccount(PlayerDTO player)
+        {
+            BankAccountDTO returnObj = null;
+
+            try
+            {
+                using (APIService apiClient = new APIService())
+                {
+                    var temp = apiClient.MakePostRequest("api/Bank/CreateAccount", player);
+                    ResultToken result = apiClient.ConvertObjectToToken(temp);
+                    if (result.Success && result.Data != null)
+                    {
+                        returnObj = JsonConvert.DeserializeObject<BankAccountDTO>(result.Data.ToString());
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
                 Logger logger = LogManager.GetLogger("excpLogger");
                 logger.Error(ex);
             }
