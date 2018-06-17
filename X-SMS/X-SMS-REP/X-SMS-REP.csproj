@@ -41,11 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventDetail.cs" />
+    <Compile Include="EventDTO.cs" />
+    <Compile Include="GameDetail.cs" />
     <Compile Include="GameDTO.cs" />
     <Compile Include="PlayerDTO.cs" />
+    <Compile Include="PlayerTransactionsDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestModel\JoinRequestModel.cs" />
     <Compile Include="ResultToken.cs" />
+    <Compile Include="SectorDTO.cs" />
+    <Compile Include="StockDetail.cs" />
+    <Compile Include="StockDTO.cs" />
+    <Compile Include="TurnDetail.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

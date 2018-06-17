@@ -14,11 +14,19 @@ namespace X_SMS_DAL.Database
     
     public partial class Stock
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Stock()
+        {
+            this.PlayerStocks = new HashSet<PlayerStock>();
+        }
+    
         public int StockId { get; set; }
         public int SectorId { get; set; }
         public string StockName { get; set; }
         public decimal StartingPrice { get; set; }
     
         public virtual Sector Sector { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlayerStock> PlayerStocks { get; set; }
     }
 }

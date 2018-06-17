@@ -109,3 +109,225 @@ F:\Final Year\x-sms\X-SMS\X-SMS\obj\Debug\X-SMS.csproj.CoreCompileInputs.cache
 F:\Final Year\x-sms\X-SMS\X-SMS\obj\Debug\X-SMS.csproj.CopyComplete
 F:\Final Year\x-sms\X-SMS\X-SMS\obj\Debug\X-SMS.dll
 F:\Final Year\x-sms\X-SMS\X-SMS\obj\Debug\X-SMS.pdb
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\ApplicationInsights.config
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\NLog.config
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\X-SMS.dll.config
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\X-SMS.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\X-SMS.pdb
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\csc.exe
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\csc.exe.config
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\csc.rsp
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\csi.exe
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\csi.exe.config
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\csi.rsp
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.AppContext.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Console.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Diagnostics.Process.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.IO.Compression.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.IO.Pipes.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Security.Claims.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Threading.Thread.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.ValueTuple.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Xml.XPath.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\vbc.exe
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\vbc.exe.config
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\vbc.rsp
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\VBCSCompiler.exe
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Antlr3.Runtime.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AI.Agent.Intercept.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AI.DependencyCollector.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AI.PerfCounterCollector.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AI.ServerTelemetryChannel.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AI.Web.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AI.WindowsServer.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.ApplicationInsights.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.Owin.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.Owin.Security.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Newtonsoft.Json.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\NLog.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Owin.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Diagnostics.DiagnosticSource.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Net.Http.Formatting.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.Helpers.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.Mvc.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.Optimization.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.Razor.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.WebPages.Deployment.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.WebPages.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.WebPages.Razor.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\WebGrease.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\X-SMS-REP.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\X-SMS-REP.pdb
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.Owin.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.Owin.Security.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\NLog.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Net.Http.Formatting.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.Helpers.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.Mvc.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.Optimization.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.Razor.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.WebPages.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.WebPages.Deployment.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Web.WebPages.Razor.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Newtonsoft.Json.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Antlr3.Runtime.pdb
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\System.Diagnostics.DiagnosticSource.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AI.DependencyCollector.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AI.WindowsServer.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.AI.Web.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\obj\Debug\X-SMS.csprojAssemblyReference.cache
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\obj\Debug\X-SMS.csproj.CoreCompileInputs.cache
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\obj\Debug\X-SMS.csproj.CopyComplete
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\obj\Debug\X-SMS.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS\obj\Debug\X-SMS.pdb
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\ApplicationInsights.config
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\NLog.config
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\X-SMS.dll.config
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\X-SMS.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\X-SMS.pdb
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\csc.exe
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\csc.exe.config
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\csc.rsp
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\csi.exe
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\csi.exe.config
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\csi.rsp
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.AppContext.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Collections.Immutable.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Console.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Diagnostics.Process.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.IO.Compression.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.IO.FileSystem.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.IO.Pipes.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Reflection.Metadata.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Security.AccessControl.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Security.Claims.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Security.Principal.Windows.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Threading.Thread.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.ValueTuple.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Xml.XmlDocument.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Xml.XPath.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\vbc.exe
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\vbc.exe.config
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\vbc.rsp
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\VBCSCompiler.exe
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\roslyn\VBCSCompiler.exe.config
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Antlr3.Runtime.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AI.Agent.Intercept.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AI.DependencyCollector.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AI.PerfCounterCollector.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AI.ServerTelemetryChannel.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AI.Web.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AI.WindowsServer.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.ApplicationInsights.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AspNet.SignalR.Core.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AspNet.TelemetryCorrelation.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.Owin.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.Owin.Security.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.Web.Infrastructure.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Newtonsoft.Json.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\NLog.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Owin.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Diagnostics.DiagnosticSource.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Net.Http.Formatting.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.Helpers.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.Mvc.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.Optimization.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.Razor.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.WebPages.Deployment.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.WebPages.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.WebPages.Razor.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\WebGrease.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\X-SMS-REP.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\X-SMS-REP.pdb
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AspNet.SignalR.Core.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.Owin.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.Owin.Security.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\NLog.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Net.Http.Formatting.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.Helpers.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.Mvc.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.Optimization.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.Razor.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.WebPages.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.WebPages.Deployment.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Web.WebPages.Razor.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Newtonsoft.Json.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Antlr3.Runtime.pdb
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\System.Diagnostics.DiagnosticSource.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AspNet.TelemetryCorrelation.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AI.DependencyCollector.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AI.WindowsServer.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.AI.Web.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\StockMarketSimulator\X-SMS\X-SMS\obj\Debug\X-SMS.csprojAssemblyReference.cache
+E:\StockMarketSimulator\X-SMS\X-SMS\obj\Debug\X-SMS.csproj.CoreCompileInputs.cache
+E:\StockMarketSimulator\X-SMS\X-SMS\obj\Debug\X-SMS.csproj.CopyComplete
+E:\StockMarketSimulator\X-SMS\X-SMS\obj\Debug\X-SMS.dll
+E:\StockMarketSimulator\X-SMS\X-SMS\obj\Debug\X-SMS.pdb

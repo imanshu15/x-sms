@@ -14,6 +14,12 @@ namespace X_SMS_DAL.Database
     
     public partial class Transcation
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Transcation()
+        {
+            this.PlayerStocks = new HashSet<PlayerStock>();
+        }
+    
         public int TransactionId { get; set; }
         public int AccountId { get; set; }
         public bool IsWithdraw { get; set; }
@@ -23,5 +29,7 @@ namespace X_SMS_DAL.Database
         public decimal Amount { get; set; }
     
         public virtual BankAccount BankAccount { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlayerStock> PlayerStocks { get; set; }
     }
 }

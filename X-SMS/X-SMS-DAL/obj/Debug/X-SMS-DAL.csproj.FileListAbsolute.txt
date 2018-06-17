@@ -17,3 +17,41 @@ F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CoreCompileInputs
 F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CopyComplete
 F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.pdb
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\NLog.config
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll.config
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.pdb
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\AutoMapper.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\NLog.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-REP.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-REP.pdb
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\AutoMapper.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\NLog.xml
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csprojAssemblyReference.cache
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CoreCompileInputs.cache
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CopyComplete
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.dll
+C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.pdb
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\NLog.config
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll.config
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.pdb
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\AutoMapper.dll
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.dll
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.SqlServer.dll
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\NLog.dll
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-REP.dll
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-REP.pdb
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\AutoMapper.xml
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.xml
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.SqlServer.xml
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\bin\Debug\NLog.xml
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csprojAssemblyReference.cache
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CoreCompileInputs.cache
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CopyComplete
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.dll
+E:\StockMarketSimulator\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.pdb

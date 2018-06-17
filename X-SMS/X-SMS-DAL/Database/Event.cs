@@ -20,5 +20,9 @@ namespace X_SMS_DAL.Database
         public int MaxEffect { get; set; }
         public bool IsSector { get; set; }
         public bool IsStock { get; set; }
+        public int MinDuration { get; set; }
+        public int MaxDuration { get; set; }
+        public double Probability { get; set; }
+        public int Chance { get; set; }
     }
 }
