@@ -16,13 +16,15 @@
     @RenderSection("scripts", required: false)
 
     <link href="~/Content/style.css" rel="stylesheet" />
+    <link href="~/Content/GameBoardCSS/resources/css/style.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/GameBoardJS/resource/popper.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.3.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.3.js"></script>
     <script src="/signalr/hubs" type="text/javascript"></script>
     <script src="~/Scripts/App/Main.js"></script>
 </head>
 <body>
-
+    <div id="wrapper">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -44,17 +46,17 @@
         </div>
     </nav>
 
-    <div class="container padding-top-50">
+    <div class="container padding-top-50" id="content">
         @RenderBody()
     </div>
 
-    <footer class="footer">
+    <footer class="footer" id="footer">
         <div class="container">
             <span>© Copyright X-SMS 2018</span>
         </div>
     </footer> <!-- end footer -->
 
-
+    </div>
     <div id="mdlMessage" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">

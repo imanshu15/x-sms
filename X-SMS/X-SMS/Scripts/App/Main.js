@@ -46,6 +46,7 @@ function setUpClientMethods() {
 
     setupJoinClientMethods();
     setUpWaitClientMethods();
+    setUpGameClientMethods();
 
 }
 
@@ -115,6 +116,7 @@ function setUpWaitClientMethods() {
                 showPreloader(400);
                 setTimeout(function () {
                     $("#mdlMessage").modal("hide");
+                    $("#hdnScreen").val("GAME");
                     loadMainScreen("Game/GameBoard");
                 }, 400);
             }, 800);
@@ -143,3 +145,12 @@ function setUpWaitClientMethods() {
     };
 }
 
+function setUpGameClientMethods() {
+
+    game.client.firstRound = function (response) {
+        console.log(response);
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+            console.log(response);
+        }
+    };
+}

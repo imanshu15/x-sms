@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () { 
-    loadMainScreen("Join");
+    loadMainScreen("Join/Index");
 });
 
 function loadMainScreen(url) {

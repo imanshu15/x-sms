@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Timers;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
@@ -109,6 +111,8 @@ namespace X_SMS.Hubs
             GameManager gameManager = new GameManager();
             lock (_syncRoot)
             {
+                GameLogicManager gameLogic = new GameLogicManager();
+
                 var game = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == gameId);
                 if (game != null && game.Players.Count == game.PlayersCount)
                 {
@@ -117,8 +121,9 @@ namespace X_SMS.Hubs
                     {
                         var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == game.GameId);
                         gameObj.IsStarted = true;
-
-                       Clients.Group(game.GameCode).gameStarted(game);
+                        gameObj.GameDetail = gameLogic.GetGameData(gameObj.GameId);
+                        Clients.Group(game.GameCode).gameStarted(game);
+                        SetupGame(gameObj.GameId);
                     }
                     else
                     {
@@ -127,6 +132,8 @@ namespace X_SMS.Hubs
                 }
             }
         }
+
+
         private void AddPlayer(PlayerDTO player) {
             var client = EntityStateManager.Players.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
             if (client == null)
@@ -173,6 +180,41 @@ namespace X_SMS.Hubs
         public void GetCurrentGameList() {
             var games = EntityStateManager.CurrentGames.ToList();
             Clients.Client(Context.ConnectionId).currentGameList(games);
+        }
+
+        //---------------------------------------------------------------------------------------------------------------------------
+        // GameBoard 
+
+        private void SetupGame(int gameId)
+        {
+            var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
+            gameObj.CurrentRound = 1;
+            var firstTurn = gameObj.GameDetail.TurnDetail[0];
+
+            Clients.Group(gameObj.GameCode).firstRound(firstTurn);
+
+            System.Threading.Timer timer = null;
+            timer = new System.Threading.Timer(new TimerCallback(y =>
+            {
+                try
+                {
+                    var isFinished = NextRound(gameObj);
+                    if (isFinished)
+                    {
+                        timer.Dispose();
+                    }
+                }
+                catch
+                {
+                }
+            }));
+
+            timer.Change(TimeSpan.Zero, TimeSpan.FromSeconds(30));
+        }
+
+        private bool NextRound(GameDTO gameObj) {
+
+            return true;
         }
     }
 }

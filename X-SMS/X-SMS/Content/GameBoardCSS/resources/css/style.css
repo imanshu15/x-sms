@@ -1,0 +1,254 @@
+html{
+    min-width: 100%;
+    min-height: 100%;
+    background-color: #ffffff;
+}
+
+body {
+
+/*
+    width: 1349px;
+    height: 636px;
+*/
+    background-color: #ffffff;
+}
+
+.container-fluid{
+    background-color: #ffffff;
+}
+
+#balance{
+    height: 200px;
+    width: 400px;
+    font-size: 12px;
+    border-bottom: 0.5px solid #000000;
+    border-right: 0.5px solid #000000;
+}
+
+#clock{
+    height: 75px;
+    width: 400px;
+    border-bottom: 0.5px solid #000000;
+    border-right: 0.5px solid #000000;
+}
+
+#other_player_details{
+    height: 350px;
+    width: 400px;
+    border-right: 0.5px solid #000000;
+}
+
+#title {
+    height: auto;
+    width: auto;
+    font-size: 30px;
+    font-family: sans-serif;
+    color: #000000;
+    padding-top: 16px;
+    padding-left: 150px;
+    padding-right: 110px;
+
+}
+
+#graph {
+    height: auto;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    text-align: justify;
+}
+
+#buttons{
+    height: auto;
+    border-left: 0.5px solid #000000;
+
+}
+
+#bank {
+    margin-top: 28px;
+    width: 200px;
+    margin-left: 10px;
+    /*    margin-right: 10px;*/
+    position: relative;
+    border: 2px solid #000000;
+
+}
+
+#portfolio {
+    margin-top: 28px;
+    width: 200px;
+    margin-left: 10px;
+    /*    margin-right: 10px;*/
+    position: relative;
+    border: 2px solid #000000;
+
+
+}
+
+#help {
+    margin-top: 28px;
+    width: 200px;
+    margin-left: 10px;
+    /*    margin-right: 10px;*/
+    position: relative;
+    border: 2px solid #000000;
+}
+
+#history {
+    margin-top: 28px;
+    width: 200px;
+    margin-left: 10px;
+    /*    margin-right: 10px;*/
+    position: relative;
+    border: 2px solid #000000;
+}
+
+#buy {
+    margin-top: 28px;
+    width: 200px;
+    margin-left: 10px;
+    /*    margin-right: 10px;*/
+    position: relative;
+    background-color: #d98108;
+    border: 2px solid #000000;
+}
+
+
+#events {
+    margin-top: 28px;
+    width: 200px;
+    margin-left: 10px;
+    /*    margin-right: 10px;*/
+    position: relative;
+    border: 2px solid #000000;
+}
+
+#players_info {
+    margin-top: 28px;
+    width: 200px;
+    margin-left: 10px;
+    /*    margin-right: 10px;*/
+    position: relative;
+    border: 2px solid #000000;
+}
+
+
+#logout {
+    margin-top: 28px;
+    width: 200px;
+    margin-left: 10px;
+    /*    margin-right: 10px;*/
+    position: relative;
+    border: 2px solid #000000;
+}
+
+#sell {
+    margin-top: 28px;
+    width: 200px;
+    margin-left: 10px;
+    /*    margin-right: 10px;*/
+    position: relative;
+    background-color: #d98108;
+    border: 2px solid #000000;
+}
+
+
+.modal-content {
+
+    height: auto;
+    /*    width: 400px;*/
+    background-color: #c4b9b9;
+    border: 2px solid #000000;
+    background-size:auto;
+    font-family: serif;
+
+}
+
+.eventScroll {
+    overflow-y: scroll;
+    height: 350px;
+}
+
+.opdScroll {
+    overflow-y: scroll;
+    height: 310px;
+    margin-right: 4px;
+    margin-left: 4px;
+}
+
+.cssScroll {
+    overflow-y: scroll;
+    height: 120px;
+    margin-right: 4px;
+    margin-left: 4px;
+
+
+}
+
+
+#opdLabel {
+    color: #000000;
+    margin-bottom: 2px;
+    margin-left: 8px;
+}
+
+
+
+#cssLabel {
+    color: #000000;
+    margin-bottom: 2px;
+}
+
+
+h5 {
+    color: #000000;
+}
+
+
+
+.form-bank {
+    margin-left: 80px;
+}
+
+
+
+#btn_submit {
+    margin-left: 25px;
+    width: 150px;
+}
+
+.alert-success {
+    background-color: #6f6f6f;
+    border: 2px solid #000000;
+    color: black;
+    margin-right: 2px;
+    margin-left: 10px;
+    font-family: cursive;
+
+}
+
+#alert_other_player {
+    background-color: #bababa;
+
+}
+
+.form-player_stock_details {
+    color: #000000;
+    margin-left: 10px;
+    margin-top: 8px;
+    font-size: 15px;
+}
+
+
+
+
+
+
+
+
+#exampleFormControlSelect1 {
+    width: auto;
+    height: auto;
+    position: relative;
+}
