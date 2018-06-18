@@ -12,8 +12,7 @@
     <a href="#" class="button title">ORDERS</a>
     <a href="#" class="button title">GRAPHS</a>
 </nav>
-
-<!-- Side Bar!-->
+<!-- Left-Side Bar!-->
 
 <div class="a-menu closed ">
     <div class="w-head-clone ">
@@ -30,16 +29,29 @@
 
     </div>
 </div>
+
 <div class="table-custom">
     <div class="table-responsive">
         @{
-            Html.RenderPartial("_MarketWindow");
-            Html.RenderPartial("_LeaderBoard");
-            Html.RenderPartial("_Orders");
+           // Html.RenderPartial("_MarketWindow");
+           // Html.RenderPartial("_LeaderBoard");
+          //  Html.RenderPartial("_Orders");
+           Html.RenderPartial("_StockInfo");
         }
     </div>
 </div>
+<!-- Right-Side Bar!-->
 
+<div class="a-menu-right closed ">
+    <div class="clock">
+
+        
+        </div>
+
+
+
+    
+</div>
 <footer>
     <nav class=" navbar-light bg-light footer1">
         <div class="footer-unit balance">
@@ -75,3 +87,4 @@
         </div>
     </nav>
 </footer>
+ 

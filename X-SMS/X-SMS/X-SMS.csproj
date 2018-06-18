@@ -263,6 +263,7 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Scripts\Clock.js" />
     <Content Include="Scripts\Clock\flipclock.css" />
     <Content Include="Scripts\Clock\flipclock.js" />
     <Content Include="Scripts\Clock\flipclock.min.js" />
@@ -318,6 +319,7 @@
     <Content Include="Views\Game\_MarketWindow.cshtml" />
     <Content Include="Views\Game\_Orders.cshtml" />
     <Content Include="Views\Game\_GameBoard.cshtml" />
+    <Content Include="Views\Game\_StockInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
