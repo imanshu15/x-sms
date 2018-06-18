@@ -61,27 +61,30 @@ namespace X_SMS_API.AIHelper
 
             foreach (TurnDetail turn in prevTurns)
             {
-                foreach(StockDetail stock in turn.Stocks)
+                foreach (SectorDetail sector in turn.Sectors)
                 {
-                    int i = 0;
-                    foreach(StockDetail owned in currentStocks)
+                    foreach (StockDetail stock in sector.Stocks)
                     {
-                        if (stock.StockId != owned.StockId)
+                        int i = 0;
+                        foreach (StockDetail owned in currentStocks)
                         {
-                            i++; continue;
+                            if (stock.StockId != owned.StockId)
+                            {
+                                i++; continue;
+                            }
+                            else
+                            {
+                                if (shouldBuy == null)
+                                    shouldBuy = stock;
+                                else if (shouldBuy.CurrentPrice > stock.CurrentPrice)
+                                    shouldBuy = stock;
+                            }
                         }
-                        else
-                        {
-                            if (shouldBuy == null)
-                                shouldBuy = stock;
-                            else if (shouldBuy.CurrentPrice > stock.CurrentPrice)
-                                shouldBuy = stock;
+                        if (i == currentStocks.Capacity && stock.CurrentPrice > shouldBuy.CurrentPrice)
+                        {//this stock is never bought but its cur price is greater than shouldBuy's price
+                            shouldBuy = stock;
                         }
-                    }
-                    if(i == currentStocks.Capacity && stock.CurrentPrice > shouldBuy.CurrentPrice)
-                    {//this stock is never bought but its cur price is greater than shouldBuy's price
-                        shouldBuy = stock;
-                    }
+                    } 
                 }
             }
         }
@@ -93,20 +96,23 @@ namespace X_SMS_API.AIHelper
 
             foreach (TurnDetail turn in prevTurns)
             {
-                foreach (StockDetail stock in turn.Stocks)
+                foreach (SectorDetail sector in turn.Sectors)
                 {
-                    foreach (StockDetail owned in currentStocks)
+                    foreach (StockDetail stock in sector.Stocks)
                     {
-                        if (stock.StockId != owned.StockId)
-                            continue;
-                        else
+                        foreach (StockDetail owned in currentStocks)
                         {
-                            if (shouldSell == null)
-                                shouldSell = stock;
-                            else if (shouldSell.CurrentPrice < stock.CurrentPrice)
-                                shouldSell = stock;
+                            if (stock.StockId != owned.StockId)
+                                continue;
+                            else
+                            {
+                                if (shouldSell == null)
+                                    shouldSell = stock;
+                                else if (shouldSell.CurrentPrice < stock.CurrentPrice)
+                                    shouldSell = stock;
+                            }
                         }
-                    }
+                    } 
                 }
             }
         }

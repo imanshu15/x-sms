@@ -66,6 +66,7 @@ namespace X_SMS_DAL.Services
             ResultToken result = new ResultToken();
             result.Success = true;
             bool gotMoney = false;
+            bool priceIsRight = false;
 
             decimal currentAccBalance = checkBankBalance(playerID);
             if (currentAccBalance >= quantity * price)
@@ -78,11 +79,12 @@ namespace X_SMS_DAL.Services
                 result.Message = "Account balance insufficient";
                 return result;
             }
-            //price is right?
+
+            priceIsRight = stock.CurrentPrice == price ? true : false;
 
             int accID = getAccountID(playerID);
 
-            if (gotMoney && accID > 0)
+            if (gotMoney && priceIsRight && accID > 0)
             {
                 try
                 {
@@ -111,6 +113,7 @@ namespace X_SMS_DAL.Services
             ResultToken result = new ResultToken();
             result.Success = true;
             bool gotSupply = false;
+            bool priceIsRight = false;
 
             int quantityBalance = checkStockQuantity(playerID, stock.StockId);
             if (quantityBalance >= quantity)
@@ -123,12 +126,12 @@ namespace X_SMS_DAL.Services
                 result.Message = "Insufficient Stocks";
                 return result;
             }
-            // price is right?
 
+            priceIsRight = stock.CurrentPrice == price ? true : false;
 
             int accID = getAccountID(playerID); //acc id for update bank acc details
 
-            if (gotSupply && accID > 0)
+            if (gotSupply && priceIsRight && accID > 0)
             {
                 try
                 {
@@ -153,14 +156,17 @@ namespace X_SMS_DAL.Services
         }
 
         //portfolio
-        public ResultToken viewPortfolio(int playerID)
+        public IEnumerable<ViewPlayerPortfolio> viewPortfolio()
         {
-            ResultToken result = new ResultToken();
-            result.Success = true;
-
-            var playersPortfolio = playerEntities.ViewPlayerPortfolios.Where(c => c.PlayerId == playerID);
-            //map as view obj
-            return result;
+            try
+            {
+                var playersPortfolio = playerEntities.ViewPlayerPortfolios.ToList();
+                return playersPortfolio;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public List<Stock> getAllStocks()
@@ -189,15 +195,6 @@ namespace X_SMS_DAL.Services
         }
 
         //getRecommendationsFromAnalyst()
-
-        public bool priceIsRight(StockDetail stock, decimal currentPrice)
-        {
-            decimal price = stock.CurrentPrice;
-            if (price == currentPrice)
-                return true;
-            else
-                return false;
-        }
 
         public int checkStockQuantity(int playerID, int stockID)
         {
@@ -274,6 +271,72 @@ namespace X_SMS_DAL.Services
             }
 
             return accID;
+        }
+
+        //purchase history
+        public ResultToken getPurchasesByPlayer(int playerId)
+        {
+            ResultToken result = new ResultToken();
+            result.Success = true;
+
+            try
+            {
+                var purchasesByPlayer = viewPortfolio().Where(c => c.PlayerId == playerId && c.Quantity > 0).ToList();
+
+                if (purchasesByPlayer != null)
+                {
+                    result.Data = purchasesByPlayer;
+                    return result;
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = "No History found.";
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Success = false;
+                result.Message = e.Message;
+                return null;
+            }
+
+        }
+
+        //sales history
+        public ResultToken getSalesByPlayer(int playerId)
+        {
+            ResultToken result = new ResultToken();
+            result.Success = true;
+
+            try
+            {
+                var salesByPlayer = viewPortfolio().Where(c => c.PlayerId == playerId && c.Quantity < 0).ToList();
+
+                if (salesByPlayer != null)
+                {
+                    foreach(ViewPlayerPortfolio item in salesByPlayer) // set minus quan to positive values
+                    {
+                        item.Quantity = item.Quantity * -1;
+                    }
+                    result.Data = salesByPlayer;
+                    return result;
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = "No History found.";
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Success = false;
+                result.Message = e.Message;
+                return null;
+            }
+
         }
 
         public void Dispose()
