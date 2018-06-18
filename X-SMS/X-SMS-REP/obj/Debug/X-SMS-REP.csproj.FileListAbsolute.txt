@@ -15,3 +15,8 @@ F:\Final Year\x-sms\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.pdb
 F:\Final Year\x-sms\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csproj.CoreCompileInputs.cache
 F:\Final Year\x-sms\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.dll
 F:\Final Year\x-sms\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.pdb
+C:\Git\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.dll
+C:\Git\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.pdb
+C:\Git\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csproj.CoreCompileInputs.cache
+C:\Git\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.dll
+C:\Git\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.pdb
