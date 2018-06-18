@@ -179,6 +179,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JoinController.cs" />
     <Compile Include="Global.asax.cs">
@@ -285,6 +286,8 @@
     <Content Include="Views\Game\_GameBoard.cshtml" />
     <Content Include="Views\Shared\_GameBoardLayout.cshtml" />
     <Content Include="Views\Home\GameBoard.cshtml" />
+    <Content Include="Views\History\Index.cshtml" />
+    <Content Include="Views\Shared\_HistoryLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

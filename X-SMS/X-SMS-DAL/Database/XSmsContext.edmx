@@ -24,6 +24,7 @@
           <Property Name="TransactionId" Type="int" Nullable="false" />
           <Property Name="PlayerId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Transcation">
           <Key>
@@ -33,8 +34,6 @@
           <Property Name="AccountId" Type="int" Nullable="false" />
           <Property Name="IsWithdraw" Type="bit" Nullable="false" />
           <Property Name="IsDeposit" Type="bit" Nullable="false" />
-          <Property Name="Sender" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Receiver" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Game">
@@ -51,6 +50,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="IsStarted" Type="bit" Nullable="false" />
           <Property Name="IsCanceled" Type="bit" Nullable="false" />
+          <Property Name="Winner" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -175,9 +175,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Receiver' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Receiver" />-->
         <Association Name="FK_Sector">
           <End Role="Sector" Type="Self.Sector" Multiplicity="1" />
           <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
@@ -190,9 +187,6 @@ warning 6035: The relationship 'FK_Receiver' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Sender' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Sender" />-->
         <Function Name="BuyStocks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="playerID" Type="int" Mode="In" />
           <Parameter Name="playerAccID" Type="int" Mode="In" />
@@ -323,8 +317,6 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
           <Property Name="AccountId" Type="Int32" Nullable="false" />
           <Property Name="IsWithdraw" Type="Boolean" Nullable="false" />
           <Property Name="IsDeposit" Type="Boolean" Nullable="false" />
-          <Property Name="Sender" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Receiver" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="BankAccount" Relationship="XSmsModel.FK_Account" FromRole="Transcation" ToRole="BankAccount" />
           <NavigationProperty Name="PlayerStocks" Relationship="XSmsModel.FK_Detail_PlayerStock_Transcation" FromRole="Transcation" ToRole="PlayerStock" />
@@ -344,6 +336,7 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
           <Property Name="IsStarted" Type="Boolean" Nullable="false" />
           <Property Name="IsCanceled" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Players" Relationship="XSmsModel.FK_Game" FromRole="Game" ToRole="Player" />
+          <Property Name="Winner" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Player">
           <Key>
@@ -450,6 +443,7 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
           <NavigationProperty Name="Player" Relationship="XSmsModel.FK_Detail_PlayerStock_Player" FromRole="PlayerStock" ToRole="Player" />
           <NavigationProperty Name="Stock" Relationship="XSmsModel.FK_Detail_PlayerStock_Stock" FromRole="PlayerStock" ToRole="Stock" />
           <NavigationProperty Name="Transcation" Relationship="XSmsModel.FK_Detail_PlayerStock_Transcation" FromRole="PlayerStock" ToRole="Transcation" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_BankAccount_Player">
           <End Type="XSmsModel.Player" Role="Player" Multiplicity="1" />
@@ -520,8 +514,6 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
             <EntityTypeMapping TypeName="XSmsModel.Transcation">
               <MappingFragment StoreEntitySet="Transcation">
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-                <ScalarProperty Name="Sender" ColumnName="Sender" />
                 <ScalarProperty Name="IsDeposit" ColumnName="IsDeposit" />
                 <ScalarProperty Name="IsWithdraw" ColumnName="IsWithdraw" />
                 <ScalarProperty Name="AccountId" ColumnName="AccountId" />
@@ -532,6 +524,7 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
           <EntitySetMapping Name="Games">
             <EntityTypeMapping TypeName="XSmsModel.Game">
               <MappingFragment StoreEntitySet="Game">
+                <ScalarProperty Name="Winner" ColumnName="Winner" />
                 <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
                 <ScalarProperty Name="IsStarted" ColumnName="IsStarted" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
@@ -604,6 +597,7 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
           <EntitySetMapping Name="PlayerStocks">
             <EntityTypeMapping TypeName="XSmsModel.PlayerStock">
               <MappingFragment StoreEntitySet="PlayerStock">
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
                 <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />

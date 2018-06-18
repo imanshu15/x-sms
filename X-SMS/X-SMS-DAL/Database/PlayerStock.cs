@@ -19,6 +19,7 @@ namespace X_SMS_DAL.Database
         public int TransactionId { get; set; }
         public int PlayerId { get; set; }
         public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
     
         public virtual Player Player { get; set; }
         public virtual Stock Stock { get; set; }

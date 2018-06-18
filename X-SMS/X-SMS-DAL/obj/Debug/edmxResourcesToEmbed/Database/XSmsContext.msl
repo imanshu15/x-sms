@@ -16,8 +16,6 @@
       <EntityTypeMapping TypeName="XSmsModel.Transcation">
         <MappingFragment StoreEntitySet="Transcation">
           <ScalarProperty Name="Amount" ColumnName="Amount" />
-          <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-          <ScalarProperty Name="Sender" ColumnName="Sender" />
           <ScalarProperty Name="IsDeposit" ColumnName="IsDeposit" />
           <ScalarProperty Name="IsWithdraw" ColumnName="IsWithdraw" />
           <ScalarProperty Name="AccountId" ColumnName="AccountId" />
@@ -28,6 +26,7 @@
     <EntitySetMapping Name="Games">
       <EntityTypeMapping TypeName="XSmsModel.Game">
         <MappingFragment StoreEntitySet="Game">
+          <ScalarProperty Name="Winner" ColumnName="Winner" />
           <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
           <ScalarProperty Name="IsStarted" ColumnName="IsStarted" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />
@@ -100,6 +99,7 @@
     <EntitySetMapping Name="PlayerStocks">
       <EntityTypeMapping TypeName="XSmsModel.PlayerStock">
         <MappingFragment StoreEntitySet="PlayerStock">
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
           <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />

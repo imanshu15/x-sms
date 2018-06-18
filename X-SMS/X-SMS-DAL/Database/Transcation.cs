@@ -24,8 +24,6 @@ namespace X_SMS_DAL.Database
         public int AccountId { get; set; }
         public bool IsWithdraw { get; set; }
         public bool IsDeposit { get; set; }
-        public string Sender { get; set; }
-        public string Receiver { get; set; }
         public decimal Amount { get; set; }
     
         public virtual BankAccount BankAccount { get; set; }
