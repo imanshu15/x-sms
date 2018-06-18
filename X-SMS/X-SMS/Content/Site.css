@@ -142,3 +142,58 @@ html.no-csstransitions .home-content__main {
 .selected {
     background-color: #acbad4 !important;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+#content {
+    padding-bottom: 150px;
+}
+
+#footer {
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.glyphicon {
+    margin-right: 4px !important; /*override*/
+}
+
+.pagination .glyphicon {
+    margin-right: 0px !important; /*override*/
+}
+
+.pagination a {
+    color: #555;
+}
+
+.panel ul {
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+
+.news-item {
+    padding: 4px 4px;
+    margin: 0px;
+    border-bottom: 1px dotted #555;
+}
+
+.buy-stock {
+color: green;
+}
+
+.sell-stock {
+color: red;
+}

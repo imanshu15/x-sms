@@ -30,6 +30,7 @@ namespace X_SMS_DAL.Database
         public bool IsActive { get; set; }
         public bool IsStarted { get; set; }
         public bool IsCanceled { get; set; }
+        public string Winner { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Player> Players { get; set; }

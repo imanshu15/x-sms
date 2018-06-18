@@ -46,6 +46,7 @@ function setUpClientMethods() {
 
     setupJoinClientMethods();
     setUpWaitClientMethods();
+    setUpGameClientMethods();
 
 }
 
@@ -58,6 +59,7 @@ function setupJoinClientMethods() {
             if (response !== null) {
                 $("#hdnGameId").val(response.GameId);
                 $("#hdnGameCode").val(response.GameCode);
+                $("#hdnPlayerId").val(response.PlayerId);
                 loadMainScreen("Join/Wait");
             }
         }
@@ -84,6 +86,8 @@ function setupJoinClientMethods() {
             console.log(response);
             if (response !== null) {
                 $("#hdnGameId").val(response.GameId);
+                $("#hdnPlayerId").val(response.PlayerId);
+                $("#hdnGameCode").val(response.GameCode);
                 loadMainScreen("Join/Wait");
             }
         }
@@ -115,6 +119,7 @@ function setUpWaitClientMethods() {
                 showPreloader(400);
                 setTimeout(function () {
                     $("#mdlMessage").modal("hide");
+                    $("#hdnScreen").val("GAME");
                     loadMainScreen("Game/GameBoard");
                 }, 400);
             }, 800);
@@ -143,3 +148,76 @@ function setUpWaitClientMethods() {
     };
 }
 
+function setUpGameClientMethods() {
+
+    game.client.startRound = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+            console.log(response);
+            setUpStocks(response);
+
+            // -- Clock
+            clock = $('.clock').FlipClock(60,  {
+                clockFace: 'MinuteCounter',
+                countdown: true,
+                callbacks: {
+                    stop: function () {
+                        //$('.message').html('The clock has stopped!');
+                    }
+                }
+            });
+       }
+    };
+
+    game.client.stockBuySuccess = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+            console.log(response);
+            $('#gameScrnBalance').text(response);
+        }
+    };
+
+    game.client.playerBoughtStock = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+            console.log(response);
+            addStockBoughtNews(response);
+            getPlayerStock();
+        }
+    };
+
+    game.client.stockBuyFailed = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+            $('#msgTitle').text('Unsuccessful');
+            $('#msgBody').text(response.Message);
+            $('#mdlMessage').modal('show');
+        }
+    };
+
+    game.client.loadPlayerStocksList = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+            console.log(response);
+            loadPlayerStocksGrid(response);
+        }
+    };
+
+    game.client.stockSellSuccess = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+            console.log(response);
+            $('#gameScrnBalance').text(response);
+        }
+    };
+
+    game.client.playerSoldStock = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+            console.log(response);
+            addStockSoldNews(response);
+            getPlayerStock();
+        }
+    };
+
+    game.client.stockSellFailed = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+            $('#msgTitle').text('Unsuccessful');
+            $('#msgBody').text(response.Message);
+            $('#mdlMessage').modal('show');
+        }
+    };
+}

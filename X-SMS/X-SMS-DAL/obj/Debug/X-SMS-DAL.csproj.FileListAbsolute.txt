@@ -1,22 +1,3 @@
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\NLog.config
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll.config
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.pdb
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\AutoMapper.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.SqlServer.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\NLog.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-REP.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-REP.pdb
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\AutoMapper.xml
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.xml
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.SqlServer.xml
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\NLog.xml
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csprojAssemblyReference.cache
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CoreCompileInputs.cache
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CopyComplete
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.pdb
 C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\NLog.config
 C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll.config
 C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll
@@ -55,3 +36,22 @@ E:\StockMarketSimulator\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CoreCompileIn
 E:\StockMarketSimulator\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CopyComplete
 E:\StockMarketSimulator\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.dll
 E:\StockMarketSimulator\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.pdb
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csprojAssemblyReference.cache
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CoreCompileInputs.cache
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\NLog.config
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll.config
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.pdb
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\AutoMapper.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.SqlServer.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\NLog.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-REP.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-REP.pdb
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\AutoMapper.xml
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.xml
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.SqlServer.xml
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\bin\Debug\NLog.xml
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CopyComplete
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.pdb

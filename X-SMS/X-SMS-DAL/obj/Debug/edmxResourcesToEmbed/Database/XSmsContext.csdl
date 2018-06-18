@@ -74,8 +74,6 @@
     <Property Name="AccountId" Type="Int32" Nullable="false" />
     <Property Name="IsWithdraw" Type="Boolean" Nullable="false" />
     <Property Name="IsDeposit" Type="Boolean" Nullable="false" />
-    <Property Name="Sender" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="Receiver" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
     <NavigationProperty Name="BankAccount" Relationship="XSmsModel.FK_Account" FromRole="Transcation" ToRole="BankAccount" />
     <NavigationProperty Name="PlayerStocks" Relationship="XSmsModel.FK_Detail_PlayerStock_Transcation" FromRole="Transcation" ToRole="PlayerStock" />
@@ -95,6 +93,7 @@
     <Property Name="IsStarted" Type="Boolean" Nullable="false" />
     <Property Name="IsCanceled" Type="Boolean" Nullable="false" />
     <NavigationProperty Name="Players" Relationship="XSmsModel.FK_Game" FromRole="Game" ToRole="Player" />
+    <Property Name="Winner" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Player">
     <Key>

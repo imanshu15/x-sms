@@ -26,6 +26,7 @@
     <EntitySetMapping Name="Games">
       <EntityTypeMapping TypeName="XSmsModel.Game">
         <MappingFragment StoreEntitySet="Game">
+          <ScalarProperty Name="Winner" ColumnName="Winner" />
           <ScalarProperty Name="IsCanceled" ColumnName="IsCanceled" />
           <ScalarProperty Name="IsStarted" ColumnName="IsStarted" />
           <ScalarProperty Name="IsActive" ColumnName="IsActive" />

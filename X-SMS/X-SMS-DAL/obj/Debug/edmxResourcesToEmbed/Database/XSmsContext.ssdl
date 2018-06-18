@@ -45,6 +45,7 @@
     <Property Name="IsActive" Type="bit" Nullable="false" />
     <Property Name="IsStarted" Type="bit" Nullable="false" />
     <Property Name="IsCanceled" Type="bit" Nullable="false" />
+    <Property Name="Winner" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="Player">
     <Key>

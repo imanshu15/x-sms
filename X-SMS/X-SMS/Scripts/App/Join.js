@@ -80,7 +80,7 @@ function joinGameAction() {
         e.preventDefault();
         var playerName = $("#txtJoinPrivatePlayer").val();
         var gameCode = $("#txtJoinGameCode").val();
-        game.server.joinPrivateGame(playerName, 0, gameCode);
+        game.server.joinGame(playerName, 0, gameCode);
     });
 }
 

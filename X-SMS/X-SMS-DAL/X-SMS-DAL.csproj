@@ -110,6 +110,7 @@
     <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\GameTrendService.cs" />
+    <Compile Include="Services\HistoryService.cs" />
     <Compile Include="Services\PlayerService.cs" />
     <Compile Include="Services\TrendService.cs" />
   </ItemGroup>

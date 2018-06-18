@@ -71,6 +71,35 @@ namespace X_SMS.Services
             return result;
         }
 
+        public ResultToken MakeGetRequest(string transaction)
+        {
+
+            ResultToken result = new ResultToken();
+
+            try
+            {
+                var response = client.GetAsync(transaction).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    result = response.Content.ReadAsAsync<ResultToken>().Result;
+                }
+                else
+                {
+                    Logger logger = LogManager.GetLogger("errorLogger");
+                    logger.Error(transaction + " : " + response.StatusCode);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex, transaction);
+            }
+
+            return result;
+        }
+
         public ResultToken ConvertObjectToToken(object input) {
             return (ResultToken) input;
         }

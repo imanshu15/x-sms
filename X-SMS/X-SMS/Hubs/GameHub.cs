@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Timers;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
@@ -24,13 +26,14 @@ namespace X_SMS.Hubs
 
             lock (_syncRoot)
             {
-
+                PlayerDTO player = null;
                 GameDTO game = gameManager.CreateGame(playerName, playerCount, isPrivate);
                 if (game != null)
                 {
-                    PlayerDTO player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
+                    player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
                     if (player != null)
                     {
+                        player.GameCode = game.GameCode;
                         game.Players.Add(player);
                         EntityStateManager.CurrentGames.Add(game);
                         AddPlayer(player);
@@ -41,7 +44,7 @@ namespace X_SMS.Hubs
                 if (isSuccess)
                 {
                     Groups.Add(Context.ConnectionId, game.GameCode);
-                    Clients.Client(Context.ConnectionId).gameCreated(game); // Call method on created players view
+                    Clients.Client(Context.ConnectionId).gameCreated(player); // Call method on created players view
                     var games = EntityStateManager.CurrentGames.ToList();
                     var connectedIds = EntityStateManager.Players.Select(a => a.ConnectionId).ToArray();
                     Clients.AllExcept(connectedIds).updateGameList(games);
@@ -69,6 +72,8 @@ namespace X_SMS.Hubs
 
             lock (_syncRoot)
             {
+                PlayerDTO player = null;
+
                 if (isCodeFound)
                 {
                     var game = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == gameId);
@@ -77,11 +82,11 @@ namespace X_SMS.Hubs
 
                     if (game != null && game.Players.Count < game.PlayersCount)
                     {
-                        PlayerDTO player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
+                         player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
                         if (player != null)
                         {
+                            player.GameCode = game.GameCode;
                             game.Players.Add(player);
-                            EntityStateManager.CurrentGames.Add(game);
                             AddPlayer(player);
                             isSuccess = true;
                         }
@@ -90,7 +95,7 @@ namespace X_SMS.Hubs
                     if (isSuccess)
                     {
                         Groups.Add(Context.ConnectionId, game.GameCode);
-                        Clients.Client(Context.ConnectionId).joinSuccess(game);
+                        Clients.Client(Context.ConnectionId).joinSuccess(player);
                         Clients.Group(game.GameCode).notifyJoinedPlayers(playerName);
                     }
                     else
@@ -109,6 +114,8 @@ namespace X_SMS.Hubs
             GameManager gameManager = new GameManager();
             lock (_syncRoot)
             {
+                GameLogicManager gameLogic = new GameLogicManager();
+
                 var game = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == gameId);
                 if (game != null && game.Players.Count == game.PlayersCount)
                 {
@@ -117,8 +124,9 @@ namespace X_SMS.Hubs
                     {
                         var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == game.GameId);
                         gameObj.IsStarted = true;
-
-                       Clients.Group(game.GameCode).gameStarted(game);
+                        gameObj.GameDetail = gameLogic.GetGameData(gameObj.GameId);
+                        Clients.Group(game.GameCode).gameStarted(game);
+                        SetupGame(gameObj.GameId);
                     }
                     else
                     {
@@ -127,6 +135,8 @@ namespace X_SMS.Hubs
                 }
             }
         }
+
+
         private void AddPlayer(PlayerDTO player) {
             var client = EntityStateManager.Players.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
             if (client == null)
@@ -174,5 +184,198 @@ namespace X_SMS.Hubs
             var games = EntityStateManager.CurrentGames.ToList();
             Clients.Client(Context.ConnectionId).currentGameList(games);
         }
+
+        //---------------------------------------------------------------------------------------------------------------------------
+        // GameBoard 
+
+        private void SetupGame(int gameId)
+        {
+            var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
+            gameObj.CurrentRound = 0;
+            var isFinished = NextRound(gameObj.GameId);
+            //System.Threading.Timer timer = null;
+            //timer = new System.Threading.Timer(new TimerCallback(y =>
+            //{
+            //    try
+            //    {
+            //        var isFinished = NextRound(gameObj.GameId);
+            //        if (isFinished)
+            //        {
+            //            timer.Dispose();
+            //        }
+            //    }
+            //    catch
+            //    {
+            //    }
+            //}));
+
+            //timer.Change(TimeSpan.Zero, TimeSpan.FromMinutes(1));
+        }
+
+        private bool NextRound(int gameId) {
+
+             bool isFinished = false;
+            var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
+
+            if (gameObj.CurrentRound > EntityStateManager.NumberOfRounds)
+            {
+                isFinished = true;
+                //GAME OVER
+            }
+            else {
+               gameObj.CurrentRound += 1;
+               if(gameObj.CurrentRound == 1)
+                    System.Threading.Thread.Sleep(3000);
+
+                var turnDetails = gameObj.GameDetail.TurnDetail.FirstOrDefault(x => x.Turn == gameObj.CurrentRound);
+                if(turnDetails != null)
+                    Clients.Group(gameObj.GameCode).startRound(turnDetails);
+
+            }
+
+            return isFinished;
+        }
+
+        public void BuyStocks(int gameId,int playerId,int sectorId,int stockId,int quantity)
+        {
+            GameLogicManager gameLogic = new GameLogicManager();
+            lock (_syncRoot)
+            {
+                var game = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == gameId);
+                if (game != null)
+                {
+                   var turn = game.GameDetail.TurnDetail.FirstOrDefault(x => x.Turn == game.CurrentRound);
+                    if (turn != null) {
+                        var sector = turn.Sectors.FirstOrDefault(y => y.Sector.SectorId == sectorId);
+                        if (sector != null) {
+                            var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockId);
+
+                            var token = gameLogic.BuyStocks(playerId,stockId,quantity,stock.CurrentPrice);
+
+                            if (token.Success)
+                            {
+                                if (token.Data != null)
+                                {
+                                    var player = game.Players.FirstOrDefault(o => o.PlayerId == playerId);
+                                    var temp = (PlayerTransactionsDTO)token.Data;
+                                    temp.PlayerName = player.PlayerName;
+                                    temp.StockName = stock.StockName;
+
+                                    PlayerStock pStock = new PlayerStock();
+                                    pStock.Quantity = quantity;
+                                    pStock.SectorId = sectorId;
+                                    pStock.StockId = stockId;
+                                    pStock.StockName = stock.StockName;
+                                    pStock.SectorName = sector.Sector.SectorName;
+                                    pStock.BoughtPrice = stock.CurrentPrice;
+
+                                    player.PlayerStocks.Add(pStock);
+                                    player.BankAccount.Balance -= (quantity * stock.CurrentPrice);
+                                    Clients.Client(Context.ConnectionId).stockBuySuccess(player.BankAccount.Balance);
+                                    Clients.Group(game.GameCode).playerBoughtStock(temp);
+                                }
+                                else {
+                                    token.Success = false;
+                                    token.Message = "An error occurred";
+                                }
+
+                            }
+
+                            if(!token.Success){
+                                Clients.Client(Context.ConnectionId).stockBuyFailed(token);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public void GetPlayerStocks(int gameId,int playerId)
+        {
+            GameLogicManager gameLogic = new GameLogicManager();
+            lock (_syncRoot)
+            {
+                var game = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == gameId);
+                var player = game.Players.FirstOrDefault(x => x.PlayerId == playerId);
+                var playerStocks = player.PlayerStocks.ToList();
+                foreach (var temp in playerStocks) {
+                    temp.CurrentPrice = gameLogic.GetStockValue(gameId, temp.SectorId, temp.StockId);
+                    temp.IsIncreased = (temp.CurrentPrice > temp.BoughtPrice) ? true : false;
+                }
+                Clients.Client(Context.ConnectionId).loadPlayerStocksList(playerStocks.GroupBy(x => x.StockId).ToList());
+            }
+        }
+
+        public void SellStocks(int gameId, int playerId, int sectorId, int stockId, int quantity)
+        {
+            GameLogicManager gameLogic = new GameLogicManager();
+            lock (_syncRoot)
+            {
+                var game = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == gameId);
+                if (game != null)
+                {
+                    var turn = game.GameDetail.TurnDetail.FirstOrDefault(x => x.Turn == game.CurrentRound);
+                    if (turn != null)
+                    {
+                        var sector = turn.Sectors.FirstOrDefault(y => y.Sector.SectorId == sectorId);
+                        if (sector != null)
+                        {
+                            var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockId);
+
+                            var token = gameLogic.SellStocks(playerId, stockId, quantity, stock.CurrentPrice);
+
+                            if (token.Success)
+                            {
+                                if (token.Data != null)
+                                {
+                                    var player = game.Players.FirstOrDefault(o => o.PlayerId == playerId);
+                                    var temp = (PlayerTransactionsDTO)token.Data;
+                                    temp.PlayerName = player.PlayerName;
+                                    temp.StockName = stock.StockName;
+
+                                    var tempStocks = player.PlayerStocks.Where(b => b.StockId == stockId).ToList();
+
+                                    foreach (var tempStock in tempStocks) {
+                                        tempStock.Quantity -= quantity;
+                                        if (tempStock.Quantity < 0)
+                                        {
+                                            quantity = -(tempStock.Quantity);
+                                        }
+                                        else if (tempStock.Quantity == 0) {
+                                            break;
+                                        }
+                                    }
+                                    var stockToRemove = tempStocks.Where(c => c.Quantity <= 0).Select(x => x.SectorId).ToList();
+
+                                    foreach (var removeStock in stockToRemove)
+                                    {
+                                        var tempStockToRemove = tempStocks.Where(a => a.StockId == removeStock).ToList();
+                                        foreach (var tempStk in tempStockToRemove) {
+                                            if (tempStk.Quantity == 0)
+                                                tempStocks.Remove(tempStk);
+                                        }
+                                    }
+
+                                    player.BankAccount.Balance += (quantity * stock.CurrentPrice);
+                                    Clients.Client(Context.ConnectionId).stockSellSuccess(player.BankAccount.Balance);
+                                    Clients.Group(game.GameCode).playerSoldStock(temp);
+                                }
+                                else
+                                {
+                                    token.Success = false;
+                                    token.Message = "An error occurred";
+                                }
+
+                            }
+
+                            if (!token.Success)
+                            {
+                                Clients.Client(Context.ConnectionId).stockSellFailed(token);
+                            }
+                        }
+                    }
+                }
+            }
+       }
     }
 }

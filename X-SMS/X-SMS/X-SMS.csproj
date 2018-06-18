@@ -179,6 +179,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\GameController.cs" />
+    <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JoinController.cs" />
     <Compile Include="Global.asax.cs">
@@ -188,6 +189,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\APIService.cs" />
     <Compile Include="Services\EntityStateManager.cs" />
+    <Compile Include="Services\GameLogicManager.cs" />
     <Compile Include="Services\GameManager.cs" />
     <Compile Include="StartUp.cs" />
   </ItemGroup>
@@ -213,6 +215,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\App\GameBoard.js" />
     <Content Include="Scripts\App\GameLoad.js" />
     <Content Include="Scripts\App\Join.js" />
     <Content Include="Scripts\App\Main.js" />
@@ -234,6 +237,9 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Scripts\Clock\flipclock.css" />
+    <Content Include="Scripts\Clock\flipclock.js" />
+    <Content Include="Scripts\Clock\flipclock.min.js" />
     <Content Include="Scripts\GameBoardJS\bootstrapJS\js\bootstrap.bundle.js" />
     <Content Include="Scripts\GameBoardJS\bootstrapJS\js\bootstrap.bundle.min.js" />
     <Content Include="Scripts\GameBoardJS\bootstrapJS\js\bootstrap.js" />
@@ -258,6 +264,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\NewsBox\jquery.bootstrap.newsbox.js" />
+    <Content Include="Scripts\NewsBox\jquery.bootstrap.newsbox.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -278,12 +286,13 @@
     <Content Include="Views\Game\_GameBoard.cshtml" />
     <Content Include="Views\Shared\_GameBoardLayout.cshtml" />
     <Content Include="Views\Home\GameBoard.cshtml" />
+    <Content Include="Views\History\Index.cshtml" />
+    <Content Include="Views\Shared\_HistoryLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\logs\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\New\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -14,5 +14,9 @@ namespace X_SMS_REP
         public string ConnectionId { get; set; }
         public int GameId { get; set; }
         public bool IsActive { get; set; }
+
+        public BankAccountDTO BankAccount { get; set; }
+        public string GameCode { get; set; }
+        public List<PlayerStock> PlayerStocks { get; set; }
     }
 }
