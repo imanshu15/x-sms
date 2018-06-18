@@ -21,6 +21,7 @@
         <AssociationConnector Association="XSmsModel.FK_Detail_PlayerStock_Player" />
         <AssociationConnector Association="XSmsModel.FK_Detail_PlayerStock_Stock" />
         <AssociationConnector Association="XSmsModel.FK_Detail_PlayerStock_Transcation" />
+        <EntityTypeShape EntityType="XSmsModel.ViewPlayerPortfolio" Width="1.5" PointX="5.375" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

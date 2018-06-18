@@ -12,6 +12,7 @@ C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.dll
 C:\Users\She De Woony\Documents\Git\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.pdb
 E:\StockMarketSimulator\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.dll
 E:\StockMarketSimulator\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.pdb
+E:\StockMarketSimulator\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csprojAssemblyReference.cache
 E:\StockMarketSimulator\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csproj.CoreCompileInputs.cache
 E:\StockMarketSimulator\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.dll
 E:\StockMarketSimulator\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.pdb

@@ -58,7 +58,7 @@ namespace X_SMS_DAL.Services
         }
 
         //buyStocks()
-        public ResultToken buyStocks(int playerID, int quantity, int stockID, decimal price)
+        public ResultToken buyStocks(int playerID, int quantity, StockDetail stock, decimal price)
         {
             ResultToken result = new ResultToken();
             result.Success = true;
@@ -77,6 +77,7 @@ namespace X_SMS_DAL.Services
                 return result;
             }
             //price is right?
+            priceIsrightForBuy = priceIsRight(stock, price);
 
             int accID = getAccountID(playerID); //acc id for update bank acc details
 
@@ -84,7 +85,7 @@ namespace X_SMS_DAL.Services
             {
                 try
                 {
-                    playerEntities.BuyStocks(playerID, accID, quantity, stockID, price);
+                    playerEntities.BuyStocks(playerID, accID, quantity, stock.StockId, price);
                 }
                 catch (Exception e)
                 {
@@ -104,14 +105,14 @@ namespace X_SMS_DAL.Services
         }
 
         //sellStocks()
-        public ResultToken sellStocks(int playerID, int quantity, int stockID, decimal price)
+        public ResultToken sellStocks(int playerID, int quantity, StockDetail stock, decimal price)
         {
             ResultToken result = new ResultToken();
             result.Success = true;
             bool gotSupply = false;
             bool priceIsrightForSell = false;
 
-            int quantityBalance = checkStockQuantity(playerID, stockID);
+            int quantityBalance = checkStockQuantity(playerID, stock.StockId);
             if (quantityBalance >= quantity)
             {
                 gotSupply = true;
@@ -122,8 +123,8 @@ namespace X_SMS_DAL.Services
                 result.Message = "Not enough stocks";
                 return result;
             }
-            // price is right?
-
+            //price is right?
+            priceIsrightForSell = priceIsRight(stock, price);
 
             int accID = getAccountID(playerID); //acc id for update bank acc details
 
@@ -131,13 +132,13 @@ namespace X_SMS_DAL.Services
             {
                 try
                 {
-                    playerEntities.SellStocks(playerID, accID, quantity, stockID, price);
+                    playerEntities.SellStocks(playerID, accID, quantity, stock.StockId, price);
                 }
                 catch (Exception e)
                 {
-                result.Success = false;
-                result.Message = e.Message;
-                return result;
+                    result.Success = false;
+                    result.Message = e.Message;
+                    return result;
                 }
             }
             else
@@ -157,14 +158,46 @@ namespace X_SMS_DAL.Services
             ResultToken result = new ResultToken();
             result.Success = true;
 
-            //var playersPortfolio = playerEntities.
+            var playersPortfolio = playerEntities.ViewPlayerPortfolios.Where(c => c.PlayerId == playerID);
             //map as view obj
             return result;
         }
 
-        //priceOfStocks()
+        public List<Stock> getAllStocks()
+        {
+            try
+            {
+                var allStocks = playerEntities.Stocks.ToList();
+                //var stocksDTO = Mapping.Mapper.Map<List<StockDTO>>(allStocks);
+                return allStocks;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        //priceOfStocks() *****************************************************************
+        public List<decimal> priceOfStocks(List<StockDetail> stocks)
+        {
+            List<decimal> prices = new List<decimal>();
+            foreach(StockDetail item in stocks)
+            {
+                prices.Add(item.CurrentPrice);
+            }
+            return prices;
+        }
 
         //getRecommendationsFromAnalyst()
+
+        public bool priceIsRight(StockDetail stock, decimal currentPrice)
+        {
+            decimal price = stock.CurrentPrice;
+            if (price == currentPrice)
+                return true;
+            else
+                return false;
+        }
 
         public int checkStockQuantity(int playerID, int stockID)
         {
@@ -174,15 +207,40 @@ namespace X_SMS_DAL.Services
             {
                 foreach (var item in playerEntities.PlayerStocks.Where(c => c.PlayerId == playerID && c.StockId == stockID))
                 {
-                    stockQuan += item.Quantity;
+                    if (item != null)
+                    {
+                        stockQuan += item.Quantity; 
+                    }
                 }
             }
             catch (Exception e)
             {
-                return 0;
+                return -1;
             }
 
             return stockQuan;
+        }
+
+        public decimal amountSpentForStocks(int playerID, int stockID)
+        {
+            decimal amount = 0;
+
+            try
+            {
+                foreach (var item in playerEntities.PlayerStocks.Where(c => c.PlayerId == playerID && c.StockId == stockID && c.Quantity>0))
+                {
+                    if (item == null)
+                        break;
+                    else
+                        amount += item.Quantity * item.UnitPrice;
+                }
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+
+            return amount;
         }
 
         public decimal checkBankBalance(int playerID)
@@ -195,7 +253,7 @@ namespace X_SMS_DAL.Services
             }
             catch (Exception e)
             {
-                return 0;
+                return -1;
             }
 
             return accBalance;
@@ -212,7 +270,7 @@ namespace X_SMS_DAL.Services
             }
             catch (Exception e)
             {
-                return 0;
+                return -1;
             }
 
             return accID;

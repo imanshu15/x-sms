@@ -131,6 +131,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AIHelper\PlayerAI.cs" />
+    <Compile Include="AIHelper\PlayerAILogics.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

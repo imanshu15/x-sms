@@ -24,6 +24,7 @@
           <Property Name="TransactionId" Type="int" Nullable="false" />
           <Property Name="PlayerId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Transcation">
           <Key>
@@ -33,8 +34,6 @@
           <Property Name="AccountId" Type="int" Nullable="false" />
           <Property Name="IsWithdraw" Type="bit" Nullable="false" />
           <Property Name="IsDeposit" Type="bit" Nullable="false" />
-          <Property Name="Sender" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="Receiver" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Game">
@@ -102,6 +101,27 @@
           <Property Name="TrendName" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="MaxEffect" Type="int" Nullable="false" />
           <Property Name="MinEffect" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewPlayerPortfolio">
+          <Key>
+            <PropertyRef Name="IsWithdraw" />
+            <PropertyRef Name="IsDeposit" />
+            <PropertyRef Name="Amount" />
+          </Key>
+          <Property Name="StockName" Type="nvarchar" MaxLength="100" />
+          <Property Name="StartingPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="PlayerId" Type="int" />
+          <Property Name="PlayerName" Type="nvarchar" MaxLength="100" />
+          <Property Name="StockId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="GameId" Type="int" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="IsWithdraw" Type="bit" Nullable="false" />
+          <Property Name="IsDeposit" Type="bit" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <Association Name="FK_Account">
           <End Role="BankAccount" Type="Self.BankAccount" Multiplicity="1" />
@@ -175,9 +195,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Receiver' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Receiver" />-->
         <Association Name="FK_Sector">
           <End Role="Sector" Type="Self.Sector" Multiplicity="1" />
           <End Role="Stock" Type="Self.Stock" Multiplicity="*" />
@@ -190,9 +207,6 @@ warning 6035: The relationship 'FK_Receiver' has columns that are not part of th
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_Sender' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_Sender" />-->
         <Function Name="BuyStocks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="playerID" Type="int" Mode="In" />
           <Parameter Name="playerAccID" Type="int" Mode="In" />
@@ -217,6 +231,22 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
           <EntitySet Name="Sector" EntityType="Self.Sector" Schema="Master" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="Master" store:Type="Tables" />
           <EntitySet Name="Trend" EntityType="Self.Trend" Schema="Master" store:Type="Tables" />
+          <EntitySet Name="ViewPlayerPortfolio" EntityType="Self.ViewPlayerPortfolio" store:Type="Views" store:Schema="Detail">
+            <DefiningQuery>SELECT 
+    [ViewPlayerPortfolio].[StockName] AS [StockName], 
+    [ViewPlayerPortfolio].[StartingPrice] AS [StartingPrice], 
+    [ViewPlayerPortfolio].[Quantity] AS [Quantity], 
+    [ViewPlayerPortfolio].[PlayerId] AS [PlayerId], 
+    [ViewPlayerPortfolio].[PlayerName] AS [PlayerName], 
+    [ViewPlayerPortfolio].[StockId] AS [StockId], 
+    [ViewPlayerPortfolio].[IsActive] AS [IsActive], 
+    [ViewPlayerPortfolio].[GameId] AS [GameId], 
+    [ViewPlayerPortfolio].[UnitPrice] AS [UnitPrice], 
+    [ViewPlayerPortfolio].[IsWithdraw] AS [IsWithdraw], 
+    [ViewPlayerPortfolio].[IsDeposit] AS [IsDeposit], 
+    [ViewPlayerPortfolio].[Amount] AS [Amount]
+    FROM [Detail].[ViewPlayerPortfolio] AS [ViewPlayerPortfolio]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Account" Association="Self.FK_Account">
             <End Role="BankAccount" EntitySet="BankAccount" />
             <End Role="Transcation" EntitySet="Transcation" />
@@ -288,6 +318,7 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
             <End Role="Transcation" EntitySet="Transcations" />
             <End Role="PlayerStock" EntitySet="PlayerStocks" />
           </AssociationSet>
+          <EntitySet Name="ViewPlayerPortfolios" EntityType="XSmsModel.ViewPlayerPortfolio" />
           <FunctionImport Name="BuyStocks">
             <Parameter Name="playerID" Mode="In" Type="Int32" />
             <Parameter Name="playerAccID" Mode="In" Type="Int32" />
@@ -450,6 +481,7 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
           <NavigationProperty Name="Player" Relationship="XSmsModel.FK_Detail_PlayerStock_Player" FromRole="PlayerStock" ToRole="Player" />
           <NavigationProperty Name="Stock" Relationship="XSmsModel.FK_Detail_PlayerStock_Stock" FromRole="PlayerStock" ToRole="Stock" />
           <NavigationProperty Name="Transcation" Relationship="XSmsModel.FK_Detail_PlayerStock_Transcation" FromRole="PlayerStock" ToRole="Transcation" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_BankAccount_Player">
           <End Type="XSmsModel.Player" Role="Player" Multiplicity="1" />
@@ -499,6 +531,25 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ViewPlayerPortfolio">
+          <Key>
+            <PropertyRef Name="IsWithdraw" />
+            <PropertyRef Name="IsDeposit" />
+            <PropertyRef Name="Amount" />
+          </Key>
+          <Property Name="StockName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StartingPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="PlayerId" Type="Int32" />
+          <Property Name="PlayerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StockId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="GameId" Type="Int32" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsWithdraw" Type="Boolean" Nullable="false" />
+          <Property Name="IsDeposit" Type="Boolean" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -520,8 +571,6 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
             <EntityTypeMapping TypeName="XSmsModel.Transcation">
               <MappingFragment StoreEntitySet="Transcation">
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-                <ScalarProperty Name="Sender" ColumnName="Sender" />
                 <ScalarProperty Name="IsDeposit" ColumnName="IsDeposit" />
                 <ScalarProperty Name="IsWithdraw" ColumnName="IsWithdraw" />
                 <ScalarProperty Name="AccountId" ColumnName="AccountId" />
@@ -604,11 +653,30 @@ warning 6035: The relationship 'FK_Sender' has columns that are not part of the 
           <EntitySetMapping Name="PlayerStocks">
             <EntityTypeMapping TypeName="XSmsModel.PlayerStock">
               <MappingFragment StoreEntitySet="PlayerStock">
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
                 <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
                 <ScalarProperty Name="StockId" ColumnName="StockId" />
                 <ScalarProperty Name="PlayerStockId" ColumnName="PlayerStockId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ViewPlayerPortfolios">
+            <EntityTypeMapping TypeName="XSmsModel.ViewPlayerPortfolio">
+              <MappingFragment StoreEntitySet="ViewPlayerPortfolio">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="IsDeposit" ColumnName="IsDeposit" />
+                <ScalarProperty Name="IsWithdraw" ColumnName="IsWithdraw" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="GameId" ColumnName="GameId" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="StockId" ColumnName="StockId" />
+                <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+                <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="StartingPrice" ColumnName="StartingPrice" />
+                <ScalarProperty Name="StockName" ColumnName="StockName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

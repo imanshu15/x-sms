@@ -36,6 +36,7 @@ namespace X_SMS_DAL.Database
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Trend> Trends { get; set; }
         public virtual DbSet<PlayerStock> PlayerStocks { get; set; }
+        public virtual DbSet<ViewPlayerPortfolio> ViewPlayerPortfolios { get; set; }
     
         public virtual int BuyStocks(Nullable<int> playerID, Nullable<int> playerAccID, Nullable<int> quantity, Nullable<int> stockID, Nullable<decimal> price)
         {

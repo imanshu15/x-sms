@@ -16,8 +16,6 @@
       <EntityTypeMapping TypeName="XSmsModel.Transcation">
         <MappingFragment StoreEntitySet="Transcation">
           <ScalarProperty Name="Amount" ColumnName="Amount" />
-          <ScalarProperty Name="Receiver" ColumnName="Receiver" />
-          <ScalarProperty Name="Sender" ColumnName="Sender" />
           <ScalarProperty Name="IsDeposit" ColumnName="IsDeposit" />
           <ScalarProperty Name="IsWithdraw" ColumnName="IsWithdraw" />
           <ScalarProperty Name="AccountId" ColumnName="AccountId" />
@@ -100,11 +98,30 @@
     <EntitySetMapping Name="PlayerStocks">
       <EntityTypeMapping TypeName="XSmsModel.PlayerStock">
         <MappingFragment StoreEntitySet="PlayerStock">
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
           <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
           <ScalarProperty Name="StockId" ColumnName="StockId" />
           <ScalarProperty Name="PlayerStockId" ColumnName="PlayerStockId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ViewPlayerPortfolios">
+      <EntityTypeMapping TypeName="XSmsModel.ViewPlayerPortfolio">
+        <MappingFragment StoreEntitySet="ViewPlayerPortfolio">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="IsDeposit" ColumnName="IsDeposit" />
+          <ScalarProperty Name="IsWithdraw" ColumnName="IsWithdraw" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="StockId" ColumnName="StockId" />
+          <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+          <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="StartingPrice" ColumnName="StartingPrice" />
+          <ScalarProperty Name="StockName" ColumnName="StockName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

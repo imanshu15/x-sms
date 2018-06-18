@@ -25,7 +25,7 @@ namespace X_SMS_API.Controllers
         {
             using (PlayerService playerService = new PlayerService())
             {
-                var result = playerService.buyStocks(playerTrans.PlayerId, playerTrans.Quantity, playerTrans.StockId, playerTrans.Price);
+                var result = playerService.buyStocks(playerTrans.PlayerId, playerTrans.Quantity, playerTrans.Stock, playerTrans.Price);
                 return result;
             }
         }
@@ -34,7 +34,7 @@ namespace X_SMS_API.Controllers
         {
             using (PlayerService playerService = new PlayerService())
             {
-                var result = playerService.sellStocks(playerTrans.PlayerId, playerTrans.Quantity, playerTrans.StockId, playerTrans.Price);
+                var result = playerService.sellStocks(playerTrans.PlayerId, playerTrans.Quantity, playerTrans.Stock, playerTrans.Price);
                 return result;
             }
         }
