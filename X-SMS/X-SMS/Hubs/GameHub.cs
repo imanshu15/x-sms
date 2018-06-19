@@ -236,7 +236,7 @@ namespace X_SMS.Hubs
             return isFinished;
         }
 
-        public void BuyStocks(int gameId,int playerId,int sectorId,int stockId,int quantity)
+        public void BuyStocks(int gameId,int playerId,int sectorId,StockDetail stockTo,int quantity)
         {
             GameLogicManager gameLogic = new GameLogicManager();
             lock (_syncRoot)
@@ -248,9 +248,9 @@ namespace X_SMS.Hubs
                     if (turn != null) {
                         var sector = turn.Sectors.FirstOrDefault(y => y.Sector.SectorId == sectorId);
                         if (sector != null) {
-                            var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockId);
+                            var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockTo.StockId);
 
-                            var token = gameLogic.BuyStocks(playerId,stockId,quantity,stock.CurrentPrice);
+                            var token = gameLogic.BuyStocks(playerId, stockTo, quantity,stock.CurrentPrice);
 
                             if (token.Success)
                             {
@@ -264,7 +264,7 @@ namespace X_SMS.Hubs
                                     PlayerStock pStock = new PlayerStock();
                                     pStock.Quantity = quantity;
                                     pStock.SectorId = sectorId;
-                                    pStock.StockId = stockId;
+                                    pStock.StockId = stockTo.StockId;
                                     pStock.StockName = stock.StockName;
                                     pStock.SectorName = sector.Sector.SectorName;
                                     pStock.BoughtPrice = stock.CurrentPrice;
@@ -306,7 +306,7 @@ namespace X_SMS.Hubs
             }
         }
 
-        public void SellStocks(int gameId, int playerId, int sectorId, int stockId, int quantity)
+        public void SellStocks(int gameId, int playerId, int sectorId, StockDetail stockTo, int quantity)
         {
             GameLogicManager gameLogic = new GameLogicManager();
             lock (_syncRoot)
@@ -320,9 +320,9 @@ namespace X_SMS.Hubs
                         var sector = turn.Sectors.FirstOrDefault(y => y.Sector.SectorId == sectorId);
                         if (sector != null)
                         {
-                            var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockId);
+                            var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockTo.StockId);
 
-                            var token = gameLogic.SellStocks(playerId, stockId, quantity, stock.CurrentPrice);
+                            var token = gameLogic.SellStocks(playerId, stockTo, quantity, stock.CurrentPrice);
 
                             if (token.Success)
                             {
@@ -333,7 +333,7 @@ namespace X_SMS.Hubs
                                     temp.PlayerName = player.PlayerName;
                                     temp.StockName = stock.StockName;
 
-                                    var tempStocks = player.PlayerStocks.Where(b => b.StockId == stockId).ToList();
+                                    var tempStocks = player.PlayerStocks.Where(b => b.StockId == stockTo.StockId).ToList();
 
                                     foreach (var tempStock in tempStocks) {
                                         tempStock.Quantity -= quantity;
