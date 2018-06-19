@@ -55,8 +55,8 @@ namespace X_SMS_API.Controllers
         //    }
         //}
 
-        //[Route("api/")]
-        //[HttpPost]
+        [Route("api/PlayerHistory/GetPurchaseHistory")]
+        [HttpGet]
         public ResultToken GetPurchaseHistory([FromBody] int palyerID)
         {
             using (PlayerService playerService = new PlayerService())
@@ -66,8 +66,8 @@ namespace X_SMS_API.Controllers
             }
         }
 
-        //[Route("api/")]
-        //[HttpPost]
+        [Route("api/PlayerHistory/GetSalesHistory")]
+        [HttpGet]
         public ResultToken GetSalesHistory([FromBody] int palyerID)
         {
             using (PlayerService playerService = new PlayerService())
