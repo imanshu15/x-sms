@@ -23,6 +23,16 @@ namespace X_SMS_API.Controllers
             }
         }
 
+        [Route("api/Game/PlayerExist")]
+        public IHttpActionResult PlayerExist(string playerName)
+        {
+            using (GameService gameService = new GameService())
+            {
+                var result = gameService.DoesPlayerExist(playerName);
+                return Json(result);
+            }
+        }
+
         [Route("api/Game/CreateGame")]
         [HttpPost]
         public ResultToken CreateGame([FromBody] GameDTO game)

@@ -10,18 +10,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- style CSS -->
-    <link href="~/Content/GameBoardCSS/vendor/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/GameBoardCSS/resources/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/dataTables/bootstrap4/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/dataTables/bootstrap4/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <script src="~/Content/dataTables/bootstrap4/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/dataTables/bootstrap4/jquery-3.3.1.js"></script>
+    <script src="~/Content/dataTables/bootstrap4/dataTables.bootstrap4.min.js"></script>
 </head>
 <body>
     <div class="row-history"><h1>PLAYER'S HISTORY</h1></div>
     <div class="table-history">
         @RenderBody()
     </div>
-
-    <!-- JavaScript JS -->
-    <script src="~/Scripts/GameBoardJS/resource/jquery-3.3.1.slim.min.js"></script>
-    <script src="~/Scripts/GameBoardJS/resource/popper.min.js"></script>
-    <script src="~/Scripts/GameBoardJS/resource/bootstrap.min.js"></script>
 </body>
 </html>

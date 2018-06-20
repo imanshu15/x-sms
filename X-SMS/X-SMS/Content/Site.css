@@ -197,3 +197,7 @@ color: green;
 .sell-stock {
 color: red;
 }
+
+.pagination li:hover {
+    cursor: pointer;
+}

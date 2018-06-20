@@ -217,6 +217,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\App\GameBoard.js" />
     <Content Include="Scripts\App\GameLoad.js" />
+    <Content Include="Scripts\App\History.js" />
     <Content Include="Scripts\App\Join.js" />
     <Content Include="Scripts\App\Main.js" />
     <Content Include="Scripts\App\Wait.js" />
@@ -266,6 +267,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\NewsBox\jquery.bootstrap.newsbox.js" />
     <Content Include="Scripts\NewsBox\jquery.bootstrap.newsbox.min.js" />
+    <Content Include="Scripts\pagination.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

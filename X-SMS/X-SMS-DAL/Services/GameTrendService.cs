@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using X_SMS_DAL.Database;
+using X_SMS_DAL.Global;
 using X_SMS_DAL.Mapper;
 using X_SMS_REP;
 
@@ -12,8 +13,8 @@ namespace X_SMS_DAL.Services
 {
     public class GameTrendService:IDisposable
     {
-        private static readonly int noOfTurns = 10;
-        private static Dictionary<int, GameDetail> gameDetails = new Dictionary<int, GameDetail>();
+       
+        
         private XSmsEntities eventEntities = null;
 
         public GameTrendService()
@@ -27,7 +28,7 @@ namespace X_SMS_DAL.Services
             result.Success = true;
             try
             {
-                if (!gameDetails.ContainsKey(gameId))
+                if (!GameDataManager.gameDetails.ContainsKey(gameId))
                 {
                     GameDetail gameDetail = new GameDetail();
                     using (TrendService trendService = new TrendService())
@@ -42,10 +43,10 @@ namespace X_SMS_DAL.Services
                     }
                     gameDetail.TurnDetail = calculateTurnScore(gameDetail);
 
-                    gameDetails.Add(gameId, gameDetail);
+                    GameDataManager.gameDetails.Add(gameId, gameDetail);
                 }
                 result.Message = "Success! Game Turn Details Generated Successfully.";
-                result.Data = (GameDetail)gameDetails[gameId];
+                result.Data = (GameDetail)GameDataManager.gameDetails[gameId];
             }
             catch (Exception ex)
             {
@@ -66,7 +67,7 @@ namespace X_SMS_DAL.Services
 
             var sectors = eventEntities.Sectors.ToList();
 
-            for (int i = 0; i < noOfTurns; i++)
+            for (int i = 0; i < GameDataManager.noOfTurns; i++)
             {
                 TurnDetail tempTurn = new TurnDetail();
                 tempTurn.Turn = i + 1;
