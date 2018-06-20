@@ -51,8 +51,7 @@ namespace X_SMS.Hubs
                 }
                 else
                 {
-                    // Needs to be implemented
-
+                    Clients.Client(Context.ConnectionId).gameCreationFailed();
                 }
             }
         }
@@ -100,7 +99,7 @@ namespace X_SMS.Hubs
                     }
                     else
                     {
-                        //Need to be implemented
+                        Clients.Client(Context.ConnectionId).gameJoinFailed();
                     }
                 }
                 else {

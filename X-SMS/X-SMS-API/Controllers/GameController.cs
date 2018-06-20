@@ -24,6 +24,7 @@ namespace X_SMS_API.Controllers
         }
 
         [Route("api/Game/PlayerExist")]
+        [HttpGet]
         public IHttpActionResult PlayerExist(string playerName)
         {
             using (GameService gameService = new GameService())

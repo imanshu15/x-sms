@@ -14,6 +14,12 @@ function getAPIUrl() {
     return "http://localhost:1597/api/";
 }
 
+function showErrorMsg(title,msg) {
+    $('#msgTitle').text(title);
+    $('#msgBody').text(msg);
+    $('#mdlMessage').modal('show');
+}
+
 $(window).on('beforeunload', function () {
     var gameId = $("#hdnSelectedGameId").val();
     game.server.disconnectPlayer(gameId);
@@ -31,11 +37,13 @@ var clPreloader = function () {
 
 };
 
-function showPreloader(miliSeconds) {
+function showPreloader() {
     $("html").addClass('cl-preload');
+}
 
+function hidePreloader() {
     $("#loader").fadeOut("slow", function () {
-        $("#preloader").delay(miliSeconds).fadeOut("slow");
+        $("#preloader").delay(500).fadeOut("slow");
     });
     $("html").removeClass('cl-preload');
     $("html").addClass('cl-loaded');
@@ -92,6 +100,23 @@ function setupJoinClientMethods() {
         }
     };
 
+    game.client.gameCreationFailed = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "JOIN") {
+            showErrorMsg('Error', 'An error occurred while creating a game');
+        }
+    };
+
+    game.client.invalidGameCode = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "JOIN") {
+            showErrorMsg('Error', 'Invalid game code');
+        }
+    };
+
+    game.client.gameJoinFailed = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "JOIN") {
+            showErrorMsg('Error', 'An error occurred while joining a game');
+        }
+    };
 
 }
 
@@ -115,11 +140,12 @@ function setUpWaitClientMethods() {
             $("#msgBody").text("All players connected. Please wait till we get everything ready");
             $("#mdlMessage").modal("show");
             setTimeout(function () {
-                showPreloader(400);
+                showPreloader();
                 setTimeout(function () {
                     $("#mdlMessage").modal("hide");
                     $("#hdnScreen").val("GAME");
                     loadMainScreen("Game/GameBoard");
+                    hidePreloader();
                 }, 400);
             }, 800);
         }
@@ -139,8 +165,9 @@ function setUpWaitClientMethods() {
         $("#msgBody").text("Sorry, A Player disconnected from the game.");
         $("#mdlMessage").modal("show");
         setTimeout(function () {
-            showPreloader(400);
+            showPreloader();
             setTimeout(function () {
+                hidePreloader();
                 window.location.href = "/Game";
             }, 400);
         }, 1000);
