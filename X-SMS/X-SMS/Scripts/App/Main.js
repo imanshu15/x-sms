@@ -10,6 +10,9 @@ $(document).ready(function () {
     clPreloader();
 });
 
+function getAPIUrl() {
+    return "http://localhost:1597/api/";
+}
 
 $(window).on('beforeunload', function () {
     var gameId = $("#hdnSelectedGameId").val();
@@ -36,10 +39,6 @@ function showPreloader(miliSeconds) {
     });
     $("html").removeClass('cl-preload');
     $("html").addClass('cl-loaded');
-}
-
-function getAPIUrl() {
-    return "http://localhost:1597/api/";
 }
 
 function setUpClientMethods() {

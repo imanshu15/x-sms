@@ -8,23 +8,36 @@
 
 }
 <nav class=" navbar-light bg-light inner-header">
-    <a href="#" class="button title">MARKETS</a>
-    <a href="#" class="button title">ORDERS</a>
+   <a href="#" class="button title">MARKETS</a>
+    <a href="#" class="button title">CURRENT TRANSACTIONS</a>
     <a href="#" class="button title">GRAPHS</a>
 </nav>
 <!-- Left-Side Bar!-->
 
 <div class="a-menu closed ">
     <div class="w-head-clone ">
+        <div class="user-info ">
+            <div class="user-image">
+                <img class="avatar" alt="Alphabet" src="~/Content/images/user.png">
+            </div>
+            <div class="stock-info ">
+                <span class="user-name d-inline">Shey De Woony</span>
+                <button class="btn blue-button" style="margin-left:40px;"><span class="fa fa-user-circle"></span>  Profilo</button>
+
+            </div>
+        </div>
+
         <a class="i-menu-link">
-            <span class="fa fa-user-circle"></span>&nbsp; Profilo
+            <span class="	fa fa-calendar"></span>&nbsp; Bank
         </a>
         <a class="i-menu-link">
             <span class="	fa fa-calendar"></span>&nbsp; Markets
         </a>
         <a class="i-menu-link">
-            <span class=" fa fa-history"></span>&nbsp; History
-
+            <span class=" fa fa-history"></span>&nbsp;History
+        </a>
+        <a class="i-menu-link">
+            <span class=" fa fa-history"></span>&nbsp;Leader Board
         </a>
 
     </div>
@@ -33,10 +46,12 @@
 <div class="table-custom">
     <div class="table-responsive">
         @{
-           // Html.RenderPartial("_MarketWindow");
-           // Html.RenderPartial("_LeaderBoard");
-          //  Html.RenderPartial("_Orders");
+          //  Html.RenderPartial("_MarketWindow");
+          //  Html.RenderPartial("_LeaderBoard");
+            // Html.RenderPartial("_Orders");
            Html.RenderPartial("_StockInfo");
+         // Html.RenderPartial("_Transactions");
+        // Html.RenderPartial("_Bank");
         }
     </div>
 </div>
@@ -55,12 +70,17 @@
 <footer>
     <nav class=" navbar-light bg-light footer1">
         <div class="footer-unit balance">
+            <span class="footer-bank-label d-inline">Bank</span>
+            <i class="fas fa-angle-double-right d-inline" style="font-size: 45px;color:#3dbdec;padding-left:10px;"></i>
+        </div>
+
+        <div class="footer-unit balance">
             <span class="footer-unit-value ng-binding">$0.00</span>
             <span class="footer-unit-label">Available</span>
         </div>
 
         <div class="footer-unit balance">
-            <i class="fa fa-plus-circle" style="font-size:40px;color:#91ba4d; padding-top:5px;"></i>
+            <i class="fa fa-plus-circle" style="font-size:40px;color:#3dbdec; padding-top:5px;"></i>
         </div>
 
         <div class="footer-unit balance">
@@ -69,7 +89,7 @@
         </div>
 
         <div class="footer-unit balance">
-            <i class="fa fa-plus-circle" style="font-size:40px;color:#91ba4d; padding-top:5px;"></i>
+            <i class="fa fa-plus-circle" style="font-size:40px;color:#3dbdec; padding-top:5px;"></i>
         </div>
 
         <div class="footer-unit balance">
@@ -78,7 +98,7 @@
         </div>
 
         <div class="footer-unit balance">
-            <i class="fa fa-angle-double-right" style="font-size:40px;color:#91ba4d; padding-top:5px;"></i>
+            <i class="fa fa-angle-double-right" style="font-size:40px;color:#3dbdec; padding-top:5px;"></i>
         </div>
 
         <div class="footer-unit balance">

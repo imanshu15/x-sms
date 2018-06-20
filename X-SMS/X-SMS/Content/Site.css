@@ -154,9 +154,7 @@ body {
     
 }
 
-#content {
-    padding-bottom: 150px;
-}
+ 
 
 #footer {
     width: 100%;
@@ -196,4 +194,8 @@ color: green;
 
 .sell-stock {
 color: red;
+}
+
+.pagination li:hover {
+    cursor: pointer;
 }

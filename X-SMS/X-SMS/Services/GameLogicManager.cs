@@ -34,13 +34,13 @@ namespace X_SMS.Services
             return returnObj;
         }
 
-        public ResultToken BuyStocks(int playerId,int stockId,int quantity,decimal price)
+        public ResultToken BuyStocks(int playerId,StockDetail stock,int quantity,decimal price)
         {
             ResultToken result = null;
 
             PlayerTransactionsDTO obj = new PlayerTransactionsDTO();
             obj.PlayerId = playerId;
-            obj.Stock.StockId = stockId;
+            obj.Stock.StockId = stock.StockId;
             obj.Quantity = quantity;
             obj.Price = price;
 
@@ -63,13 +63,13 @@ namespace X_SMS.Services
             return result;
         }
 
-        public ResultToken SellStocks(int playerId, int stockId, int quantity, decimal price)
+        public ResultToken SellStocks(int playerId, StockDetail stock, int quantity, decimal price)
         {
             ResultToken result = null;
 
             PlayerTransactionsDTO obj = new PlayerTransactionsDTO();
             obj.PlayerId = playerId;
-            obj.Stock.StockId = stockId;
+            obj.Stock.StockId = stock.StockId;
             obj.Quantity = quantity;
             obj.Price = price;
 

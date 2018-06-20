@@ -1,79 +1,105 @@
-﻿<div class="col-md-6">
-    <div class="row">
-        <h3> Create a game </h3>
-        <form>
-            <div class="form-group">
-                <label for="txtPlayerName"> Player Name </label>
-                <input type="text" class="form-control" id="txtPlayerName" placeholder="Enter your name">
+﻿<div class=" login"  >
+    <ul class="nav nav-tabs login-title">
+        <li class="active"  ><a data-toggle="tab" href="#home" style="padding:10px 65px 10px 65px; background-color: transparent;color: #fff;">Create</a></li>
+        <li  ><a data-toggle="tab" href="#menu1" style="padding:10px 82px 10px 82px;background-color: transparent;color: #fff;">Join</a></li>
+    </ul>
+
+    <div class="tab-content" style="border-top: 1px solid #e4e4e4;">
+        <div id="home" class="tab-pane fade in active players-table-info">
+            <div class="row">
+                <span class="login-head"> Create a game </span>
+                <form>
+                    <div class="form-group">
+                        <label for="txtPlayerName"> Player Name </label>
+                        <input type="text" class="form-control" id="txtPlayerName" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPlayerCount">Player Count</label>
+                        <input type="number" class="form-control" id="txtPlayerCount" placeholder="Max number of players">
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="chkIsPrivateGame">
+                        <label class="form-check-label" for="chkIsPrivateGame">Create as a private game? </label>
+                    </div>
+                    <button class="btn btn-primary" id="btnCreateGame">Create</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="txtPlayerCount">Player Count</label>
-                <input type="number" class="form-control" id="txtPlayerCount" placeholder="Max number of players">
+        </div>
+        <div id="menu1" class="tab-pane fade players-table-info">
+            <div class="row ">
+                <span class="login-head">Join a private game</span>
+                    <form>
+                        <div class="form-group">
+                            <label for="txtJoinPrivatePlayer"> Player Name </label>
+                            <input type="text" class="form-control" id="txtJoinPrivatePlayer" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="txtJoinGameCode"> Game Code </label>
+                            <input type="number" class="form-control" id="txtJoinGameCode" placeholder="Enter the game code">
+                        </div>
+                        <button class="btn btn-primary" id="btnJoinPrivateGame">Join</button>
+                    </form>
             </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="chkIsPrivateGame">
-                <label class="form-check-label" for="chkIsPrivateGame">Create as a private game? </label>
-            </div>
-            <button class="btn btn-primary" id="btnCreateGame">Create</button>
-        </form>
+        </div>
+
     </div>
-    <div class="row padding-top-20">
-        <h3> Join a private game </h3>
-        <form>
-            <div class="form-group">
-                <label for="txtJoinPrivatePlayer"> Player Name </label>
-                <input type="text" class="form-control" id="txtJoinPrivatePlayer" placeholder="Enter your name">
+
+</div>
+
+
+<div class="players-table">
+    <table id="tblGameList" class="table table-hover table-responsive  " style="width:100%;height: 198px;" data-page-length='5'>
+        <thead>
+            <tr>
+                <th>Game Id</th>
+                <th>Game Code</th>
+                <th>Created Player</th>
+                <th>Maximum Players</th>
+                <th>Joined Players</th>
+                <th>Started Time</th>
+            </tr>
+        </thead>
+        <tbody style="height:250px"></tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+<div id="mdlJoinConfirmation" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Join Confirmation</h4>
             </div>
-            <div class="form-group">
-                <label for="txtJoinGameCode"> Game Code </label>
-                <input type="number" class="form-control" id="txtJoinGameCode" placeholder="Enter the game code">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="lblJoinPlayerName"> Player Name </label>
+                    <input type="hidden" id="hdnSelectedGameId">
+                    <input type="text" class="form-control" id="txtJoinPlayerName" placeholder="Enter your name">
+                </div>
+                <p>Are you sure that you want to join this game created by <b><span id="lblCreatedPlayer"></span></b> ?</p>
             </div>
-            <button class="btn btn-primary" id="btnJoinPrivateGame">Join</button>
-        </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnJoinGame">Join</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+
     </div>
 </div>
-    <div class="col-md-6">
-        <table id="tblGameList" class="table table-hover" style="width:100%" data-page-length='5'>
-            <thead>
-                <tr>
-                    <th>Game Id</th>
-                    <th>Game Code</th>
-                    <th>Created Player</th>
-                    <th>Maximum Players</th>
-                    <th>Joined Players</th>
-                    <th>Started Time</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
 
-    <div id="mdlJoinConfirmation" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Join Confirmation</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="lblJoinPlayerName"> Player Name </label>
-                        <input type="hidden" id="hdnSelectedGameId">
-                        <input type="text" class="form-control" id="txtJoinPlayerName" placeholder="Enter your name">
-                    </div>
-                    <p>Are you sure that you want to join this game created by <b><span id="lblCreatedPlayer"></span></b> ?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="btnJoinGame">Join</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
 
-        </div>
-    </div>
 
-    <link href="~/Content/dataTables/dataTables.bootstrap.min.css" rel="stylesheet" />
-    <script src="~/Content/dataTables/jquery.dataTables.min.js"></script>
-    <script src="~/Content/dataTables/dataTables.bootstrap.min.js"></script>
 
-    <script src="~/Scripts/App/Join.js"></script>
+
+
+<link href="~/Content/dataTables/dataTables.bootstrap.min.css" rel="stylesheet" />
+<script src="~/Content/dataTables/jquery.dataTables.min.js"></script>
+<script src="~/Content/dataTables/dataTables.bootstrap.min.js"></script>
+<link href="~/Content/GameBoardCSS/resources/css/styles.css" rel="stylesheet" type="text/css" />
+<script src="~/Scripts/App/Join.js"></script>
