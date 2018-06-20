@@ -411,15 +411,15 @@
     transform: translate3d(0, 0, 0);
 }
 .a-menu-right {
-    color: #D1D3E0;
+    
     background-color: #fff;
     border-right: 1px solid #626877;
     box-sizing: border-box;
     box-shadow: 0 0 3px 2px rgba(0,0,0,0.2);
-    height: 100%;
+    height: 68%;
     position: fixed;
     bottom: 0;
-    top: 102px;
+    top: 130px;
     width: 270px;
     right: 0;
     z-index: 0;
@@ -786,4 +786,57 @@ display: block;
 }
 .table-hover > tbody > tr:hover {
     background-color: rgba(0, 0, 0, 0.4);
+}
+.chat {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+    .chat li {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px Solid #B3A9A9;
+    }
+
+        .chat li.left .chat-body {
+            margin-left: 60px;
+        }
+
+        .chat li.right .chat-body {
+            margin-right: 60px;
+        }
+
+
+        .chat li .chat-body p {
+            margin: 0;
+            color: #777777;
+        }
+
+    .panel .slidedown .glyphicon, .chat .glyphicon {
+        margin-right: 5px;
+    }
+
+.panel-body {
+    overflow-y: scroll;
+    height: 250px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+.news-feed {
+    top: 180px;
+    position: absolute;
 }
