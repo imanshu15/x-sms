@@ -140,7 +140,7 @@ html.no-csstransitions .home-content__main {
 }
 
 .selected {
-    background-color: #acbad4 !important;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 body {

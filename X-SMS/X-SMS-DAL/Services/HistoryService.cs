@@ -34,7 +34,7 @@ namespace X_SMS_DAL.Services
             return gameList;
         }
 
-        public object GetGameSummary(int gameId) {
+        public void GetGameSummary(int gameId) {
 
             var game = gameEntities.Games.FirstOrDefault(a => a.GameId == gameId);
             var players = gameEntities.Players.Where(a => a.GameId == gameId).ToList();

@@ -745,3 +745,45 @@ display: block;
 .blue {
     color: #3dbdec;
 }
+.wait-info {
+    display: block;
+    margin-top:10px; 
+    text-align:center;
+}
+.game-code-bar {
+    background-color: #fafafa;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.15);
+    height: 63px;
+    padding: 12px;
+    position: absolute;
+    font-size: 26px;
+    width: 45%;
+    top: 116px;
+    left: 27%;
+    border-top: 1px solid #d7d7d7;
+}
+.player-conecting-table {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 45%;
+    position: absolute;
+    left: 27%;
+    top: 180px;
+    box-shadow: 9px 9px 15px 0 rgba(0,0,0,0.4);
+    overflow-x: hidden;
+    margin-bottom: 66px;
+    padding: 24px;
+    height: 335px;
+    color: #fff;
+}
+.preloader-player-connecting {
+    top: 25px;
+    position: relative;
+     
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: scroll;
+}
+.table-hover > tbody > tr:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
