@@ -27,6 +27,10 @@
     <script src="~/Scripts/NewsBox/jquery.bootstrap.newsbox.js"></script>
     <script src="~/Scripts/App/GameBoard.js"></script>
     <script src="~/Scripts/App/Main.js"></script>
+
+    <link href="~/Content/GameBoardCSS/resources/css/styles.css" rel="stylesheet" type="text/css" />
+    <link href="/Content/GameBoardCSS/Fontawesome/css/fontawesome-all.css" rel="stylesheet">
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <div id="wrapper">
@@ -51,16 +55,11 @@
         </div>
     </nav>
 
-    <div class="container padding-top-50" id="content">
+    <div class="container " id="content">
         @RenderBody()
     </div>
 
-    <footer class="footer" id="footer">
-        <div class="container">
-            <span>© Copyright X-SMS 2018</span>
-        </div>
-    </footer> <!-- end footer -->
-
+    
     </div>
     <div id="mdlMessage" class="modal fade" role="dialog">
         <div class="modal-dialog">

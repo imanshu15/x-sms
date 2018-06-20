@@ -86,6 +86,9 @@
     <Compile Include="Database\Trend.cs">
       <DependentUpon>XSmsContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\ViewPlayerPortfolio.cs">
+      <DependentUpon>XSmsContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\XSmsContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

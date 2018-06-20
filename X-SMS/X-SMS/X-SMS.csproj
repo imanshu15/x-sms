@@ -201,7 +201,21 @@
     <Content Include="Content\dataTables\dataTables.bootstrap.min.css" />
     <Content Include="Content\dataTables\dataTables.bootstrap.min.js" />
     <Content Include="Content\dataTables\jquery.dataTables.min.js" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\css\fa-brands.css" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\css\fa-brands.min.css" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\css\fa-regular.css" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\css\fa-regular.min.css" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\css\fa-solid.css" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\css\fa-solid.min.css" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\css\fontawesome-all.css" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\css\fontawesome-all.min.css" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\css\fontawesome.css" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\css\fontawesome.min.css" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-brands-400.svg" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-regular-400.svg" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-solid-900.svg" />
     <Content Include="Content\GameBoardCSS\resources\css\style.css" />
+    <Content Include="Content\GameBoardCSS\resources\css\styles.css" />
     <Content Include="Content\GameBoardCSS\vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="Content\GameBoardCSS\vendor\bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="Content\GameBoardCSS\vendor\bootstrap\css\bootstrap-reboot.css" />
@@ -235,9 +249,22 @@
     <Content Include="Content\GameBoardCSS\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
     <Content Include="Content\GameBoardCSS\vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="Content\GameBoardCSS\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-brands-400.eot" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-brands-400.woff" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-regular-400.eot" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-regular-400.woff" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-solid-900.eot" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-solid-900.woff" />
+    <Content Include="Content\GameBoardCSS\Fontawesome\webfonts\fa-solid-900.woff2" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Scripts\Clock.js" />
     <Content Include="Scripts\Clock\flipclock.css" />
     <Content Include="Scripts\Clock\flipclock.js" />
     <Content Include="Scripts\Clock\flipclock.min.js" />
@@ -285,11 +312,16 @@
     <Content Include="Views\Join\_Join.cshtml" />
     <Content Include="Views\Join\_Wait.cshtml" />
     <Content Include="Views\Game\Index.cshtml" />
-    <Content Include="Views\Game\_GameBoard.cshtml" />
+    <Content Include="Views\Game\_GameBoardOld.cshtml" />
     <Content Include="Views\Shared\_GameBoardLayout.cshtml" />
     <Content Include="Views\Home\GameBoard.cshtml" />
     <Content Include="Views\History\Index.cshtml" />
     <Content Include="Views\Shared\_HistoryLayout.cshtml" />
+    <Content Include="Views\Game\_LeaderBoard.cshtml" />
+    <Content Include="Views\Game\_MarketWindow.cshtml" />
+    <Content Include="Views\Game\_Orders.cshtml" />
+    <Content Include="Views\Game\_GameBoard.cshtml" />
+    <Content Include="Views\Game\_StockInfo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

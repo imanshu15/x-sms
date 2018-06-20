@@ -1,108 +1,90 @@
-﻿<h1>   Game Board </h1>
+﻿
 
-<div class="clock" style="margin:2em;"></div>
 
-<h3>Game Id - <span id="gameScrnGameId"></span></h3>
-<h4>Current Turn - <span id="gameScrnCurntTurn"> 1 </span></h4>
+@{
+    ViewBag.Title = "Index";
 
-<h5>Player - <span id="gameScrnPlayerName">  </span></h5>
-<h5>Balance - <span id="gameScrnBalance"> 1000 </span></h5>
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
-<table class="table" id="stockList">
-    <thead>
-        <tr>
-            <th>SectorId</th>
-            <th>Sector</th>
-            <th>StockId</th>
-            <th>Stock Name</th>
-            <th>Price</th>
-            <th>Is increased</th>
-            <th>Buy</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
+}
+<nav class=" navbar-light bg-light inner-header">
+    <a href="#" class="button title">MARKETS</a>
+    <a href="#" class="button title">ORDERS</a>
+    <a href="#" class="button title">GRAPHS</a>
+</nav>
+<!-- Left-Side Bar!-->
 
-<div class="col-md-6">
-    <div class="panel panel-default">
-        <div class="panel-heading"> <span class="glyphicon glyphicon-list-alt"></span><b>News</b></div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-xs-12">
-                    <ul class="stocksBuyIfo" style="min-height: 100px">
-                        
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="panel-footer"> </div>
+<div class="a-menu closed ">
+    <div class="w-head-clone ">
+        <a class="i-menu-link">
+            <span class="fa fa-user-circle"></span>&nbsp; Profilo
+        </a>
+        <a class="i-menu-link">
+            <span class="	fa fa-calendar"></span>&nbsp; Markets
+        </a>
+        <a class="i-menu-link">
+            <span class=" fa fa-history"></span>&nbsp; History
+
+        </a>
+
     </div>
 </div>
 
-<table class="table" id="playerStocksList">
-    <thead>
-        <tr>
-            <th>SectorId</th>
-            <th>Sector</th>
-            <th>StockId</th>
-            <th>Stock Name</th>
-            <th>Quantity</th>
-            <th>Bought Price</th>
-            <th>Current Price</th>
-            <th>Is Increased</th>
-            <th>Sell</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-
-
-<div id="mdlBuyStock" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Buy Stock - <span id="lblBuyStockName"> </span></h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="lblJoinPlayerName"> Quantity</label>
-                    <input type="hidden" id="hdnBuyStockId">
-                    <input type="hidden" id="hdnBuySectorId">
-                    <input type="number" class="form-control" id="txtStockQuantity" placeholder="Enter the quantity">
-                </div>
-                <p>Are you sure that you want to buy those stocks ?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="buyStocks()">Buy</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            </div>
-        </div>
+<div class="table-custom">
+    <div class="table-responsive">
+        @{
+           // Html.RenderPartial("_MarketWindow");
+           // Html.RenderPartial("_LeaderBoard");
+          //  Html.RenderPartial("_Orders");
+           Html.RenderPartial("_StockInfo");
+        }
     </div>
 </div>
+<!-- Right-Side Bar!-->
 
-<div id="mdlSellStock" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Sell Stock - <span id="lblSellStockName"> </span></h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label for="lblJoinPlayerName"> Quantity</label>
-                    <input type="hidden" id="hdnSellStockId">
-                    <input type="hidden" id="hdnSellSectorId">
-                    <input type="number" class="form-control" id="txtSellStockQuantity" placeholder="Enter the quantity">
-                </div>
-                <p>Are you sure that you want to sell those stocks ?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" onclick="sellStocks()">Sell</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            </div>
+<div class="a-menu-right closed ">
+    <div class="clock">
+
+        
         </div>
-    </div>
-</div>
 
-<script src="~/Scripts/App/GameBoard.js"></script>
+
+
+    
+</div>
+<footer>
+    <nav class=" navbar-light bg-light footer1">
+        <div class="footer-unit balance">
+            <span class="footer-unit-value ng-binding">$0.00</span>
+            <span class="footer-unit-label">Available</span>
+        </div>
+
+        <div class="footer-unit balance">
+            <i class="fa fa-plus-circle" style="font-size:40px;color:#91ba4d; padding-top:5px;"></i>
+        </div>
+
+        <div class="footer-unit balance">
+            <span class="footer-unit-value">$0.00</span>
+            <span class="footer-unit-label">Total Allocated</span>
+        </div>
+
+        <div class="footer-unit balance">
+            <i class="fa fa-plus-circle" style="font-size:40px;color:#91ba4d; padding-top:5px;"></i>
+        </div>
+
+        <div class="footer-unit balance">
+            <span class="footer-unit-value ">$0.00</span>
+            <span class="footer-unit-label">Profit</span>
+        </div>
+
+        <div class="footer-unit balance">
+            <i class="fa fa-angle-double-right" style="font-size:40px;color:#91ba4d; padding-top:5px;"></i>
+        </div>
+
+        <div class="footer-unit balance">
+            <span class="footer-unit-value ">$0.00</span>
+            <span class="footer-unit-label">Equity</span>
+        </div>
+    </nav>
+</footer>
+ 

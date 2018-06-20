@@ -98,6 +98,27 @@
     <Property Name="MaxEffect" Type="int" Nullable="false" />
     <Property Name="MinEffect" Type="int" Nullable="false" />
   </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ViewPlayerPortfolio">
+    <Key>
+      <PropertyRef Name="IsWithdraw" />
+      <PropertyRef Name="IsDeposit" />
+      <PropertyRef Name="Amount" />
+    </Key>
+    <Property Name="StockName" Type="nvarchar" MaxLength="100" />
+    <Property Name="StartingPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="PlayerId" Type="int" />
+    <Property Name="PlayerName" Type="nvarchar" MaxLength="100" />
+    <Property Name="StockId" Type="int" />
+    <Property Name="IsActive" Type="bit" />
+    <Property Name="GameId" Type="int" />
+    <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="IsWithdraw" Type="bit" Nullable="false" />
+    <Property Name="IsDeposit" Type="bit" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+  </EntityType>
   <Association Name="FK_Account">
     <End Role="BankAccount" Type="Self.BankAccount" Multiplicity="1" />
     <End Role="Transcation" Type="Self.Transcation" Multiplicity="*" />
@@ -206,6 +227,22 @@
     <EntitySet Name="Sector" EntityType="Self.Sector" Schema="Master" store:Type="Tables" />
     <EntitySet Name="Stock" EntityType="Self.Stock" Schema="Master" store:Type="Tables" />
     <EntitySet Name="Trend" EntityType="Self.Trend" Schema="Master" store:Type="Tables" />
+    <EntitySet Name="ViewPlayerPortfolio" EntityType="Self.ViewPlayerPortfolio" store:Type="Views" store:Schema="Detail">
+      <DefiningQuery>SELECT 
+    [ViewPlayerPortfolio].[StockName] AS [StockName], 
+    [ViewPlayerPortfolio].[StartingPrice] AS [StartingPrice], 
+    [ViewPlayerPortfolio].[Quantity] AS [Quantity], 
+    [ViewPlayerPortfolio].[PlayerId] AS [PlayerId], 
+    [ViewPlayerPortfolio].[PlayerName] AS [PlayerName], 
+    [ViewPlayerPortfolio].[StockId] AS [StockId], 
+    [ViewPlayerPortfolio].[IsActive] AS [IsActive], 
+    [ViewPlayerPortfolio].[GameId] AS [GameId], 
+    [ViewPlayerPortfolio].[UnitPrice] AS [UnitPrice], 
+    [ViewPlayerPortfolio].[IsWithdraw] AS [IsWithdraw], 
+    [ViewPlayerPortfolio].[IsDeposit] AS [IsDeposit], 
+    [ViewPlayerPortfolio].[Amount] AS [Amount]
+    FROM [Detail].[ViewPlayerPortfolio] AS [ViewPlayerPortfolio]</DefiningQuery>
+    </EntitySet>
     <AssociationSet Name="FK_Account" Association="Self.FK_Account">
       <End Role="BankAccount" EntitySet="BankAccount" />
       <End Role="Transcation" EntitySet="Transcation" />

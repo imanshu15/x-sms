@@ -108,6 +108,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ViewPlayerPortfolios">
+      <EntityTypeMapping TypeName="XSmsModel.ViewPlayerPortfolio">
+        <MappingFragment StoreEntitySet="ViewPlayerPortfolio">
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="IsDeposit" ColumnName="IsDeposit" />
+          <ScalarProperty Name="IsWithdraw" ColumnName="IsWithdraw" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          <ScalarProperty Name="StockId" ColumnName="StockId" />
+          <ScalarProperty Name="PlayerName" ColumnName="PlayerName" />
+          <ScalarProperty Name="PlayerId" ColumnName="PlayerId" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="StartingPrice" ColumnName="StartingPrice" />
+          <ScalarProperty Name="StockName" ColumnName="StockName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="BuyStocks" FunctionName="XSmsModel.Store.BuyStocks" />
     <FunctionImportMapping FunctionImportName="SellStocks" FunctionName="XSmsModel.Store.SellStocks" />
   </EntityContainerMapping>

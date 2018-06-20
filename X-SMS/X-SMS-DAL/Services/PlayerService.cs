@@ -61,11 +61,12 @@ namespace X_SMS_DAL.Services
         }
 
         //buyStocks()
-        public ResultToken buyStocks(int playerID, int quantity, int stockID, decimal price)
+        public ResultToken buyStocks(int playerID, int quantity, StockDetail stock, decimal price)
         {
             ResultToken result = new ResultToken();
             result.Success = true;
             bool gotMoney = false;
+            bool priceIsRight = false;
 
             decimal currentAccBalance = checkBankBalance(playerID);
             if (currentAccBalance >= quantity * price)
@@ -79,13 +80,15 @@ namespace X_SMS_DAL.Services
                 return result;
             }
 
+            priceIsRight = stock.CurrentPrice == price ? true : false;
+
             int accID = getAccountID(playerID);
 
-            if (gotMoney && accID > 0)
+            if (gotMoney && priceIsRight && accID > 0)
             {
                 try
                 {
-                    playerEntities.BuyStocks(playerID, accID, quantity, stockID, price);
+                    playerEntities.BuyStocks(playerID, accID, quantity, stock.StockId, price);
                 }
                 catch (Exception e)
                 {
@@ -105,13 +108,14 @@ namespace X_SMS_DAL.Services
         }
 
         //sellStocks()
-        public ResultToken sellStocks(int playerID, int quantity, int stockID, decimal price)
+        public ResultToken sellStocks(int playerID, int quantity, StockDetail stock, decimal price)
         {
             ResultToken result = new ResultToken();
             result.Success = true;
             bool gotSupply = false;
+            bool priceIsRight = false;
 
-            int quantityBalance = checkStockQuantity(playerID, stockID);
+            int quantityBalance = checkStockQuantity(playerID, stock.StockId);
             if (quantityBalance >= quantity)
             {
                 gotSupply = true;
@@ -123,19 +127,21 @@ namespace X_SMS_DAL.Services
                 return result;
             }
 
+            priceIsRight = stock.CurrentPrice == price ? true : false;
+
             int accID = getAccountID(playerID); //acc id for update bank acc details
 
-            if (gotSupply && accID > 0)
+            if (gotSupply && priceIsRight && accID > 0)
             {
                 try
                 {
-                    playerEntities.SellStocks(playerID, accID, quantity, stockID, price);
+                    playerEntities.SellStocks(playerID, accID, quantity, stock.StockId, price);
                 }
                 catch (Exception e)
                 {
-                result.Success = false;
-                result.Message = e.Message;
-                return result;
+                    result.Success = false;
+                    result.Message = e.Message;
+                    return result;
                 }
             }
             else
@@ -150,17 +156,43 @@ namespace X_SMS_DAL.Services
         }
 
         //portfolio
-        public ResultToken viewPortfolio(int playerID)
+        public IEnumerable<ViewPlayerPortfolio> viewPortfolio()
         {
-            ResultToken result = new ResultToken();
-            result.Success = true;
-
-            //var playersPortfolio = playerEntities.
-            //map as view obj
-            return result;
+            try
+            {
+                var playersPortfolio = playerEntities.ViewPlayerPortfolios.ToList();
+                return playersPortfolio;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
-        //priceOfStocks()
+        public List<Stock> getAllStocks()
+        {
+            try
+            {
+                var allStocks = playerEntities.Stocks.ToList();
+                //var stocksDTO = Mapping.Mapper.Map<List<StockDTO>>(allStocks);
+                return allStocks;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+
+        //priceOfStocks() *****************************************************************
+        public List<decimal> priceOfStocks(List<StockDetail> stocks)
+        {
+            List<decimal> prices = new List<decimal>();
+            foreach(StockDetail item in stocks)
+            {
+                prices.Add(item.CurrentPrice);
+            }
+            return prices;
+        }
 
         //getRecommendationsFromAnalyst()
 
@@ -172,15 +204,40 @@ namespace X_SMS_DAL.Services
             {
                 foreach (var item in playerEntities.PlayerStocks.Where(c => c.PlayerId == playerID && c.StockId == stockID))
                 {
-                    stockQuan += item.Quantity;
+                    if (item != null)
+                    {
+                        stockQuan += item.Quantity; 
+                    }
                 }
             }
             catch (Exception e)
             {
-                return 0;
+                return -1;
             }
 
             return stockQuan;
+        }
+
+        public decimal amountSpentForStocks(int playerID, int stockID)
+        {
+            decimal amount = 0;
+
+            try
+            {
+                foreach (var item in playerEntities.PlayerStocks.Where(c => c.PlayerId == playerID && c.StockId == stockID && c.Quantity>0))
+                {
+                    if (item == null)
+                        break;
+                    else
+                        amount += item.Quantity * item.UnitPrice;
+                }
+            }
+            catch (Exception e)
+            {
+                return -1;
+            }
+
+            return amount;
         }
 
         public decimal checkBankBalance(int playerID)
@@ -193,7 +250,7 @@ namespace X_SMS_DAL.Services
             }
             catch (Exception e)
             {
-                return 0;
+                return -1;
             }
 
             return accBalance;
@@ -210,10 +267,76 @@ namespace X_SMS_DAL.Services
             }
             catch (Exception e)
             {
-                return 0;
+                return -1;
             }
 
             return accID;
+        }
+
+        //purchase history
+        public ResultToken getPurchasesByPlayer(int playerId)
+        {
+            ResultToken result = new ResultToken();
+            result.Success = true;
+
+            try
+            {
+                var purchasesByPlayer = viewPortfolio().Where(c => c.PlayerId == playerId && c.Quantity > 0).ToList();
+
+                if (purchasesByPlayer != null)
+                {
+                    result.Data = purchasesByPlayer;
+                    return result;
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = "No History found.";
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Success = false;
+                result.Message = e.Message;
+                return null;
+            }
+
+        }
+
+        //sales history
+        public ResultToken getSalesByPlayer(int playerId)
+        {
+            ResultToken result = new ResultToken();
+            result.Success = true;
+
+            try
+            {
+                var salesByPlayer = viewPortfolio().Where(c => c.PlayerId == playerId && c.Quantity < 0).ToList();
+
+                if (salesByPlayer != null)
+                {
+                    foreach(ViewPlayerPortfolio item in salesByPlayer) // set minus quan to positive values
+                    {
+                        item.Quantity = item.Quantity * -1;
+                    }
+                    result.Data = salesByPlayer;
+                    return result;
+                }
+                else
+                {
+                    result.Success = false;
+                    result.Message = "No History found.";
+                    return null;
+                }
+            }
+            catch (Exception e)
+            {
+                result.Success = false;
+                result.Message = e.Message;
+                return null;
+            }
+
         }
 
         public void Dispose()
