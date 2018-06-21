@@ -18,11 +18,6 @@ namespace X_SMS_DAL.Services
             playerEntities = new XSmsEntities();
         }
 
-        //public ResultToken registerPlayer(string playerFirstName, string playerSecondName)
-        //{
-
-        //}
-
         public ResultToken createBankAccount(int playerId,string playerName)
         {
             ResultToken result = new ResultToken();
@@ -212,7 +207,7 @@ namespace X_SMS_DAL.Services
             }
             catch (Exception e)
             {
-                return -1;
+                return 0;
             }
 
             return stockQuan;
@@ -234,7 +229,7 @@ namespace X_SMS_DAL.Services
             }
             catch (Exception e)
             {
-                return -1;
+                return 0;
             }
 
             return amount;
@@ -250,7 +245,7 @@ namespace X_SMS_DAL.Services
             }
             catch (Exception e)
             {
-                return -1;
+                return 0;
             }
 
             return accBalance;
@@ -267,7 +262,7 @@ namespace X_SMS_DAL.Services
             }
             catch (Exception e)
             {
-                return -1;
+                return 0;
             }
 
             return accID;

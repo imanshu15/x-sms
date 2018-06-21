@@ -136,7 +136,6 @@ namespace X_SMS.Hubs
             }
         }
 
-
         private void AddPlayer(PlayerDTO player) {
             var client = EntityStateManager.Players.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
             if (client == null)
@@ -192,6 +191,13 @@ namespace X_SMS.Hubs
         {
             var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
             gameObj.CurrentRound = 0;
+
+            #region AI
+            //Register AI player
+            //JoinGame("COMPUTER_AI", gameObj.GameId, gameObj.GameCode);
+            // 
+            #endregion
+
             var isFinished = NextRound(gameObj.GameId);
             //System.Threading.Timer timer = null;
             //timer = new System.Threading.Timer(new TimerCallback(y =>
@@ -230,6 +236,10 @@ namespace X_SMS.Hubs
                 var turnDetails = gameObj.GameDetail.TurnDetail.FirstOrDefault(x => x.Turn == gameObj.CurrentRound);
                 if(turnDetails != null)
                     Clients.Group(gameObj.GameCode).startRound(turnDetails);
+
+                //PlayerAI player = new PlayerAI(gameObj);
+                //
+                //decideBuySellForAI(player.returnBuySellList();)
 
             }
 
@@ -377,5 +387,24 @@ namespace X_SMS.Hubs
                 }
             }
        }
+
+        public void decideBuySellForAI(List<AIBuySellDetails> list)
+        {
+            try
+            {
+                foreach (AIBuySellDetails item in list)
+                {
+                    if (item.Buy)
+                        BuyStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock, item.Quantity);
+                    else if (!item.Buy)
+                    {
+                        SellStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock, item.Quantity);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }
