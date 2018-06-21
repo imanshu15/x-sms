@@ -14,5 +14,7 @@ namespace X_SMS_REP
         public decimal Price { get; set; }
         public string StockName { get; set; }
         public string PlayerName { get; set; }
+
+        public decimal PlayerAccBalance { get; set; }
     }
 }

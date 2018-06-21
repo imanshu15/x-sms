@@ -2,9 +2,12 @@
 
 function setUpStocks(data) {
 
-    var currentTurn = data.Tun;
+    var currentTurn = data.Turn;
+    if (currentTurn != 1) {
+        getPlayerStock();
+    }
     $('#hdnCurrentTurn').val(currentTurn);
-    $('#gameScrnCurntTurn').val(currentTurn);
+    $('#gameScrnCurntTurn').text(currentTurn);
     var sectorList = data.Sectors;
     var stocksList = [];
 
@@ -20,7 +23,9 @@ function setUpStocks(data) {
                 price: "",
                 sectorId: "",
                 sectorName: "",
-                isIncreased: false
+                isIncreased: false,
+                previousPrice: "",
+                percentage:0
             };
 
             stock.sectorName = sector.Sector.SectorName;
@@ -30,40 +35,79 @@ function setUpStocks(data) {
             stock.stockId = tempStock.StockId;
             stock.stockName = tempStock.StockName;
             stock.price = tempStock.CurrentPrice;
+            stock.previousPrice = tempStock.StartingPrice;
             if (tempStock.CurrentPrice > tempStock.StartingPrice)
                 stock.isIncreased = true;
 
+            if (stock.isIncreased) {
+                stock.percentage = (tempStock.CurrentPrice / tempStock.StartingPrice) * 100;
+                stock.percentage = stock.percentage.toFixed(2);
+            }
             stocksList.push(stock);
         }
     }
 
+    loadStocksTable(stocksList);
     console.log(stocksList);
-    if (currentTurn == 1) {
-        setInterval(function () { loadStocksTable(stocksList); }, 10000);
-    } else {
-        loadStocksTable(stocksList);
-    }
+    //if (currentTurn == 1) {
+    //    setInterval(function () { loadStocksTable(stocksList); }, 10000);
+    //} else {
+        
+    //}
     
 }
 
 function loadStocksTable(stocks) {
 
-    $(".stocksBuyIfo").bootstrapNews({
-        newsPerPage: 5,
-        autoplay: false,
-        pauseOnHover: true,
-        direction: 'down',
-        newsTickerInterval: 4000,
-        onToDo: function () {
-            //console.log(this);
-        }
-    });
+    //$(".stocksBuyIfo").bootstrapNews({
+    //    newsPerPage: 5,
+    //    autoplay: false,
+    //    pauseOnHover: true,
+    //    direction: 'down',
+    //    newsTickerInterval: 4000,
+    //    onToDo: function () {
+    //        //console.log(this);
+    //    }
+    //});
 
-    $("#stockList > tbody").html("");
+    $("#stockMarketTable > tbody").html("");
     for (var i = 0; i < stocks.length; i++) {
         var stock = stocks[i];
-        NewRowToStocks(stock);
+        AddToStocksTable(stock);
     }
+}
+
+function AddToStocksTable(stock) {
+
+    var appendStr = '<tr class="table-row"><td> <div class="stock-img" > <img class="avatar" alt="Alphabet" src="https://etoro-cdn.etorostatic.com/market-avatars/goog/150x150.png"></div>'
+        + '<div class="stock-info"><span class="stock-name">' + stock.stockName + '</span>'
+        + '<span class="sector-name">' + stock.sectorName + '</span></div></td><td><div class="red ">'
+        + '<span class="change-num-amount ">' + stock.percentage + ' %</span></div></td><td>'
+        + '<div class="stock-trade-button"><div class="left-price-name">P</div><div class="price-value"><span>' + stock.previousPrice + '</span> </div></div></td>'
+        + '<td><div class="stock-trade-button"><div class="left-price-name">C</div><div class="price-value"><span>' + stock.price + '</span> </div></div ></td>'
+        + '<td style="text-align:center;"><i class="fa fa-arrow-up green" style="font-size:20px;top:5px;"></i></td>'
+        + ' <td style="text-align:center;"><div class="trade-button "><div class="sell-botton  d-inline victoria-sell" onclick = "showStockChart(' + stock.sectorId + ', ' + stock.stockId +')"><span>VIEW</span> </div>'
+        + '<div class="sell-botton d-inline victoria-buy" onclick= "buyStockPopUp(' + stock.sectorId + ',' + stock.stockId + ',\'' + stock.stockName +'\')"><span>BUY</span> </div></div></td></tr>';
+
+    $('#stockMarketTable > tbody:last-child').append(appendStr);
+}
+
+function showStockChart(sectorId,stockId) {
+    var gameId = $('#hdnGameId').val();
+    var turn = $('#hdnCurrentTurn').val();
+    var data;
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: getAPIUrl() + "Chart/StockValues?gameId=" + gameId + "&sectorId=" + sectorId + "&stockId=" + stockId + '&turn=' + turn,
+        async: false,
+        success: function (res) {
+                data = res;
+        }
+    });
+    console.log(data);
+    generateBarChart(turn, data.PriceList, data.StockName);
+    $('#mdlStockChart').modal('show');
 }
 
 function NewRowToStocks(stock) {
@@ -112,12 +156,11 @@ function buyStocks() {
 
 function addStockBoughtNews(details) {
 
-    var newsStr = details.PlayerName + ' bought ' + details.Quantity + ' stocks of ' + details.StockName + ' at a price of Rs. ' + details.Price;
-    var appendStr = '<li class="news-item"> <table cellpadding="4"><tr class="buy-stock">';
-    appendStr += '<td>' + newsStr+'<td>';
-    appendStr += '</tr> </table> </li>';
+    var appendStr = '<li class="left clearfix"><span class="chat-img pull-left"><img src="~/Content/images/user-chat.png" alt="User Avatar" class="img-circle" /></span>';
+    appendStr += '<div class="chat-body clearfix"><div class="header"><strong class="primary-font">' + details.PlayerName + '</strong></div>';
+    appendStr += '<p class = "green">Type: Buy Stock: ' + details.StockName + ' StockPrice: ' + details.Price + ' Units:' + details.Quantity + ' Balance:' + details.PlayerAccBalance + ' </p> </div></li>';
 
-    $(".stocksBuyIfo").append(appendStr);
+    $("#stocksNewsFeed").prepend(appendStr);
 }
 
 function getPlayerStock() {
@@ -128,10 +171,10 @@ function getPlayerStock() {
 }
 
 function loadPlayerStocksGrid(data) {
-    $("#playerStocksList > tbody").html("");
+    $("#myStockMarketTable > tbody").html("");
     for (var i = 0; i < data.length; i++) {
         var stock = data[i];
-        NewRowToPlayerStocks(stock);
+        AddToMyStocksTable(stock);
     }
 }
 
@@ -161,11 +204,30 @@ function NewRowToPlayerStocks(stock) {
     Sell.innerHTML = sellStr;
 }
 
+function AddToMyStocksTable(stock) {
+    var appendStr = '<tr class="table-row"><td><div class="stock-img"><img class="avatar" alt="Alphabet" src="https://etoro-cdn.etorostatic.com/market-avatars/goog/150x150.png"></div>'
+        + '<div class="stock-info"><span class="stock-name">' + stock[0].StockName + '</span><span class="sector-name">' + stock[0].SectorName + '</span></div></td>'
+        + ' <td><div class="units"><span>' + stock[0].Quantity + '</span> </div></td>'
+        + ' <td><div class="stock-trade-button"><div class="left-price-name">O</div><div class="price-value"><span>' + stock[0].BoughtPrice + '</span> </div></div></td>'
+        + '<td><div class="stock-trade-button"><div class="left-price-name">C</div><div class="price-value"><span>' + stock[0].CurrentPrice + '</span> </div></div></td>'
+        + '<td><div class="red"><span class="change-num-amount ">' + stock[0].Percentage + '</span></div></td>'
+        + '<td style="text-align:center;"><i class="fa fa-arrow-up green" style="font-size:20px;top:5px;"></i></td>'
+        + '<td><div class="red"><span class="profit-amount ">' + stock[0].Profit + '</span></div></td>'
+        + ' <td style="text-align:center;"><div class="trade-button "><div class="sell-botton  d-inline victoria-sell" onclick = "showStockChart(' + stock[0].SectorId + ', ' + stock[0].StockId + ')"><span>VIEW</span> </div>'
+        + '<td style="text-align:center;"><div class="trade-button "><div class="sell-botton d-inline victoria-buy" onclick="sellStockPopUp(' + stock[0].SectorId + ',' + stock[0].StockId + ',' + stock[0].Quantity + ',\'' + stock[0].StockName +'\')"><span> SELL </span> </div></div></td> </tr>';
+
+    $('#myStockMarketTable > tbody:last-child').append(appendStr);
+}
+
 function sellStockPopUp(sectorId,stockId,quantity,stockName) {
     $('#hdnSellStockId').val(stockId);
     $('#hdnSellSectorId').val(sectorId);
     $('#lblSellStockName').text(stockName);
     $('#txtSellStockQuantity').val(quantity);
+    $("txtSellStockQuantity").attr({
+        "max": quantity,        // substitute your own
+        "min": 1          // values (or variables) here
+    });
     $('#mdlSellStock').modal('show');
 }
 
@@ -183,10 +245,9 @@ function sellStocks() {
 
 function addStockSoldNews(details) {
 
-    var newsStr = details.PlayerName + ' sold ' + details.Quantity + ' stocks of ' + details.StockName + ' at a price of Rs. ' + details.Price;
-    var appendStr = '<li class="news-item"> <table cellpadding="4"><tr class="sell-stock">';
-    appendStr += '<td>' + newsStr + '<td>';
-    appendStr += '</tr> </table> </li>';
+    var appendStr = '<li class="left clearfix"><span class="chat-img pull-left"><img src="~/Content/images/user-chat.png" alt="User Avatar" class="img-circle" /></span>';
+    appendStr += '<div class="chat-body clearfix"><div class="header"><strong class="primary-font">' + details.PlayerName +'</strong></div>';
+    appendStr += '<p class = "red">Type: Sell Stock: ' + details.StockName + ' StockPrice: ' + details.Price + ' Units:' + details.Quantity + ' Balance:' + details.PlayerAccBalance +' </p> </div></li>';
 
-    $(".stocksBuyIfo").append(appendStr);
+    $("#stocksNewsFeed").prepend(appendStr);
 }

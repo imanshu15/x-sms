@@ -56,6 +56,13 @@ namespace X_SMS_DAL.Services
 
         }
 
+        public bool DoesPlayerExist(string playerName) {
+
+            var player = gameEntities.Players.Where(a => a.PlayerName == playerName && a.IsActive == true).Count();
+
+            return (player >= 1 ? true : false);
+        }
+
         public List<PlayerDTO> GetGamePlayerList(int gameId)
         {
 

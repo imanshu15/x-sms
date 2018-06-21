@@ -16,5 +16,7 @@ namespace X_SMS_REP
         public decimal BoughtPrice { get; set; }
         public decimal CurrentPrice { get; set; }
         public bool IsIncreased { get; set; }
+        public decimal Percentage { get; set; }
+        public decimal Profit { get; set; }
     }
 }

@@ -29,7 +29,7 @@
     width: 64%;
     position: absolute;
     left: 222px;
-    top: 100px;
+    top: 130px;
     bottom: 0;
     overflow-y: auto;
     overflow-x: hidden;
@@ -271,8 +271,8 @@
     z-index: 2;
     width: 84%;
     position: absolute;
-    left: 222px;
-    top: 54px;
+    left: 218px;
+    top: 84px;
 }
 
 .button {
@@ -326,8 +326,9 @@
     font-size: 14px;
     font-weight: bold;
     position: relative;
-    color: #black;
+    color: black;
     padding-top:5px;
+    text-align:center;
 }
 
 .green {
@@ -357,8 +358,8 @@
     height: 80px;
     position: fixed;
     right: 0;
-    width: 84%;
-    z-index: 1;
+    width: 100%;
+    z-index: 5;
     right: 0px;
 }
 
@@ -395,10 +396,10 @@
     height: 100%;
     position: fixed;
     bottom: 0;
-    top: 0;
+    top: 84px;
     width: 220px;
     left: 0;
-    z-index: 50;
+    z-index: 4;
     -moz-transition: transform .25s ease-in-out;
     -o-transition: transform .25s ease-in-out;
     -webkit-transition: -webkit-transform .25s ease-in-out;
@@ -410,15 +411,15 @@
     transform: translate3d(0, 0, 0);
 }
 .a-menu-right {
-    color: #D1D3E0;
+    
     background-color: #fff;
     border-right: 1px solid #626877;
     box-sizing: border-box;
     box-shadow: 0 0 3px 2px rgba(0,0,0,0.2);
-    height: 100%;
+    height: 68%;
     position: fixed;
     bottom: 0;
-    top: 102px;
+    top: 130px;
     width: 270px;
     right: 0;
     z-index: 0;
@@ -471,7 +472,7 @@
     }
 
 .w-head-clone {
-    top: 200px;
+    top: 5px;
     position: absolute;
     width: 100%;
 }
@@ -526,8 +527,8 @@
 .stock-chart-bar {
     background-color: #fafafa;
     box-shadow: 0 1px 1px 0 rgba(0,0,0,0.15);
-    height: 50px;
-    padding: 10px;
+    height: 30px;
+    padding: 0px;
     position: absolute;
     text-align: center;
     font-size: 20px;
@@ -589,3 +590,253 @@
     fill: black;
 }
 
+.login {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 400px;
+    height: 335px;
+    box-shadow: 9px 9px 15px 0 rgba(0,0,0,0.4);
+    top: 180px;
+    left: 46px;
+    position: absolute;
+}
+.players-table {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 63%;
+    position: absolute;
+    right: 30px;
+    top: 180px;
+    box-shadow: 9px 9px 15px 0 rgba(0,0,0,0.4);
+    overflow-x: hidden;
+    margin-bottom: 66px;
+    padding: 24px;
+    height: 335px;
+    color: #fff;
+}
+.players-table-info {
+    padding-left: 30px;
+    padding-top: 5px;
+    padding-bottom: 20px;
+    color: #fff;
+}
+.login-title {
+    display: inline;
+    font-size: 20px;
+    color: #fff;
+   background-color: transparent;
+    font-family: 'num','Open Sans',ariel,sans-serif;
+    
+}
+.login-head {
+    font-size: 28px;
+    min-height: 45px;
+    line-height: 45px;
+    text-align: left;
+    font-weight: 300;
+}
+.background {
+    background: #d5d7e2 url("../../../images/background.jpg");
+    background-size: cover;
+}
+.active {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+.table-hover > tbody > tr:hover {
+    background-color: transparent;
+}
+.btn-primary {
+    padding: 3px 30px 3px 30px;
+    font-size: 21px;
+}
+.logo {
+    display: inline-block;
+    height: 80px;
+    width: 292px;
+    margin-left: 7px;
+    cursor: pointer;
+    padding: 4px;
+}
+.header-background {
+    background: url("../../../images/header.png");
+    background-size: cover;
+}
+.header-item {
+    padding: 30px 15px 30px 15px;
+    font-size: 20px;
+}
+.transaction-bar {
+    background-color: #fafafa;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.15);
+    height: 30px;
+    padding: 2px;
+    position: absolute;
+    text-align: center;
+    font-size: 19px;
+   
+    z-index: 1;
+    width: 100%;
+    border-top: 1px solid #d7d7d7;
+
+}
+.bank-head{
+
+    background-color:#fff;
+    padding-top:12px;
+    padding-bottom:12px;
+}
+.players-name-bar {
+    background-color: #fafafa;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.15);
+    height: 30px;
+    padding: 2px;
+     
+   
+    font-size: 19px;
+   
+    z-index: 1;
+    width: 100%;
+    border-top: 1px solid #d7d7d7;
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 0px; 
+}
+.user-image {
+    height: 120px;
+    width: 120px;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    margin-left: 22px;
+}
+.user-name {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #fff;
+    
+}
+.blue-button {
+    color: #fff;
+    background-color: #3dbdec;
+    border-color: #2e6da4;
+}
+    .blue-button:hover {
+        color: #fff;
+        background-color: #3caed8;
+        border-color: #2e6da4;
+    }
+.user-info {
+    padding-left: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d7d7d7;
+}
+
+.footer-bank-label{
+color: #777;
+font-size: 44px;
+text-transform: uppercase;
+display: block;
+
+}
+.blue {
+    color: #3dbdec;
+}
+.wait-info {
+    display: block;
+    margin-top:10px; 
+    text-align:center;
+}
+.game-code-bar {
+    background-color: #fafafa;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.15);
+    height: 63px;
+    padding: 12px;
+    position: absolute;
+    font-size: 26px;
+    width: 45%;
+    top: 116px;
+    left: 27%;
+    border-top: 1px solid #d7d7d7;
+}
+.player-conecting-table {
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 45%;
+    position: absolute;
+    left: 27%;
+    top: 180px;
+    box-shadow: 9px 9px 15px 0 rgba(0,0,0,0.4);
+    overflow-x: hidden;
+    margin-bottom: 66px;
+    padding: 24px;
+    height: 335px;
+    color: #fff;
+}
+.preloader-player-connecting {
+    top: 25px;
+    position: relative;
+     
+}
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: scroll;
+}
+.table-hover > tbody > tr:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.chat {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+    .chat li {
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px Solid #B3A9A9;
+    }
+
+        .chat li.left .chat-body {
+            margin-left: 60px;
+        }
+
+        .chat li.right .chat-body {
+            margin-right: 60px;
+        }
+
+
+        .chat li .chat-body p {
+            margin: 0;
+            color: #777777;
+        }
+
+    .panel .slidedown .glyphicon, .chat .glyphicon {
+        margin-right: 5px;
+    }
+
+.panel-body {
+    overflow-y: scroll;
+    height: 250px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+.news-feed {
+    top: 180px;
+    position: absolute;
+}

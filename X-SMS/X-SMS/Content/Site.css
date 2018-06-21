@@ -140,7 +140,7 @@ html.no-csstransitions .home-content__main {
 }
 
 .selected {
-    background-color: #acbad4 !important;
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 body {
@@ -154,9 +154,7 @@ body {
     
 }
 
-#content {
-    padding-bottom: 150px;
-}
+ 
 
 #footer {
     width: 100%;
@@ -196,4 +194,14 @@ color: green;
 
 .sell-stock {
 color: red;
+}
+
+.pagination li:hover {
+    cursor: pointer;
+}
+
+canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }

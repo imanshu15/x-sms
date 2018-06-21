@@ -229,8 +229,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\App\Charts.js" />
     <Content Include="Scripts\App\GameBoard.js" />
     <Content Include="Scripts\App\GameLoad.js" />
+    <Content Include="Scripts\App\History.js" />
     <Content Include="Scripts\App\Join.js" />
     <Content Include="Scripts\App\Main.js" />
     <Content Include="Scripts\App\Wait.js" />
@@ -263,6 +265,8 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Scripts\ChartsJs\Chart.bundle.js" />
+    <Content Include="Scripts\ChartsJs\utils.js" />
     <Content Include="Scripts\Clock.js" />
     <Content Include="Scripts\Clock\flipclock.css" />
     <Content Include="Scripts\Clock\flipclock.js" />
@@ -320,6 +324,8 @@
     <Content Include="Views\Game\_Orders.cshtml" />
     <Content Include="Views\Game\_GameBoard.cshtml" />
     <Content Include="Views\Game\_StockInfo.cshtml" />
+    <Content Include="Views\Game\_Bank.cshtml" />
+    <Content Include="Views\Game\_Transactions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

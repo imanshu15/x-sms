@@ -40,7 +40,7 @@ namespace X_SMS.Services
 
             PlayerTransactionsDTO obj = new PlayerTransactionsDTO();
             obj.PlayerId = playerId;
-            obj.Stock.StockId = stock.StockId;
+            obj.Stock = stock;
             obj.Quantity = quantity;
             obj.Price = price;
 
@@ -69,7 +69,7 @@ namespace X_SMS.Services
 
             PlayerTransactionsDTO obj = new PlayerTransactionsDTO();
             obj.PlayerId = playerId;
-            obj.Stock.StockId = stock.StockId;
+            obj.Stock = stock;
             obj.Quantity = quantity;
             obj.Price = price;
 

@@ -23,13 +23,31 @@ function createGameAction() {
 
     $("#btnCreateGame").click(function (e) {
         e.preventDefault();
+        showPreloader();
         var playerName = $("#txtPlayerName").val();
         var playersCount = $("#txtPlayerCount").val();
         var isPrivate = false;
         if ($('#chkIsPrivateGame').is(":checked")) {
             isPrivate = true;
         }
-        game.server.createGame(playerName, playersCount, isPrivate);
+        if (playerName != null && playerName != undefined && playerName != "") {
+            if (!DoesPlayerExist(playerName)) {
+                if (playersCount != null && playersCount != undefined && $.isNumeric(playersCount)) {
+                    if (playersCount <= 4) {
+                        game.server.createGame(playerName, playersCount, isPrivate);
+                    } else {                  
+                        showErrorMsg('Validation', 'Maximum players count is 4');
+                    }
+                } else {
+                    showErrorMsg('Validation', 'Invalid player count');
+                }
+            } else {
+                showErrorMsg('Validation', 'Sorry, Player name is already in use');
+            }
+        } else {
+            showErrorMsg('Validation', 'Player name is required');
+        }
+        hidePreloader();
     });
 
 }
@@ -40,6 +58,7 @@ function getOpenGameList() {
 }
 
 function setUpGameTable(data) {
+    gameTable.clear().draw();
     data.forEach(function (entry) {
         if (entry !== null) {
             gameTable.row.add([entry.GameId, entry.GameCode, entry.CreatedPlayer, entry.PlayersCount, 0, entry.StartTime]).draw();
@@ -73,14 +92,46 @@ function joinGameAction() {
         $("#mdlJoinConfirmation").modal("hide");
         var playerName = $("#txtJoinPlayerName").val();
         var gameId = $("#hdnSelectedGameId").val();
-        game.server.joinGame(playerName, gameId,"");
+        if (playerName != null && playerName != undefined && playerName != "") {
+            if (!DoesPlayerExist(playerName)) {
+                game.server.joinGame(playerName, gameId, "");
+            } else {
+                showErrorMsg('Validation', 'Sorry, Player name is already in use');
+            }
+        } else {
+            showErrorMsg('Validation', 'Player name is required');
+        }
     });
 
     $("#btnJoinPrivateGame").click(function (e) {
         e.preventDefault();
+        debugger
         var playerName = $("#txtJoinPrivatePlayer").val();
         var gameCode = $("#txtJoinGameCode").val();
-        game.server.joinGame(playerName, 0, gameCode);
+        if (playerName != null && playerName != undefined && playerName != "") {
+            if (!DoesPlayerExist(playerName)) {
+                game.server.joinGame(playerName, 0, gameCode);
+            } else {
+                    showErrorMsg('Validation', 'Sorry, Player name is already in use');
+                }
+            } else {
+            showErrorMsg('Validation', 'Player name is required');
+        }
     });
 }
 
+function DoesPlayerExist(player) {
+    var returnValue = false;
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: getAPIUrl() + "Game/PlayerExist?playerName=" + player,
+        async: false,
+        success: function (res) {
+        if (returnValue != null && returnValue != undefined)
+            returnValue = res;
+        }
+    });
+
+    return returnValue;
+}
