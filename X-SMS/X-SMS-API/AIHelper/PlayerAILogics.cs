@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using X_SMS_REP;
 using X_SMS_DAL.Database;
 using X_SMS_DAL.Services;
+using X_SMS.Hubs;
 
 namespace X_SMS_API.AIHelper
 {
@@ -15,10 +16,21 @@ namespace X_SMS_API.AIHelper
         StockDetail shouldSell;
         PlayerService playerService = null;
         XSmsEntities aiEntities = null;
+        GameDTO curGame = null;
+        GameHub hub = null;
+        List<AIBuySellDetails> list = null;
+
         public PlayerAILogics()
         {
             aiEntities = new XSmsEntities();
             playerService = new PlayerService();
+            hub = new GameHub();
+            list = new List<AIBuySellDetails>();
+        }
+
+        public void setGame(GameDTO game)
+        {
+            curGame = game;
         }
 
         public void BuyStocksForFirstTime(int playerID)
@@ -37,6 +49,7 @@ namespace X_SMS_API.AIHelper
                 stockDetail.StockName = item.StockName;
                 stockDetail.StartingPrice = item.StartingPrice;
                 stockDetail.CurrentPrice = 0;
+
                 try
                 {
                     int avgPrice = (int)((item.StartingPrice / totPrice) * 100);
@@ -44,20 +57,29 @@ namespace X_SMS_API.AIHelper
                     int buyingQuanRange = CalcQuantityForFirstTime(quanCategory); //buying for first time
                     int buyingQuan = (int)(buyingQuanRange / item.StartingPrice);
 
-                    if(buyingQuan > 0)
-                        playerService.buyStocks(playerID, buyingQuan, stockDetail, item.StartingPrice);
+                    AIBuySellDetails itemBuySell = new AIBuySellDetails();
+                    if (buyingQuan > 0)
+                    {
+                        itemBuySell.GameId = curGame.GameId;
+                        itemBuySell.PlayerId = playerID;
+                        itemBuySell.SectorId = item.SectorId;
+                        itemBuySell.Quantity = buyingQuan;
+                        itemBuySell.Stock = stockDetail;
+                        itemBuySell.Buy = true;
+                        list.Add(itemBuySell);
+                    }
+                        //playerService.buyStocks(playerID, buyingQuan, stockDetail, item.StartingPrice);
                 }
                 catch (Exception e)
                 {
                 }
-            }
-                
+            }                
         }
 
-        public void CheckHistoryForBuy(List<TurnDetail>[] prevTurnsArray, List<StockDetail> currentStocks)
+        public void CheckHistoryForBuy(List<TurnDetail> prevTurns, List<StockDetail> currentStocks)
         {
             shouldBuy = new StockDetail();
-            List<TurnDetail> prevTurns = prevTurnsArray.Cast<TurnDetail>().ToList();
+            //List<TurnDetail> prevTurns = prevTurnsArray.Cast<TurnDetail>().ToList();
 
             foreach (TurnDetail turn in prevTurns)
             {
@@ -89,10 +111,10 @@ namespace X_SMS_API.AIHelper
             }
         }
 
-        public void CheckHistoryForSell(List<TurnDetail>[] prevTurnsArray, List<StockDetail> currentStocks)
+        public void CheckHistoryForSell(List<TurnDetail> prevTurns, List<StockDetail> currentStocks)
         {
             shouldSell = new StockDetail();
-            List<TurnDetail> prevTurns = prevTurnsArray.Cast<TurnDetail>().ToList();
+            //List<TurnDetail> prevTurns = prevTurnsArray.Cast<TurnDetail>().ToList();
 
             foreach (TurnDetail turn in prevTurns)
             {
@@ -120,10 +142,12 @@ namespace X_SMS_API.AIHelper
         public void SetBuySellForAI(List<StockDetail> ownStocks, int playerID)
         {
             List<StockDetail> currentStocks = CheckHistoryWithCurrent(ownStocks, shouldBuy, shouldSell);
+
             if(currentStocks != null)
             {
                 foreach (StockDetail item in currentStocks)
                 {
+                    AIBuySellDetails itemBuySell = new AIBuySellDetails();
                     decimal averagePrice = 0;
                     decimal shouldSellIF = 0;
                     decimal shoulBuyIF = 0;
@@ -146,8 +170,18 @@ namespace X_SMS_API.AIHelper
                                 int decidingPrice = (int)(averagePrice / item.CurrentPrice) * 100;
                                 int quanCategory = CheckQuanAmount(decidingPrice);
                                 int sellingQuan = CalcQuantity(quanCategory, playerService.checkStockQuantity(playerID, item.StockId));
-                                if (quanCategory > 0 && sellingQuan > 0)
-                                    playerService.sellStocks(playerID, sellingQuan, item, item.CurrentPrice);
+                                if (quanCategory > 0 && sellingQuan > 0 && curGame != null)
+                                {
+                                    itemBuySell.GameId = curGame.GameId;
+                                    itemBuySell.PlayerId = playerID;
+                                    itemBuySell.SectorId = item.SectorId;
+                                    itemBuySell.Quantity = sellingQuan;
+                                    itemBuySell.Stock = item;
+                                    itemBuySell.Buy = false;
+                                    list.Add(itemBuySell);
+                                }
+                                    //hub.SellStocks(curGame.GameId, playerID, item.SectorId, item, sellingQuan);
+                                    //playerService.sellStocks(playerID, sellingQuan, item, item.CurrentPrice);
                             }
                             catch (Exception e)
                             {
@@ -161,22 +195,32 @@ namespace X_SMS_API.AIHelper
                                 int quanCategory = CheckQuanAmount(decidingPrice);
                                 int buyingQuan = CalcQuantity(quanCategory, playerService.checkStockQuantity(playerID, item.StockId));
                                 if (quanCategory > 0 && buyingQuan > 0)
-                                    playerService.buyStocks(playerID, buyingQuan, item, item.CurrentPrice);
+                                {
+                                    itemBuySell.GameId = curGame.GameId;
+                                    itemBuySell.PlayerId = playerID;
+                                    itemBuySell.SectorId = item.SectorId;
+                                    itemBuySell.Quantity = buyingQuan;
+                                    itemBuySell.Stock = item;
+                                    itemBuySell.Buy = true;
+                                    list.Add(itemBuySell);
+                                }
+                                    //hub.BuyStocks(curGame.GameId, playerID, item.SectorId, item, buyingQuan);
+                                    //playerService.buyStocks(playerID, buyingQuan, item, item.CurrentPrice);
                             }
                             catch (Exception e)
                             {
+                                return null;
                             }
                         }
                     }
                     else if (averagePrice == 0) //AI never bought this stock
                     {
-
                     }
                 }
             }
         }
 
-        public List<StockDetail> CheckHistoryWithCurrent(List<StockDetail> ownStocks, StockDetail shouldBuy, StockDetail shouldSell)
+        private List<StockDetail> CheckHistoryWithCurrent(List<StockDetail> ownStocks, StockDetail shouldBuy, StockDetail shouldSell)
         {
             if (shouldSell != null && shouldSell != null)
             {
@@ -213,7 +257,7 @@ namespace X_SMS_API.AIHelper
                 return ownStocks;
         }
 
-        public int CheckQuanAmount(int decidingPrice)
+        private int CheckQuanAmount(int decidingPrice)
         {
             switch (decidingPrice)
             {
@@ -230,7 +274,7 @@ namespace X_SMS_API.AIHelper
             }
         }
 
-        public int CalcQuantity(int category, int currentStockQuan)
+        private int CalcQuantity(int category, int currentStockQuan)
         {
             switch (category)
             {
@@ -247,7 +291,7 @@ namespace X_SMS_API.AIHelper
             } 
         }
 
-        public int CalcQuantityForFirstTime(int category)
+        private int CalcQuantityForFirstTime(int category)
         {
             switch (category)
             {
@@ -262,6 +306,14 @@ namespace X_SMS_API.AIHelper
                 default:
                     return 0;
             }
+        }
+
+        public List<AIBuySellDetails> returnBuySellList()
+        {
+            if (list != null)
+                return list;
+            else
+                return null;
         }
 
         public void Dispose()
@@ -280,6 +332,10 @@ namespace X_SMS_API.AIHelper
                 shouldSell = null;
             if (shouldBuy != null)
                 shouldBuy = null;
+            if (curGame != null)
+                curGame = null;
+            if (list != null)
+                list = null;
         }
     }
 }

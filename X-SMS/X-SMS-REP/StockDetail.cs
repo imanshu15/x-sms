@@ -9,6 +9,7 @@ namespace X_SMS_REP
     public class StockDetail
     {
         public int StockId { get; set; }
+        public int SectorId { get; set; }
         public string StockName { get; set; }
         public decimal StartingPrice { get; set; }
         public decimal CurrentPrice { get; set; }

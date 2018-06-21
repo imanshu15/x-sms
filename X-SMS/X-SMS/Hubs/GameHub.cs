@@ -144,7 +144,6 @@ namespace X_SMS.Hubs
             }
         }
 
-
         private void AddPlayer(PlayerDTO player) {
             var client = EntityStateManager.Players.FirstOrDefault(x => x.ConnectionId == Context.ConnectionId);
             if (client == null)
@@ -244,6 +243,10 @@ namespace X_SMS.Hubs
                 var turnDetails = gameObj.GameDetail.TurnDetail.FirstOrDefault(x => x.Turn == gameObj.CurrentRound);
                 if(turnDetails != null)
                     Clients.Group(gameObj.GameCode).startRound(turnDetails);
+
+                //PlayerAI player = new PlayerAI(gameObj);
+                //
+                //decideBuySellForAI(player.returnBuySellList();)
 
                 GetGameLeaders(gameObj.GameId);
             }
@@ -407,5 +410,24 @@ namespace X_SMS.Hubs
                 }
             }
        }
+
+        public void decideBuySellForAI(List<AIBuySellDetails> list)
+        {
+            try
+            {
+                foreach (AIBuySellDetails item in list)
+                {
+                    if (item.Buy)
+                        BuyStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock, item.Quantity);
+                    else if (!item.Buy)
+                    {
+                        SellStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock, item.Quantity);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

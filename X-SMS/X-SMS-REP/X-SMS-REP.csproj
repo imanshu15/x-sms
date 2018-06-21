@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AIBuySellDetails.cs" />
     <Compile Include="BankAccountDTO.cs" />
     <Compile Include="ChartStock.cs" />
     <Compile Include="EventDetail.cs" />
