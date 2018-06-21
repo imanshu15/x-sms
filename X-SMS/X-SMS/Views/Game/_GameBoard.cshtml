@@ -7,11 +7,79 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+
 <nav class=" navbar-light bg-light inner-header">
-    <a href="#" class="button title">MARKETS</a>
-    <a href="#" class="button title">CURRENT TRANSACTIONS</a>
-    <a href="#" class="button title">GRAPHS</a>
+    <a href="#" class="button title" data-toggle="tab" data-target="#stock">MARKETS</a>
+    <a href="#" class="button title" data-toggle="tab" data-target="#graphs">GRAPHS</a>
+    <a href="#" class="button title" data-toggle="tab" data-target="#transactions">TRANSACTIONS</a>
+    <a href="#" class="button title" data-toggle="tab" data-target="#leaderBoard">LEADERBOARD</a>
+
 </nav>
+
+<div class="panel panel-default" id="togglePanel">
+
+    <div class="panel-body tab-content">
+        <div class="tab-pane active" id="stock">
+            <div class="table-custom">
+                <div class="table-responsive">
+                    @{
+                        Html.RenderPartial("_MarketWindow");
+                        //Html.RenderPartial("_LeaderBoard");
+                        Html.RenderPartial("_Orders");
+                        // Html.RenderPartial("_StockInfo");
+                        // Html.RenderPartial("_Transactions");
+                        // Html.RenderPartial("_Bank");
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane " id="transactions">
+            <div class="table-custom">
+                <div class="table-responsive">
+                    @{
+                        //Html.RenderPartial("_MarketWindow");
+                        //Html.RenderPartial("_LeaderBoard");
+                        // Html.RenderPartial("_Orders");
+                        // Html.RenderPartial("_StockInfo");
+                        Html.RenderPartial("_Transactions");
+                        // Html.RenderPartial("_Bank");
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane " id="bank-window">
+            <div class="table-custom">
+                <div class="table-responsive">
+                    @{
+                        //Html.RenderPartial("_MarketWindow");
+                        //Html.RenderPartial("_LeaderBoard");
+                        // Html.RenderPartial("_Orders");
+                        // Html.RenderPartial("_StockInfo");
+                        // Html.RenderPartial("_Transactions");
+                        Html.RenderPartial("_Bank");
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane " id="leaderBoard">
+            <div class="table-custom">
+                <div class="table-responsive">
+                    @{
+                        //Html.RenderPartial("_MarketWindow");
+                        Html.RenderPartial("_LeaderBoard");
+                        // Html.RenderPartial("_Orders");
+                        // Html.RenderPartial("_StockInfo");
+                        // Html.RenderPartial("_Transactions");
+                       // Html.RenderPartial("_Bank");
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <!-- Left-Side Bar!-->
 
 <div class="a-menu closed ">
@@ -27,7 +95,7 @@
             </div>
         </div>
 
-        <a class="i-menu-link">
+        <a class="i-menu-link" data-toggle="tab" data-target="#bank-window">
             <span class="	fa fa-calendar"></span>&nbsp; Bank
         </a>
         <a class="i-menu-link">
@@ -43,18 +111,7 @@
     </div>
 </div>
 
-<div class="table-custom">
-    <div class="table-responsive">
-        @{
-            Html.RenderPartial("_MarketWindow");
-            //Html.RenderPartial("_LeaderBoard");
-            Html.RenderPartial("_Orders");
-            // Html.RenderPartial("_StockInfo");
-            // Html.RenderPartial("_Transactions");
-            // Html.RenderPartial("_Bank");
-        }
-    </div>
-</div>
+ 
 <!-- Right-Side Bar!-->
 
 <div class="a-menu-right closed ">
@@ -71,11 +128,7 @@
 
             <div class="panel-collapse " id="collapseOne">
                 <div class="panel-body">
-                    <ul class="chat" id="stocksNewsFeed">
-                        
-                            
-
-                    </ul>
+                    <ul class="chat" id="stocksNewsFeed"></ul>
                 </div>
 
             </div>
@@ -178,7 +231,7 @@
                     <label for="lblJoinPlayerName"> Quantity</label>
                     <input type="hidden" id="hdnSellStockId">
                     <input type="hidden" id="hdnSellSectorId">
-                    <input type="number" class="form-control" id="txtSellStockQuantity" placeholder="Enter the quantity" min="1" >
+                    <input type="number" class="form-control" id="txtSellStockQuantity" placeholder="Enter the quantity" min="1">
                 </div>
                 <p>Are you sure that you want to sell those stocks ?</p>
             </div>
