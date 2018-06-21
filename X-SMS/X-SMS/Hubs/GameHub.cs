@@ -396,10 +396,10 @@ namespace X_SMS.Hubs
                 foreach (AIBuySellDetails item in list)
                 {
                     if (item.Buy)
-                        BuyStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock, item.Quantity);
+                        BuyStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock.StockId, item.Quantity);
                     else if (!item.Buy)
                     {
-                        SellStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock, item.Quantity);
+                        SellStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock.StockId, item.Quantity);
                     }
                 }
             }
