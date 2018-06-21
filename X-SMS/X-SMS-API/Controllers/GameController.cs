@@ -88,5 +88,18 @@ namespace X_SMS_API.Controllers
             }
         }
 
+
+        [Route("api/game/sectors")]
+        [HttpGet]
+        public IHttpActionResult GetSectors()
+        {
+            using (GameService gameService = new GameService())
+            {
+                ResultToken token = new ResultToken();
+                token.Success = true;
+                token.Data = gameService.GetSectorsList();
+                return Json(token);
+            }
+        }
     }
 }

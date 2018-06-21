@@ -6,6 +6,9 @@ function setUpStocks(data) {
     if (currentTurn != 1) {
         getPlayerStock();
     }
+    generateSectorChart(currentTurn);
+    generateTrendChart(currentTurn);
+
     $('#hdnCurrentTurn').val(currentTurn);
     $('#gameScrnCurntTurn').text(currentTurn);
     var sectorList = data.Sectors;
@@ -47,29 +50,10 @@ function setUpStocks(data) {
         }
     }
 
-    loadStocksTable(stocksList);
-    console.log(stocksList);
-    //if (currentTurn == 1) {
-    //    setInterval(function () { loadStocksTable(stocksList); }, 10000);
-    //} else {
-        
-    //}
-    
+    loadStocksTable(stocksList);  
 }
 
 function loadStocksTable(stocks) {
-
-    //$(".stocksBuyIfo").bootstrapNews({
-    //    newsPerPage: 5,
-    //    autoplay: false,
-    //    pauseOnHover: true,
-    //    direction: 'down',
-    //    newsTickerInterval: 4000,
-    //    onToDo: function () {
-    //        //console.log(this);
-    //    }
-    //});
-
     $("#stockMarketTable > tbody").html("");
     for (var i = 0; i < stocks.length; i++) {
         var stock = stocks[i];
@@ -105,31 +89,9 @@ function showStockChart(sectorId,stockId) {
                 data = res;
         }
     });
-    console.log(data);
+
     generateBarChart(turn, data.PriceList, data.StockName);
     $('#mdlStockChart').modal('show');
-}
-
-function NewRowToStocks(stock) {
-    console.log(stock);
-    var table = document.getElementById("stockList");
-    var row = table.insertRow(0);
-    var SectorId = row.insertCell(0);
-    var Sector = row.insertCell(1);
-    var StockId = row.insertCell(2);
-    var StockName = row.insertCell(3);
-    var Price = row.insertCell(4);
-    var Isincreased = row.insertCell(5);
-    var Buy = row.insertCell(6);
-    SectorId.innerHTML = stock.sectorId;
-    Sector.innerHTML = stock.sectorName;
-    StockId.innerHTML = stock.stockId;
-    StockName.innerHTML = stock.stockName;
-    Price.innerHTML = stock.price;
-    Isincreased.innerHTML = stock.isIncreased;
-
-    var buyStr = '<button onclick="buyStockPopUp(' + stock.sectorId + ',' + stock.stockId + ',\'' + stock.stockName+'\')"> Buy </button>'
-    Buy.innerHTML = buyStr;
 }
 
 function buyStockPopUp(sectorId,stockId,stockName) {
@@ -140,7 +102,6 @@ function buyStockPopUp(sectorId,stockId,stockName) {
 }
 
 function buyStocks() {
-    debugger
     $('#mdlBuyStock').modal('hide');
     var sectorId = $('#hdnBuySectorId').val();
     var stockId = $('#hdnBuyStockId').val();
@@ -178,43 +139,44 @@ function loadPlayerStocksGrid(data) {
     }
 }
 
-function NewRowToPlayerStocks(stock) {
-    console.log(stock);
-    var table = document.getElementById("playerStocksList");
-    var row = table.insertRow(0);
-    var SectorId = row.insertCell(0);
-    var Sector = row.insertCell(1);
-    var StockId = row.insertCell(2);
-    var StockName = row.insertCell(3);
-    var Quantity = row.insertCell(4);
-    var BoughtPrice = row.insertCell(5);
-    var CurrentPrice = row.insertCell(6);
-    var Isincreased = row.insertCell(7);
-    var Sell = row.insertCell(8);
-    SectorId.innerHTML = stock[0].SectorId;
-    Sector.innerHTML = stock[0].SectorName;
-    StockId.innerHTML = stock[0].StockId;
-    StockName.innerHTML = stock[0].StockName;
-    Quantity.innerHTML = stock[0].Quantity;
-    BoughtPrice.innerHTML = stock[0].BoughtPrice;
-    CurrentPrice.innerHTML = stock[0].CurrentPrice;
-    Isincreased.innerHTML = stock[0].IsIncreased;
-
-    var sellStr = '<button onclick="sellStockPopUp(' + stock[0].SectorId + ',' + stock[0].StockId + ',' + stock[0].Quantity + ',\'' + stock[0].StockName + '\')"> Sell </button>'
-    Sell.innerHTML = sellStr;
-}
-
 function AddToMyStocksTable(stock) {
+    var percentage = stock[0].Percentage;
+    percentage = percentage.toFixed(2);
+
+    var percentageClass = '';
+    var profitClass = '';
+    var profitClassIcon = '';
+
+    if (percentage > 0) {
+        percentageClass = 'profit-color';
+    } else if (percentage < 0){
+        percentageClass = 'loss-color';
+    }else {
+        percentageClass = 'neutral-color ';
+    }
+
+    var profit = stock[0].Profit;
+    if (profit > 0) {
+        profitClass = 'profit-color';
+        profitClassIcon = 'fa fa-arrow-up';
+    } else if (profit < 0) {
+        profitClass = 'loss-color';
+        profitClassIcon = 'fa fa-arrow-down';
+    } else {
+        profitClass = 'neutral-color';
+        profitClassIcon = 'fa fa-arrows-h';
+    }
+
     var appendStr = '<tr class="table-row"><td><div class="stock-img"><img class="avatar" alt="Alphabet" src="https://etoro-cdn.etorostatic.com/market-avatars/goog/150x150.png"></div>'
         + '<div class="stock-info"><span class="stock-name">' + stock[0].StockName + '</span><span class="sector-name">' + stock[0].SectorName + '</span></div></td>'
         + ' <td><div class="units"><span>' + stock[0].Quantity + '</span> </div></td>'
         + ' <td><div class="stock-trade-button"><div class="left-price-name">O</div><div class="price-value"><span>' + stock[0].BoughtPrice + '</span> </div></div></td>'
         + '<td><div class="stock-trade-button"><div class="left-price-name">C</div><div class="price-value"><span>' + stock[0].CurrentPrice + '</span> </div></div></td>'
-        + '<td><div class="red"><span class="change-num-amount ">' + stock[0].Percentage + '</span></div></td>'
-        + '<td style="text-align:center;"><i class="fa fa-arrow-up green" style="font-size:20px;top:5px;"></i></td>'
-        + '<td><div class="red"><span class="profit-amount ">' + stock[0].Profit + '</span></div></td>'
+        + '<td><div class="' + percentageClass+'"><span class="change-num-amount ">' + percentage + '</span></div></td>'
+        + '<td style="text-align:center;"><i class="' + profitClassIcon + ' ' + profitClass +'" style="font-size:20px;top:5px;"></i></td>'
+        + '<td><div class="' + profitClass+'"><span class="profit-amount ">' + stock[0].Profit + '</span></div></td>'
         + ' <td style="text-align:center;"><div class="trade-button "><div class="sell-botton  d-inline victoria-sell" onclick = "showStockChart(' + stock[0].SectorId + ', ' + stock[0].StockId + ')"><span>VIEW</span> </div>'
-        + '<td style="text-align:center;"><div class="trade-button "><div class="sell-botton d-inline victoria-buy" onclick="sellStockPopUp(' + stock[0].SectorId + ',' + stock[0].StockId + ',' + stock[0].Quantity + ',\'' + stock[0].StockName +'\')"><span> SELL </span> </div></div></td> </tr>';
+        + '<div class="trade-button "><div class="sell-botton d-inline victoria-buy" onclick="sellStockPopUp(' + stock[0].SectorId + ',' + stock[0].StockId + ',' + stock[0].Quantity + ',\'' + stock[0].StockName +'\')"><span> SELL </span> </div></div></td> </tr>';
 
     $('#myStockMarketTable > tbody:last-child').append(appendStr);
 }
@@ -250,4 +212,35 @@ function addStockSoldNews(details) {
     appendStr += '<p class = "red">Type: Sell Stock: ' + details.StockName + ' StockPrice: ' + details.Price + ' Units:' + details.Quantity + ' Balance:' + details.PlayerAccBalance +' </p> </div></li>';
 
     $("#stocksNewsFeed").prepend(appendStr);
+}
+
+function setUpLeaderBoard(data) {
+    $("#leaderBoardList > tbody").html("");
+    for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        addRowToLeaderBoard(row,i+1);
+    }
+}
+
+function addRowToLeaderBoard(row,rank) {
+
+    var profit = ((row.BankAccount.Balance - 1000) / 1000) * 100;
+    profit = profit.toFixed(2);
+
+    var appendStr = '<tr class="table-row"><td> <div class="rank">#<span>' + rank + '</span> </div> </td>'
+        + ' <td><center><div class="stock-img"><img class="avatar" alt="Alphabet" src="https://png.icons8.com/color/50/000000/person-male.png"></div>'
+        + '<div class="stock-info"><span class="stock-name">' + row.PlayerName + '</span></div> </center> </td>'
+        + '<td> <div class="orders"><span> ' + row.NoOfTransactions + '</span> </div></td>';
+
+    if (profit < 0) {
+        appendStr += ' <td> <div class="profit loss-color"> <span class="profit-amount "> ' + profit + '% </span></div></td>';
+    } else if (profit > 0) {
+        appendStr += ' <td> <div class="profit profit-color"> <span class="profit-amount "> ' + profit + '% </span></div></td>';
+    } else {
+        appendStr += ' <td> <div class="profit neutral-color"> <span class="profit-amount "> ' + profit + '% </span></div></td>';
+    }
+
+    appendStr += '<td> <div class="score"><span>' + row.BankAccount.Balance +'</span> </div> </td> </tr>';
+
+    $('#leaderBoardList > tbody:last-child').append(appendStr);
 }

@@ -33,6 +33,15 @@
                 </div>
             </div>
         </div>
+        <div class="tab-pane" id="graphs">
+            <div class="table-custom">
+                <div class="table-responsive">
+                    @{
+                        Html.RenderPartial("_Graphs");
+                    }
+                </div>
+            </div>
+        </div>
         <div class="tab-pane " id="transactions">
             <div class="table-custom">
                 <div class="table-responsive">
@@ -70,7 +79,7 @@
                         // Html.RenderPartial("_Orders");
                         // Html.RenderPartial("_StockInfo");
                         // Html.RenderPartial("_Transactions");
-                       // Html.RenderPartial("_Bank");
+                        // Html.RenderPartial("_Bank");
                     }
                 </div>
             </div>
