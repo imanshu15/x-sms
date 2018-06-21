@@ -34,6 +34,7 @@ namespace X_SMS.Hubs
                     if (player != null)
                     {
                         player.GameCode = game.GameCode;
+                        player.NoOfTransactions = 0;
                         game.Players.Add(player);
                         EntityStateManager.CurrentGames.Add(game);
                         AddPlayer(player);
@@ -85,6 +86,7 @@ namespace X_SMS.Hubs
                         if (player != null)
                         {
                             player.GameCode = game.GameCode;
+                            player.NoOfTransactions = 0;
                             game.Players.Add(player);
                             AddPlayer(player);
                             isSuccess = true;
@@ -123,8 +125,15 @@ namespace X_SMS.Hubs
                     {
                         var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == game.GameId);
                         gameObj.IsStarted = true;
+
+                        // SET UP GAME DATA
+                        var sectors = gameLogic.GetSectors();
+                        Clients.Group(game.GameCode).setUpSectors(sectors);
+
                         gameObj.GameDetail = gameLogic.GetGameData(gameObj.GameId);
+                        Clients.Group(game.GameCode).setUpGameData(gameObj.GameDetail);
                         Clients.Group(game.GameCode).gameStarted(game);
+
                         SetupGame(gameObj.GameId);
                     }
                     else
@@ -239,9 +248,17 @@ namespace X_SMS.Hubs
                 //
                 //decideBuySellForAI(player.returnBuySellList();)
 
+                GetGameLeaders(gameObj.GameId);
             }
 
             return isFinished;
+        }
+
+        public void GetGameLeaders(int gameId) {
+
+            var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
+            var gamePlayers = gameObj.Players.Where(a => a.IsActive == true).OrderByDescending(b => b.BankAccount.Balance).ThenByDescending(c => c.NoOfTransactions).ToList();
+            Clients.Group(gameObj.GameCode).loadGameLeaders(gamePlayers);
         }
 
         public void BuyStocks(int gameId,int playerId,int sectorId,int stockId,int quantity)
@@ -279,8 +296,11 @@ namespace X_SMS.Hubs
 
                                     player.PlayerStocks.Add(pStock);
                                     player.BankAccount.Balance -= (quantity * stock.CurrentPrice);
+                                    player.NoOfTransactions += 1;
                                     Clients.Client(Context.ConnectionId).stockBuySuccess(player.BankAccount.Balance);
                                     Clients.Group(game.GameCode).playerBoughtStock(temp);
+
+                                    GetGameLeaders(game.GameId);
                                 }
                                 else {
                                     token.Success = false;
@@ -309,7 +329,7 @@ namespace X_SMS.Hubs
                 foreach (var temp in playerStocks) {
                     temp.CurrentPrice = gameLogic.GetStockValue(gameId, temp.SectorId, temp.StockId);
                     temp.IsIncreased = (temp.CurrentPrice > temp.BoughtPrice) ? true : false;
-                    temp.Percentage = (temp.CurrentPrice / temp.BoughtPrice) * 100;
+                    temp.Percentage = ((temp.CurrentPrice - temp.BoughtPrice)/ temp.BoughtPrice) * 100;
                     temp.Profit = (temp.CurrentPrice * temp.Quantity) - (temp.BoughtPrice * temp.Quantity);
                 }
                 Clients.Client(Context.ConnectionId).loadPlayerStocksList(playerStocks.GroupBy(x => x.StockId).ToList());
@@ -355,14 +375,14 @@ namespace X_SMS.Hubs
                                             break;
                                         }
                                     }
-                                    var stockToRemove = tempStocks.Where(c => c.Quantity <= 0).Select(x => x.SectorId).ToList();
+                                    var stockToRemove = tempStocks.Where(c => c.Quantity <= 0).Select(x => x.StockId).ToList();
 
                                     foreach (var removeStock in stockToRemove)
                                     {
                                         var tempStockToRemove = tempStocks.Where(a => a.StockId == removeStock).ToList();
                                         foreach (var tempStk in tempStockToRemove) {
-                                            if (tempStk.Quantity == 0)
-                                                tempStocks.Remove(tempStk);
+                                            if (tempStk.Quantity <= 0)
+                                                player.PlayerStocks.Remove(tempStk);
                                         }
                                     }
 
@@ -370,6 +390,8 @@ namespace X_SMS.Hubs
                                     temp.PlayerAccBalance = player.BankAccount.Balance;
                                     Clients.Client(Context.ConnectionId).stockSellSuccess(player.BankAccount.Balance);
                                     Clients.Group(game.GameCode).playerSoldStock(temp);
+
+                                    GetGameLeaders(game.GameId);
                                 }
                                 else
                                 {

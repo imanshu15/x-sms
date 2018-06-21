@@ -1,4 +1,5 @@
 ﻿var game;
+
 $(document).ready(function () {
     game = $.connection.gameHub;
 
@@ -151,6 +152,23 @@ function setUpWaitClientMethods() {
         }
     };
 
+    game.client.setUpGameData = function (data) {
+        debugger
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
+            console.log(data);
+            dataset = data;
+        }
+    };
+
+    game.client.setUpSectors = function (data) {
+        debugger
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
+            console.log(data);
+            sectors = data;
+        }
+    };
+    
+
     //WAIT - NotifyPlayers
     game.client.notifyJoinedPlayers = function (data) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
@@ -244,6 +262,12 @@ function setUpGameClientMethods() {
             $('#msgTitle').text('Unsuccessful');
             $('#msgBody').text(response.Message);
             $('#mdlMessage').modal('show');
+        }
+    };
+
+    game.client.loadGameLeaders = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+            setUpLeaderBoard(response);
         }
     };
 }

@@ -18,5 +18,6 @@ namespace X_SMS_REP
         public BankAccountDTO BankAccount { get; set; }
         public string GameCode { get; set; }
         public List<PlayerStock> PlayerStocks { get; set; }
+        public int NoOfTransactions { get; set; }
     }
 }

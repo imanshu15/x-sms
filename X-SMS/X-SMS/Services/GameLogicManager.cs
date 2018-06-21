@@ -34,6 +34,31 @@ namespace X_SMS.Services
             return returnObj;
         }
 
+        public List<SectorDTO> GetSectors()
+        {
+            List<SectorDTO> returnObj = new List<SectorDTO>();
+            try
+            {
+                using (APIService apiClient = new APIService())
+                {
+                    var temp = apiClient.MakeGetRequest("api/game/sectors");
+                    ResultToken result = apiClient.ConvertObjectToToken(temp);
+                    if (result.Success && result.Data != null)
+                    {
+                        returnObj = JsonConvert.DeserializeObject<List<SectorDTO>>(result.Data.ToString());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex);
+            }
+
+            return returnObj;
+        }
+
+
         public ResultToken BuyStocks(int playerId,StockDetail stock,int quantity,decimal price)
         {
             ResultToken result = null;
@@ -111,5 +136,6 @@ namespace X_SMS.Services
             }
             return returnValue;
         }
+
     }
 }

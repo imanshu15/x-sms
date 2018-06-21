@@ -205,3 +205,15 @@ canvas {
     -webkit-user-select: none;
     -ms-user-select: none;
 }
+
+.profit-color {
+    color:green !important;
+}
+
+.loss-color {
+    color:red !important;
+}
+
+.neutral-color {
+    color:dodgerblue !important;
+}

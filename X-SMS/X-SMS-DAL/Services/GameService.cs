@@ -107,6 +107,13 @@ namespace X_SMS_DAL.Services
 
         }
 
+        public List<SectorDTO> GetSectorsList()
+        {
+           var sectors = gameEntities.Sectors.ToList();
+            List<SectorDTO> sectorsList = Mapping.Mapper.Map<List<SectorDTO>>(sectors);
+            return sectorsList;
+        }
+
         public ResultToken StartGame(int gameId) {
 
             ResultToken result = new ResultToken();

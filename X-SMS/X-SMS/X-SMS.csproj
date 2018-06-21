@@ -267,7 +267,6 @@
     </None>
     <Content Include="Scripts\ChartsJs\Chart.bundle.js" />
     <Content Include="Scripts\ChartsJs\utils.js" />
-    <Content Include="Scripts\Clock.js" />
     <Content Include="Scripts\Clock\flipclock.css" />
     <Content Include="Scripts\Clock\flipclock.js" />
     <Content Include="Scripts\Clock\flipclock.min.js" />
@@ -282,6 +281,7 @@
     <Content Include="Scripts\GameBoardJS\bootstrapJS\js\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\GameBoardJS\bootstrapJS\js\bootstrap.js.map" />
     <Content Include="Scripts\GameBoardJS\bootstrapJS\js\bootstrap.min.js.map" />
+    <None Include="Properties\PublishProfiles\ASPNET HOST.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -326,6 +326,7 @@
     <Content Include="Views\Game\_StockInfo.cshtml" />
     <Content Include="Views\Game\_Bank.cshtml" />
     <Content Include="Views\Game\_Transactions.cshtml" />
+    <Content Include="Views\Game\_Graphs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
