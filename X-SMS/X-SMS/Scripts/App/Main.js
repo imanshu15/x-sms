@@ -197,7 +197,7 @@ function setUpGameClientMethods() {
     game.client.stockBuySuccess = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
             console.log(response);
-            $('#gameScrnBalance').text(response);
+            $('#playerAccountBalance').text(response);
         }
     };
 
@@ -227,7 +227,7 @@ function setUpGameClientMethods() {
     game.client.stockSellSuccess = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
             console.log(response);
-            $('#gameScrnBalance').text(response);
+            $('#playerAccountBalance').text(response);
         }
     };
 

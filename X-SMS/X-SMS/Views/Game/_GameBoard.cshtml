@@ -8,7 +8,7 @@
 
 }
 <nav class=" navbar-light bg-light inner-header">
-   <a href="#" class="button title">MARKETS</a>
+    <a href="#" class="button title">MARKETS</a>
     <a href="#" class="button title">CURRENT TRANSACTIONS</a>
     <a href="#" class="button title">GRAPHS</a>
 </nav>
@@ -46,12 +46,12 @@
 <div class="table-custom">
     <div class="table-responsive">
         @{
-           Html.RenderPartial("_MarketWindow");
-           Html.RenderPartial("_LeaderBoard");
+            Html.RenderPartial("_MarketWindow");
+            //Html.RenderPartial("_LeaderBoard");
             Html.RenderPartial("_Orders");
-          // Html.RenderPartial("_StockInfo");
-         // Html.RenderPartial("_Transactions");
-        // Html.RenderPartial("_Bank");
+            // Html.RenderPartial("_StockInfo");
+            // Html.RenderPartial("_Transactions");
+            // Html.RenderPartial("_Bank");
         }
     </div>
 </div>
@@ -60,7 +60,8 @@
 <div class="a-menu-right closed ">
     <div class="clock">
     </div>
-   
+    <div>ROUND - <span id="gameScrnCurntTurn"> </span></div>
+
     <div class="news-feed">
         <div class=" navbar-light bg-light transaction-bar d-inline" style=" ">
             <i class="fas fa-chart-line d-inline"></i>
@@ -70,66 +71,9 @@
 
             <div class="panel-collapse " id="collapseOne">
                 <div class="panel-body">
-                    <ul class="chat">
-                        <li class="left clearfix">
-                            <span class="chat-img pull-left">
-                                <img src="~/Content/images/user-chat.png" alt="User Avatar" class="img-circle" />
-                            </span>
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <strong class="primary-font">Shey De Woony</strong> <small class="pull-right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>12 mins ago
-                                    </small>
-                                </div>
-                                <p>
-                                    Type: Buy
-                                    Units:100
-                                    Open :1134
-                                    Balance:10000
-                                </p>
-                            </div>
-                        </li>
-
-                        <li class="left clearfix">
-                            <span class="chat-img pull-left">
-                                <img src="~/Content/images/user-chat.png" alt="User Avatar" class="img-circle" />
-                            </span>
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <strong class="primary-font">Imanshu Anupama</strong> <small class="pull-right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>14 mins ago
-                                    </small>
-                                </div>
-                                <p>
-                                    Type: Sell
-                                    Units:100
-                                    Open :1134
-                                    Balance:10000
-
-                                </p>
-                            </div>
-                        </li>
-                        <li class="left clearfix">
-                            <span class="chat-img pull-left">
-                                <img src="~/Content/images/user-chat.png" alt="User Avatar" class="img-circle" />
-                            </span>
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <strong class="primary-font">Imanshu Anupama</strong> <small class="pull-right text-muted">
-                                        <span class="glyphicon glyphicon-time"></span>14 mins ago
-                                    </small>
-                                </div>
-                                <p>
-                                    Type: Close
-                                    Units:100
-                                    Open :1134
-                                    Close:1500
-                                    Profit:400
-                                    Balance:10400
-
-                                </p>
-                            </div>
-                        </li>
+                    <ul class="chat" id="stocksNewsFeed">
+                        
+                            
 
                     </ul>
                 </div>
@@ -149,8 +93,8 @@
         </div>
 
         <div class="footer-unit balance">
-            <span class="footer-unit-value ng-binding">$0.00</span>
-            <span class="footer-unit-label">Available</span>
+            <span class="footer-unit-value ng-binding">RS 1000.00</span>
+            <span class="footer-unit-label">Opening Balance</span>
         </div>
 
         <div class="footer-unit balance">
@@ -158,7 +102,7 @@
         </div>
 
         <div class="footer-unit balance">
-            <span class="footer-unit-value">$0.00</span>
+            <span class="footer-unit-value">Rs <span id="playerAllocatedBalance"> </span></span>
             <span class="footer-unit-label">Total Allocated</span>
         </div>
 
@@ -167,7 +111,7 @@
         </div>
 
         <div class="footer-unit balance">
-            <span class="footer-unit-value ">$0.00</span>
+            <span class="footer-unit-value ">Rs <span id="playerProfiBalance"> </span></span>
             <span class="footer-unit-label">Profit</span>
         </div>
 
@@ -176,9 +120,72 @@
         </div>
 
         <div class="footer-unit balance">
-            <span class="footer-unit-value ">$0.00</span>
-            <span class="footer-unit-label">Equity</span>
+            <span class="footer-unit-value ">Rs <span id="playerAccountBalance"> </span></span>
+            <span class="footer-unit-label">Balance</span>
         </div>
     </nav>
 </footer>
- 
+
+<div id="mdlStockChart" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Turn Wise Stock Detail</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <canvas id="barCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mdlBuyStock" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Buy Stock - <span id="lblBuyStockName"> </span></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="lblJoinPlayerName"> Quantity</label>
+                    <input type="hidden" id="hdnBuyStockId">
+                    <input type="hidden" id="hdnBuySectorId">
+                    <input type="number" class="form-control" id="txtStockQuantity" placeholder="Enter the quantity">
+                </div>
+                <p>Are you sure that you want to buy those stocks ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="buyStocks()">Buy</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mdlSellStock" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Sell Stock - <span id="lblSellStockName"> </span></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="lblJoinPlayerName"> Quantity</label>
+                    <input type="hidden" id="hdnSellStockId">
+                    <input type="hidden" id="hdnSellSectorId">
+                    <input type="number" class="form-control" id="txtSellStockQuantity" placeholder="Enter the quantity" min="1" >
+                </div>
+                <p>Are you sure that you want to sell those stocks ?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="sellStocks()">Sell</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

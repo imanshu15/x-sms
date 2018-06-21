@@ -58,6 +58,7 @@ function getOpenGameList() {
 }
 
 function setUpGameTable(data) {
+    gameTable.clear().draw();
     data.forEach(function (entry) {
         if (entry !== null) {
             gameTable.row.add([entry.GameId, entry.GameCode, entry.CreatedPlayer, entry.PlayersCount, 0, entry.StartTime]).draw();

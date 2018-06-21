@@ -199,3 +199,9 @@ color: red;
 .pagination li:hover {
     cursor: pointer;
 }
+
+canvas {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}

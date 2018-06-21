@@ -191,24 +191,24 @@ namespace X_SMS.Hubs
         {
             var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
             gameObj.CurrentRound = 0;
-            var isFinished = NextRound(gameObj.GameId);
-            //System.Threading.Timer timer = null;
-            //timer = new System.Threading.Timer(new TimerCallback(y =>
-            //{
-            //    try
-            //    {
-            //        var isFinished = NextRound(gameObj.GameId);
-            //        if (isFinished)
-            //        {
-            //            timer.Dispose();
-            //        }
-            //    }
-            //    catch
-            //    {
-            //    }
-            //}));
+            // var isFinished = NextRound(gameObj.GameId);
+            System.Threading.Timer timer = null;
+            timer = new System.Threading.Timer(new TimerCallback(y =>
+            {
+                try
+                {
+                    var isFinished = NextRound(gameObj.GameId);
+                    if (isFinished)
+                    {
+                        timer.Dispose();
+                    }
+                }
+                catch
+                {
+                }
+            }));
 
-            //timer.Change(TimeSpan.Zero, TimeSpan.FromMinutes(1));
+            timer.Change(TimeSpan.Zero, TimeSpan.FromMinutes(1));
         }
 
         private bool NextRound(int gameId) {
@@ -223,8 +223,14 @@ namespace X_SMS.Hubs
             }
             else {
                gameObj.CurrentRound += 1;
-               if(gameObj.CurrentRound == 1)
+                if (gameObj.CurrentRound == 1)
+                {
                     System.Threading.Thread.Sleep(3000);
+                }
+                else
+                {
+
+                }
 
                 var turnDetails = gameObj.GameDetail.TurnDetail.FirstOrDefault(x => x.Turn == gameObj.CurrentRound);
                 if(turnDetails != null)
@@ -235,7 +241,7 @@ namespace X_SMS.Hubs
             return isFinished;
         }
 
-        public void BuyStocks(int gameId,int playerId,int sectorId,StockDetail stockTo,int quantity)
+        public void BuyStocks(int gameId,int playerId,int sectorId,int stockId,int quantity)
         {
             GameLogicManager gameLogic = new GameLogicManager();
             lock (_syncRoot)
@@ -247,9 +253,9 @@ namespace X_SMS.Hubs
                     if (turn != null) {
                         var sector = turn.Sectors.FirstOrDefault(y => y.Sector.SectorId == sectorId);
                         if (sector != null) {
-                            var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockTo.StockId);
+                            var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockId);
 
-                            var token = gameLogic.BuyStocks(playerId, stockTo, quantity,stock.CurrentPrice);
+                            var token = gameLogic.BuyStocks(playerId, stock, quantity,stock.CurrentPrice);
 
                             if (token.Success)
                             {
@@ -263,7 +269,7 @@ namespace X_SMS.Hubs
                                     PlayerStock pStock = new PlayerStock();
                                     pStock.Quantity = quantity;
                                     pStock.SectorId = sectorId;
-                                    pStock.StockId = stockTo.StockId;
+                                    pStock.StockId = stock.StockId;
                                     pStock.StockName = stock.StockName;
                                     pStock.SectorName = sector.Sector.SectorName;
                                     pStock.BoughtPrice = stock.CurrentPrice;
@@ -300,12 +306,14 @@ namespace X_SMS.Hubs
                 foreach (var temp in playerStocks) {
                     temp.CurrentPrice = gameLogic.GetStockValue(gameId, temp.SectorId, temp.StockId);
                     temp.IsIncreased = (temp.CurrentPrice > temp.BoughtPrice) ? true : false;
+                    temp.Percentage = (temp.CurrentPrice / temp.BoughtPrice) * 100;
+                    temp.Profit = (temp.CurrentPrice * temp.Quantity) - (temp.BoughtPrice * temp.Quantity);
                 }
                 Clients.Client(Context.ConnectionId).loadPlayerStocksList(playerStocks.GroupBy(x => x.StockId).ToList());
             }
         }
 
-        public void SellStocks(int gameId, int playerId, int sectorId, StockDetail stockTo, int quantity)
+        public void SellStocks(int gameId, int playerId, int sectorId, int stockId, int quantity)
         {
             GameLogicManager gameLogic = new GameLogicManager();
             lock (_syncRoot)
@@ -319,9 +327,9 @@ namespace X_SMS.Hubs
                         var sector = turn.Sectors.FirstOrDefault(y => y.Sector.SectorId == sectorId);
                         if (sector != null)
                         {
-                            var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockTo.StockId);
+                            var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockId);
 
-                            var token = gameLogic.SellStocks(playerId, stockTo, quantity, stock.CurrentPrice);
+                            var token = gameLogic.SellStocks(playerId, stock, quantity, stock.CurrentPrice);
 
                             if (token.Success)
                             {
@@ -332,7 +340,7 @@ namespace X_SMS.Hubs
                                     temp.PlayerName = player.PlayerName;
                                     temp.StockName = stock.StockName;
 
-                                    var tempStocks = player.PlayerStocks.Where(b => b.StockId == stockTo.StockId).ToList();
+                                    var tempStocks = player.PlayerStocks.Where(b => b.StockId == stockId).ToList();
 
                                     foreach (var tempStock in tempStocks) {
                                         tempStock.Quantity -= quantity;
@@ -356,6 +364,7 @@ namespace X_SMS.Hubs
                                     }
 
                                     player.BankAccount.Balance += (quantity * stock.CurrentPrice);
+                                    temp.PlayerAccBalance = player.BankAccount.Balance;
                                     Clients.Client(Context.ConnectionId).stockSellSuccess(player.BankAccount.Balance);
                                     Clients.Group(game.GameCode).playerSoldStock(temp);
                                 }
