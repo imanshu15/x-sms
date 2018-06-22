@@ -36,6 +36,25 @@ namespace X_SMS_DAL.Services
             return chartStock;
         }
 
+        public List<ChartStock> GetStocksChartValues(int gameId, int turn)
+        {
+            List<ChartStock> stockCharts = new List<ChartStock>();
+            var game = (GameDetail)GameDataManager.gameDetails[gameId];
+            var turnDetails = game.TurnDetail.Where(x => x.Turn <= turn).ToList();
+            var tempTurn = turnDetails.FirstOrDefault();
+
+            var sectors = tempTurn.Sectors.ToList();
+            foreach (var sector in sectors) {
+                var stocks = sector.Stocks;
+                foreach (var stock in stocks) {
+                    var chart = GetStocksValues(gameId, sector.Sector.SectorId, stock.StockId, turn);
+                    stockCharts.Add(chart);
+                }
+            }
+
+            return stockCharts;
+        }
+
         public List<ChartStock> GetSectorStockValues(int gameId, int sectorId, int turn)
         {
             var game = (GameDetail)GameDataManager.gameDetails[gameId];

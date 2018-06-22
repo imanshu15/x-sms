@@ -18,7 +18,7 @@ namespace X_SMS.Hubs
         
         private object _syncRoot = new object();
 
-        public void CreateGame(string playerName, int playerCount, bool isPrivate)
+        public void CreateGame(string playerName, int playerCount, bool isPrivate,bool isPlayerAi)
         {
 
             bool isSuccess = false;
@@ -30,6 +30,7 @@ namespace X_SMS.Hubs
                 GameDTO game = gameManager.CreateGame(playerName, playerCount, isPrivate);
                 if (game != null)
                 {
+                    game.JoinedPlayerCount = 0;
                     player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
                     if (player != null)
                     {
@@ -38,9 +39,9 @@ namespace X_SMS.Hubs
                         player.GameCode = game.GameCode;
                         player.NoOfTransactions = 0;
                         game.Players.Add(player);
-
+                        game.JoinedPlayerCount += 1;
                         //CREATE PLAYER AI
-                        
+
                         //JoinGame("COMPUTER_AI", game.GameId, "", false);
                         game.IsPlayerAIAvailable = false;
 
@@ -54,7 +55,7 @@ namespace X_SMS.Hubs
                 {
                     Groups.Add(Context.ConnectionId, game.GameCode);
                     Clients.Client(Context.ConnectionId).gameCreated(player); // Call method on created players view
-                    var games = EntityStateManager.CurrentGames.ToList();
+                    var games = EntityStateManager.CurrentGames.Where(a => a.IsPublic == true).ToList();
                     var connectedIds = EntityStateManager.Players.Select(a => a.ConnectionId).ToArray();
                     Clients.AllExcept(connectedIds).updateGameList(games);
                 }
@@ -91,10 +92,14 @@ namespace X_SMS.Hubs
                     if ((game != null && !game.IsPlayerAIAvailable && game.Players.Count < game.PlayersCount) || (game != null && game.IsPlayerAIAvailable && game.Players.Count < game.PlayersCount + 1))
                     {
                         if (!isPlayerAI)
+                        {
+                            game.JoinedPlayerCount += 1;
                             player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
+                        }
                         else
+                        {
                             player = gameManager.CreatePlayer(playerName, game.GameId, "NO CONNECTION");
-
+                        }
                         player.IsPlayerAI = isPlayerAI;
 
                         if (player != null)
@@ -145,6 +150,7 @@ namespace X_SMS.Hubs
                     {
                         var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == game.GameId);
                         gameObj.IsStarted = true;
+                        Clients.Group(game.GameCode).allPlayersConnected();
 
                         // SET UP GAME DATA
                         var sectors = gameLogic.GetSectors();
@@ -183,22 +189,23 @@ namespace X_SMS.Hubs
 
         public void DisconnectPlayer(int gameId)
         {
+            string gameCode = "";
             GameManager gameManager = new GameManager();
-            var player = EntityStateManager.Players.FirstOrDefault(a => a.ConnectionId == Context.ConnectionId);
+            //var player = EntityStateManager.Players.FirstOrDefault(a => a.ConnectionId == Context.ConnectionId);
             var game = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
-            if (player != null)
+            gameCode = game.GameCode;
+            var players = game.Players; 
+            if (players != null)
             {
-                bool isGameOver = false;
-                EntityStateManager.Players.Remove(player);
-                gameManager.DisconnectPlayer(player.PlayerId);
-
-                if (game != null)
-                {
-                    EntityStateManager.CurrentGames.Remove(game);
+                foreach (var player in players)
+                {               
+                    EntityStateManager.Players.Remove(player);
+                    gameManager.DisconnectPlayer(player.PlayerId);
                     game.Players.Remove(player);
                 }
-
-                Clients.Group(game.GameCode).playerDisconnected(player.PlayerName);
+                gameManager.DisconnectGame(game.GameId);
+                EntityStateManager.CurrentGames.Remove(game);
+                Clients.Group(gameCode).playerDisconnected();
                               
             }
         }
@@ -208,7 +215,7 @@ namespace X_SMS.Hubs
         }
 
         public void GetCurrentGameList() {
-            var games = EntityStateManager.CurrentGames.ToList();
+            var games = EntityStateManager.CurrentGames.Where(a => a.IsPublic == true).ToList();
             Clients.Client(Context.ConnectionId).currentGameList(games);
         }
 

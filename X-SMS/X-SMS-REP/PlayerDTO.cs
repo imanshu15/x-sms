@@ -23,5 +23,6 @@ namespace X_SMS_REP
 
         public decimal SpendAmount { get; set; }
         public decimal GainAmount { get; set; }
+
     }
 }

@@ -88,6 +88,16 @@ namespace X_SMS_API.Controllers
             }
         }
 
+        [Route("api/Game/EndGame")]
+        [HttpPost]
+        public ResultToken EndGame([FromBody] int gameId)
+        {
+            using (GameService gameService = new GameService())
+            {
+                var result = gameService.RemoveGame(gameId);
+                return result;
+            }
+        }
 
         [Route("api/game/sectors")]
         [HttpGet]

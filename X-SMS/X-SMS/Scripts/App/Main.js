@@ -14,6 +14,18 @@ $(document).ready(function () {
         $('.collapse').collapse('hide');
     })
 
+    $(window).bind('beforeunload', function (eventObject) {
+        var gameId = $("#hdnSelectedGameId").val();
+        if(gameId != null)
+            game.server.disconnectPlayer(gameId);
+    }); 
+
+    $(window).on('beforeunload', function () {
+        var gameId = $("#hdnSelectedGameId").val();
+        if(gameId != null)
+            game.server.disconnectPlayer(gameId);
+    });
+
 });
 
 function getAPIUrl() {
@@ -25,11 +37,6 @@ function showErrorMsg(title,msg) {
     $('#msgBody').text(msg);
     $('#mdlMessage').modal('show');
 }
-
-$(window).on('beforeunload', function () {
-    var gameId = $("#hdnSelectedGameId").val();
-    game.server.disconnectPlayer(gameId);
-});
 
 var clPreloader = function () {
 
@@ -161,21 +168,22 @@ function setUpWaitClientMethods() {
     };
 
     game.client.setUpGameData = function (data) {
-        debugger
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
-            console.log(data);
             dataset = data;
         }
     };
 
     game.client.setUpSectors = function (data) {
-        debugger
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
-            console.log(data);
             sectors = data;
         }
     };
-    
+
+    game.client.allPlayersConnected = function () {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
+            $('#lblWaitingNotify').text('Please wait till we get things ready');
+        }
+    };
 
     //WAIT - NotifyPlayers
     game.client.notifyJoinedPlayers = function (data) {
