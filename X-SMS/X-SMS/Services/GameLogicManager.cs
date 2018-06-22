@@ -137,5 +137,28 @@ namespace X_SMS.Services
             return returnValue;
         }
 
+        public List<AIBuySellDetails> GetPlayerAIData(GameDTO gameobj)
+        {
+            List<AIBuySellDetails> list = null;
+
+            try
+            {
+                using (APIService apiClient = new APIService())
+                {
+                    var temp = apiClient.MakePostRequest("api/PlayerAi/GetPlayerAIData", gameobj);
+                    ResultToken result = apiClient.ConvertObjectToToken(temp);
+                    if (result != null && result.Success)
+                        list = JsonConvert.DeserializeObject<List<AIBuySellDetails>>(result.Data.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex);
+            }
+
+            return list;
+        }
+
     }
 }

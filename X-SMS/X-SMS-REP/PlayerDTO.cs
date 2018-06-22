@@ -19,5 +19,6 @@ namespace X_SMS_REP
         public string GameCode { get; set; }
         public List<PlayerStock> PlayerStocks { get; set; }
         public int NoOfTransactions { get; set; }
+        public bool IsPlayerAI { get; set; }
     }
 }

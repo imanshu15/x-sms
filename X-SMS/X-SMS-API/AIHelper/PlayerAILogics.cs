@@ -209,7 +209,7 @@ namespace X_SMS_API.AIHelper
                             }
                             catch (Exception e)
                             {
-                                return null;
+                                //return null;
                             }
                         }
                     }

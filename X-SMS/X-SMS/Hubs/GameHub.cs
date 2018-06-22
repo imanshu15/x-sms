@@ -36,6 +36,11 @@ namespace X_SMS.Hubs
                         player.GameCode = game.GameCode;
                         player.NoOfTransactions = 0;
                         game.Players.Add(player);
+
+                        //CREATE PLAYER AI
+                        JoinGame("COMPUTER_AI", game.GameId, "", true);
+                        game.IsPlayerAIAvailable = true;
+
                         EntityStateManager.CurrentGames.Add(game);
                         AddPlayer(player);
                         isSuccess = true;
@@ -57,7 +62,7 @@ namespace X_SMS.Hubs
             }
         }
 
-        public void JoinGame(string playerName, int gameId,string gameCode)
+        public void JoinGame(string playerName, int gameId,string gameCode, bool isPlayerAI = false)
         {
             bool isSuccess = false;
             GameManager gameManager = new GameManager();
@@ -80,9 +85,15 @@ namespace X_SMS.Hubs
                     if (game == null)
                         game = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameCode == gameCode);
 
-                    if (game != null && game.Players.Count < game.PlayersCount)
+                    if ((game != null && !game.IsPlayerAIAvailable && game.Players.Count < game.PlayersCount) || (game != null && game.IsPlayerAIAvailable && game.Players.Count < game.PlayersCount + 1))
                     {
-                         player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
+                        player.IsPlayerAI = isPlayerAI;
+                        if (isPlayerAI)
+                            player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
+                        else
+                            player = gameManager.CreatePlayer(playerName, game.GameId, "NO CONNECTION");
+
+                        
                         if (player != null)
                         {
                             player.GameCode = game.GameCode;
@@ -95,17 +106,21 @@ namespace X_SMS.Hubs
 
                     if (isSuccess)
                     {
-                        Groups.Add(Context.ConnectionId, game.GameCode);
-                        Clients.Client(Context.ConnectionId).joinSuccess(player);
+                        if (!isPlayerAI) {
+                            Groups.Add(Context.ConnectionId, game.GameCode);
+                            Clients.Client(Context.ConnectionId).joinSuccess(player);
+                        }
                         Clients.Group(game.GameCode).notifyJoinedPlayers(playerName);
                     }
                     else
                     {
-                        Clients.Client(Context.ConnectionId).gameJoinFailed();
+                        if (!isPlayerAI)
+                            Clients.Client(Context.ConnectionId).gameJoinFailed();
                     }
                 }
                 else {
-                    Clients.Client(Context.ConnectionId).invalidGameCode();
+                    if (!isPlayerAI)
+                        Clients.Client(Context.ConnectionId).invalidGameCode();
                 }
             }
         }
@@ -118,7 +133,7 @@ namespace X_SMS.Hubs
                 GameLogicManager gameLogic = new GameLogicManager();
 
                 var game = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == gameId);
-                if (game != null && game.Players.Count == game.PlayersCount)
+                if ((game != null && !game.IsPlayerAIAvailable && game.Players.Count == game.PlayersCount) || (game != null && game.IsPlayerAIAvailable && game.Players.Count == (game.PlayersCount + 1)))
                 {
                     game = gameManager.StartGame(game.GameId);
                     if (game != null)
@@ -245,8 +260,9 @@ namespace X_SMS.Hubs
                     Clients.Group(gameObj.GameCode).startRound(turnDetails);
 
                 //PlayerAI player = new PlayerAI(gameObj);
-                //
-                //decideBuySellForAI(player.returnBuySellList();)
+                GameLogicManager gameLogic = new GameLogicManager();
+                var playerAIData = gameLogic.GetPlayerAIData(gameObj);
+                decideBuySellForAI(playerAIData);
 
                 GetGameLeaders(gameObj.GameId);
             }
@@ -274,14 +290,13 @@ namespace X_SMS.Hubs
                         var sector = turn.Sectors.FirstOrDefault(y => y.Sector.SectorId == sectorId);
                         if (sector != null) {
                             var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockId);
-
+                            var player = game.Players.FirstOrDefault(o => o.PlayerId == playerId);
                             var token = gameLogic.BuyStocks(playerId, stock, quantity,stock.CurrentPrice);
 
                             if (token.Success)
                             {
                                 if (token.Data != null)
                                 {
-                                    var player = game.Players.FirstOrDefault(o => o.PlayerId == playerId);
                                     var temp = (PlayerTransactionsDTO)token.Data;
                                     temp.PlayerName = player.PlayerName;
                                     temp.StockName = stock.StockName;
@@ -297,7 +312,10 @@ namespace X_SMS.Hubs
                                     player.PlayerStocks.Add(pStock);
                                     player.BankAccount.Balance -= (quantity * stock.CurrentPrice);
                                     player.NoOfTransactions += 1;
-                                    Clients.Client(Context.ConnectionId).stockBuySuccess(player.BankAccount.Balance);
+
+                                    if(!player.IsPlayerAI)
+                                        Clients.Client(Context.ConnectionId).stockBuySuccess(player.BankAccount.Balance);
+
                                     Clients.Group(game.GameCode).playerBoughtStock(temp);
 
                                     GetGameLeaders(game.GameId);
@@ -309,7 +327,8 @@ namespace X_SMS.Hubs
 
                             }
 
-                            if(!token.Success){
+                            if(!token.Success && !player.IsPlayerAI)
+                            {
                                 Clients.Client(Context.ConnectionId).stockBuyFailed(token);
                             }
                         }
@@ -351,6 +370,7 @@ namespace X_SMS.Hubs
                         if (sector != null)
                         {
                             var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockId);
+                            var player = game.Players.FirstOrDefault(o => o.PlayerId == playerId);
 
                             var token = gameLogic.SellStocks(playerId, stock, quantity, stock.CurrentPrice);
 
@@ -358,7 +378,6 @@ namespace X_SMS.Hubs
                             {
                                 if (token.Data != null)
                                 {
-                                    var player = game.Players.FirstOrDefault(o => o.PlayerId == playerId);
                                     var temp = (PlayerTransactionsDTO)token.Data;
                                     temp.PlayerName = player.PlayerName;
                                     temp.StockName = stock.StockName;
@@ -388,7 +407,8 @@ namespace X_SMS.Hubs
 
                                     player.BankAccount.Balance += (quantity * stock.CurrentPrice);
                                     temp.PlayerAccBalance = player.BankAccount.Balance;
-                                    Clients.Client(Context.ConnectionId).stockSellSuccess(player.BankAccount.Balance);
+                                    if(!player.IsPlayerAI)
+                                        Clients.Client(Context.ConnectionId).stockSellSuccess(player.BankAccount.Balance);
                                     Clients.Group(game.GameCode).playerSoldStock(temp);
 
                                     GetGameLeaders(game.GameId);
@@ -401,7 +421,7 @@ namespace X_SMS.Hubs
 
                             }
 
-                            if (!token.Success)
+                            if (!token.Success && !player.IsPlayerAI)
                             {
                                 Clients.Client(Context.ConnectionId).stockSellFailed(token);
                             }
@@ -418,10 +438,10 @@ namespace X_SMS.Hubs
                 foreach (AIBuySellDetails item in list)
                 {
                     if (item.Buy)
-                        BuyStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock, item.Quantity);
+                        BuyStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock.StockId, item.Quantity);
                     else if (!item.Buy)
                     {
-                        SellStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock, item.Quantity);
+                        SellStocks(item.GameId, item.PlayerId, item.SectorId, item.Stock.StockId, item.Quantity);
                     }
                 }
             }

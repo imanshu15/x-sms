@@ -143,6 +143,7 @@
     <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
+    <Compile Include="Controllers\PlayerAIController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Controllers\TrendController.cs" />
     <Compile Include="Global.asax.cs">
