@@ -9,6 +9,11 @@ $(document).ready(function () {
         console.log("ConId : %o", $.connection.hub.id);
     });
     clPreloader();
+
+    $(document).on('click', function () {
+        $('.collapse').collapse('hide');
+    })
+
 });
 
 function getAPIUrl() {
@@ -68,6 +73,7 @@ function setupJoinClientMethods() {
                 $("#hdnGameId").val(response.GameId);
                 $("#hdnGameCode").val(response.GameCode);
                 $("#hdnPlayerId").val(response.PlayerId);
+                $("#hdnPlayerName").val(response.PlayerName);
                 loadMainScreen("Join/Wait");
             }
         }
@@ -96,6 +102,8 @@ function setupJoinClientMethods() {
                 $("#hdnGameId").val(response.GameId);
                 $("#hdnPlayerId").val(response.PlayerId);
                 $("#hdnGameCode").val(response.GameCode);
+                $("#hdnPlayerName").val(response.PlayerName);
+                
                 loadMainScreen("Join/Wait");
             }
         }
@@ -215,7 +223,10 @@ function setUpGameClientMethods() {
     game.client.stockBuySuccess = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
             console.log(response);
-            $('#playerAccountBalance').text(response);
+            $('#playerAccountBalance').text(response.Balance.toFixed(2));
+            $('#bankWindowBalance').text(response.Balance.toFixed(2));
+            $('#playerAllocatedBalance').text(response.AllocatedPrice.toFixed(2));
+            $('#playerProfitBalance').text(response.ProfitPrice.toFixed(2));
         }
     };
 
@@ -224,6 +235,7 @@ function setUpGameClientMethods() {
             console.log(response);
             addStockBoughtNews(response);
             getPlayerStock();
+            getGameTransactions();
         }
     };
 
@@ -245,7 +257,10 @@ function setUpGameClientMethods() {
     game.client.stockSellSuccess = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
             console.log(response);
-            $('#playerAccountBalance').text(response);
+            $('#playerAccountBalance').text(response.Balance.toFixed(2));
+            $('#bankWindowBalance').text(response.Balance.toFixed(2));
+            $('#playerAllocatedBalance').text(response.AllocatedPrice.toFixed(2));
+            $('#playerProfitBalance').text(response.ProfitPrice.toFixed(2));
         }
     };
 
@@ -254,6 +269,7 @@ function setUpGameClientMethods() {
             console.log(response);
             addStockSoldNews(response);
             getPlayerStock();
+            getGameTransactions();
         }
     };
 

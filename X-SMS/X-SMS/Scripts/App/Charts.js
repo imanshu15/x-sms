@@ -15,8 +15,8 @@ function generateBarChart(currentTurn, stockValues, stockName) {
             labels: labels,
             datasets: [{
                 label: stockName,
-                backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-                borderColor: window.chartColors.red,
+                backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+                borderColor: window.chartColors.blue,
                 borderWidth: 1,
                 data: stockValues
             }]
@@ -110,6 +110,8 @@ function generateTrendChart(currentTurn) {
         };
 
         var ctx = document.getElementById('canvas').getContext('2d');
+        if (window.myLine != undefined)
+            window.myLine.destroy();
         window.myLine = new Chart(ctx, config);
 
     }
@@ -181,9 +183,9 @@ function generateSectorChart(currentTurn) {
         };
         debugger
         var ctx = document.getElementById('sectorCanvas').getContext('2d');
-       // if (window.myLine != undefined)
-         //   window.myLine.destroy();
-        window.myLine = new Chart(ctx, config);
+        if (window.myLine1 != undefined)
+            window.myLine1.destroy();
+        window.myLine1 = new Chart(ctx, config);
 
         var colorNames = Object.keys(window.chartColors);
         var currentMinValue = 999;
@@ -212,7 +214,7 @@ function generateSectorChart(currentTurn) {
                 }
 
                 config.data.datasets.push(newDataset);
-                window.myLine.update();
+                window.myLine1.update();
 
                 if (currentMinValue > (Math.min.apply(this, dataArray.slice(0, currentTurn)))) {
                     currentMinValue = Math.min.apply(this, dataArray.slice(0, currentTurn));
@@ -221,7 +223,7 @@ function generateSectorChart(currentTurn) {
                     currentMaxValue = Math.max.apply(this, dataArray.slice(0, currentTurn));
                 }
 
-                myLine.options.scales = {
+                myLine1.options.scales = {
                     xAxes: [{
                         display: true,
                         scaleLabel: {
@@ -241,7 +243,7 @@ function generateSectorChart(currentTurn) {
                         }
                     }]
                 }
-                myLine.update();
+                myLine1.update();
 
             }
         }

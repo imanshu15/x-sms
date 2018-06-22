@@ -33,9 +33,17 @@ namespace X_SMS.Hubs
                     player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
                     if (player != null)
                     {
+                        player.GainAmount = 0;
+                        player.SpendAmount = 0;
                         player.GameCode = game.GameCode;
                         player.NoOfTransactions = 0;
                         game.Players.Add(player);
+
+                        //CREATE PLAYER AI
+                        
+                        //JoinGame("COMPUTER_AI", game.GameId, "", false);
+                        game.IsPlayerAIAvailable = false;
+
                         EntityStateManager.CurrentGames.Add(game);
                         AddPlayer(player);
                         isSuccess = true;
@@ -57,7 +65,7 @@ namespace X_SMS.Hubs
             }
         }
 
-        public void JoinGame(string playerName, int gameId,string gameCode)
+        public void JoinGame(string playerName, int gameId,string gameCode, bool isPlayerAI = false)
         {
             bool isSuccess = false;
             GameManager gameManager = new GameManager();
@@ -80,11 +88,19 @@ namespace X_SMS.Hubs
                     if (game == null)
                         game = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameCode == gameCode);
 
-                    if (game != null && game.Players.Count < game.PlayersCount)
+                    if ((game != null && !game.IsPlayerAIAvailable && game.Players.Count < game.PlayersCount) || (game != null && game.IsPlayerAIAvailable && game.Players.Count < game.PlayersCount + 1))
                     {
-                         player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
+                        if (!isPlayerAI)
+                            player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
+                        else
+                            player = gameManager.CreatePlayer(playerName, game.GameId, "NO CONNECTION");
+
+                        player.IsPlayerAI = isPlayerAI;
+
                         if (player != null)
                         {
+                            player.SpendAmount = 0;
+                            player.GainAmount = 0;
                             player.GameCode = game.GameCode;
                             player.NoOfTransactions = 0;
                             game.Players.Add(player);
@@ -95,17 +111,21 @@ namespace X_SMS.Hubs
 
                     if (isSuccess)
                     {
-                        Groups.Add(Context.ConnectionId, game.GameCode);
-                        Clients.Client(Context.ConnectionId).joinSuccess(player);
+                        if (!isPlayerAI) {
+                            Groups.Add(Context.ConnectionId, game.GameCode);
+                            Clients.Client(Context.ConnectionId).joinSuccess(player);
+                        }
                         Clients.Group(game.GameCode).notifyJoinedPlayers(playerName);
                     }
                     else
                     {
-                        Clients.Client(Context.ConnectionId).gameJoinFailed();
+                        if (!isPlayerAI)
+                            Clients.Client(Context.ConnectionId).gameJoinFailed();
                     }
                 }
                 else {
-                    Clients.Client(Context.ConnectionId).invalidGameCode();
+                    if (!isPlayerAI)
+                        Clients.Client(Context.ConnectionId).invalidGameCode();
                 }
             }
         }
@@ -118,7 +138,7 @@ namespace X_SMS.Hubs
                 GameLogicManager gameLogic = new GameLogicManager();
 
                 var game = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == gameId);
-                if (game != null && game.Players.Count == game.PlayersCount)
+                if ((game != null && !game.IsPlayerAIAvailable && game.Players.Count == game.PlayersCount) || (game != null && game.IsPlayerAIAvailable && game.Players.Count == (game.PlayersCount + 1)))
                 {
                     game = gameManager.StartGame(game.GameId);
                     if (game != null)
@@ -245,8 +265,9 @@ namespace X_SMS.Hubs
                     Clients.Group(gameObj.GameCode).startRound(turnDetails);
 
                 //PlayerAI player = new PlayerAI(gameObj);
-                //
-                //decideBuySellForAI(player.returnBuySellList();)
+                GameLogicManager gameLogic = new GameLogicManager();
+               // var playerAIData = gameLogic.GetPlayerAIData(gameObj);
+                //decideBuySellForAI(playerAIData);
 
                 GetGameLeaders(gameObj.GameId);
             }
@@ -274,14 +295,13 @@ namespace X_SMS.Hubs
                         var sector = turn.Sectors.FirstOrDefault(y => y.Sector.SectorId == sectorId);
                         if (sector != null) {
                             var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockId);
-
+                            var player = game.Players.FirstOrDefault(o => o.PlayerId == playerId);
                             var token = gameLogic.BuyStocks(playerId, stock, quantity,stock.CurrentPrice);
 
                             if (token.Success)
                             {
                                 if (token.Data != null)
                                 {
-                                    var player = game.Players.FirstOrDefault(o => o.PlayerId == playerId);
                                     var temp = (PlayerTransactionsDTO)token.Data;
                                     temp.PlayerName = player.PlayerName;
                                     temp.StockName = stock.StockName;
@@ -297,7 +317,17 @@ namespace X_SMS.Hubs
                                     player.PlayerStocks.Add(pStock);
                                     player.BankAccount.Balance -= (quantity * stock.CurrentPrice);
                                     player.NoOfTransactions += 1;
-                                    Clients.Client(Context.ConnectionId).stockBuySuccess(player.BankAccount.Balance);
+                                    player.SpendAmount += quantity * stock.CurrentPrice;
+
+                                    BalanceDTO balance = new BalanceDTO();
+                                    balance.OpeningBalance = 1000;
+                                    balance.AllocatedPrice = player.SpendAmount;
+                                    balance.ProfitPrice = player.GainAmount;
+                                    balance.Balance = player.BankAccount.Balance;
+
+                                    if (!player.IsPlayerAI)
+                                        Clients.Client(Context.ConnectionId).stockBuySuccess(balance);
+
                                     Clients.Group(game.GameCode).playerBoughtStock(temp);
 
                                     GetGameLeaders(game.GameId);
@@ -309,7 +339,8 @@ namespace X_SMS.Hubs
 
                             }
 
-                            if(!token.Success){
+                            if(!token.Success && !player.IsPlayerAI)
+                            {
                                 Clients.Client(Context.ConnectionId).stockBuyFailed(token);
                             }
                         }
@@ -332,7 +363,7 @@ namespace X_SMS.Hubs
                     temp.Percentage = ((temp.CurrentPrice - temp.BoughtPrice)/ temp.BoughtPrice) * 100;
                     temp.Profit = (temp.CurrentPrice * temp.Quantity) - (temp.BoughtPrice * temp.Quantity);
                 }
-                Clients.Client(Context.ConnectionId).loadPlayerStocksList(playerStocks.GroupBy(x => x.StockId).ToList());
+                Clients.Client(Context.ConnectionId).loadPlayerStocksList(playerStocks);
             }
         }
 
@@ -351,6 +382,7 @@ namespace X_SMS.Hubs
                         if (sector != null)
                         {
                             var stock = sector.Stocks.FirstOrDefault(z => z.StockId == stockId);
+                            var player = game.Players.FirstOrDefault(o => o.PlayerId == playerId);
 
                             var token = gameLogic.SellStocks(playerId, stock, quantity, stock.CurrentPrice);
 
@@ -358,7 +390,6 @@ namespace X_SMS.Hubs
                             {
                                 if (token.Data != null)
                                 {
-                                    var player = game.Players.FirstOrDefault(o => o.PlayerId == playerId);
                                     var temp = (PlayerTransactionsDTO)token.Data;
                                     temp.PlayerName = player.PlayerName;
                                     temp.StockName = stock.StockName;
@@ -387,8 +418,17 @@ namespace X_SMS.Hubs
                                     }
 
                                     player.BankAccount.Balance += (quantity * stock.CurrentPrice);
+                                    player.GainAmount = quantity * stock.CurrentPrice;
                                     temp.PlayerAccBalance = player.BankAccount.Balance;
-                                    Clients.Client(Context.ConnectionId).stockSellSuccess(player.BankAccount.Balance);
+
+                                    BalanceDTO balance = new BalanceDTO();
+                                    balance.OpeningBalance = 1000;
+                                    balance.AllocatedPrice = player.SpendAmount;
+                                    balance.ProfitPrice = player.GainAmount;
+                                    balance.Balance = player.BankAccount.Balance;
+
+                                    if (!player.IsPlayerAI)
+                                        Clients.Client(Context.ConnectionId).stockSellSuccess(balance);
                                     Clients.Group(game.GameCode).playerSoldStock(temp);
 
                                     GetGameLeaders(game.GameId);
@@ -401,7 +441,7 @@ namespace X_SMS.Hubs
 
                             }
 
-                            if (!token.Success)
+                            if (!token.Success && !player.IsPlayerAI)
                             {
                                 Clients.Client(Context.ConnectionId).stockSellFailed(token);
                             }

@@ -20,7 +20,8 @@ namespace X_SMS_REP
         public bool IsCanceled { get; set; }
         public int CurrentRound { get; set; }
         public string Winner { get; set; }
-                                                     
+
+        public bool IsPlayerAIAvailable { get; set; }
         public GameDetail GameDetail { get; set; }
         public List<PlayerDTO> Players { get; set; }
     }

@@ -19,5 +19,16 @@ namespace X_SMS_API.Controllers
                 return Json(result);
             }
         }
+
+        [Route("api/History/GetGameTransactions")]
+        public IHttpActionResult GetGameTransactions(int gameId)
+        {
+            using (HistoryService historyService = new HistoryService())
+            {
+                var result = historyService.GetGameTransactions(gameId);
+                return Json(result);
+            }
+        }
+
     }
 }

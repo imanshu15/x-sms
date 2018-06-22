@@ -94,7 +94,7 @@ function joinGameAction() {
         var gameId = $("#hdnSelectedGameId").val();
         if (playerName != null && playerName != undefined && playerName != "") {
             if (!DoesPlayerExist(playerName)) {
-                game.server.joinGame(playerName, gameId, "");
+                game.server.joinGame(playerName, gameId, "",false);
             } else {
                 showErrorMsg('Validation', 'Sorry, Player name is already in use');
             }

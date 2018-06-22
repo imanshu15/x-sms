@@ -106,17 +106,19 @@ warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not h
       <PropertyRef Name="IsDeposit" />
       <PropertyRef Name="Amount" />
     </Key>
-    <Property Name="StockName" Type="nvarchar" MaxLength="100" />
-    <Property Name="StartingPrice" Type="decimal" Precision="18" Scale="2" />
-    <Property Name="Quantity" Type="int" />
+    <Property Name="GameId" Type="int" />
     <Property Name="PlayerId" Type="int" />
     <Property Name="PlayerName" Type="nvarchar" MaxLength="100" />
-    <Property Name="StockId" Type="int" />
     <Property Name="IsActive" Type="bit" />
-    <Property Name="GameId" Type="int" />
-    <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="StockId" Type="int" />
+    <Property Name="StockName" Type="nvarchar" MaxLength="100" />
+    <Property Name="SectorId" Type="int" />
+    <Property Name="SectorName" Type="nvarchar" MaxLength="100" />
+    <Property Name="StartingPrice" Type="decimal" Precision="18" Scale="2" />
     <Property Name="IsWithdraw" Type="bit" Nullable="false" />
     <Property Name="IsDeposit" Type="bit" Nullable="false" />
+    <Property Name="Quantity" Type="int" />
+    <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
     <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
   </EntityType>
   <Association Name="FK_Account">
@@ -229,17 +231,19 @@ warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not h
     <EntitySet Name="Trend" EntityType="Self.Trend" Schema="Master" store:Type="Tables" />
     <EntitySet Name="ViewPlayerPortfolio" EntityType="Self.ViewPlayerPortfolio" store:Type="Views" store:Schema="Detail">
       <DefiningQuery>SELECT 
-    [ViewPlayerPortfolio].[StockName] AS [StockName], 
-    [ViewPlayerPortfolio].[StartingPrice] AS [StartingPrice], 
-    [ViewPlayerPortfolio].[Quantity] AS [Quantity], 
+    [ViewPlayerPortfolio].[GameId] AS [GameId], 
     [ViewPlayerPortfolio].[PlayerId] AS [PlayerId], 
     [ViewPlayerPortfolio].[PlayerName] AS [PlayerName], 
-    [ViewPlayerPortfolio].[StockId] AS [StockId], 
     [ViewPlayerPortfolio].[IsActive] AS [IsActive], 
-    [ViewPlayerPortfolio].[GameId] AS [GameId], 
-    [ViewPlayerPortfolio].[UnitPrice] AS [UnitPrice], 
+    [ViewPlayerPortfolio].[StockId] AS [StockId], 
+    [ViewPlayerPortfolio].[StockName] AS [StockName], 
+    [ViewPlayerPortfolio].[SectorId] AS [SectorId], 
+    [ViewPlayerPortfolio].[SectorName] AS [SectorName], 
+    [ViewPlayerPortfolio].[StartingPrice] AS [StartingPrice], 
     [ViewPlayerPortfolio].[IsWithdraw] AS [IsWithdraw], 
     [ViewPlayerPortfolio].[IsDeposit] AS [IsDeposit], 
+    [ViewPlayerPortfolio].[Quantity] AS [Quantity], 
+    [ViewPlayerPortfolio].[UnitPrice] AS [UnitPrice], 
     [ViewPlayerPortfolio].[Amount] AS [Amount]
     FROM [Detail].[ViewPlayerPortfolio] AS [ViewPlayerPortfolio]</DefiningQuery>
     </EntitySet>
