@@ -17,9 +17,17 @@
                         <label for="txtPlayerCount">Player Count</label>
                         <input type="number" class="form-control" id="txtPlayerCount" value="2" placeholder="Max number of players" required max="4" min="2">
                     </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="chkIsPrivateGame">
-                        <label class="form-check-label" for="chkIsPrivateGame">Create as a private game? </label>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="chkIsPrivateGame">
+                            <label class="form-check-label" for="chkIsPrivateGame"> As a Private game? </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="chkIsPlayerAI">
+                            <label class="form-check-label" for="chkIsPlayerAI"> Player AI? </label>
+                        </div>
                     </div>
                     <button class="btn btn-primary" id="btnCreateGame">Create</button>
                 </form>

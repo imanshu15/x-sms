@@ -29,5 +29,15 @@ namespace X_SMS_API.Controllers
                 return Json(result);
             }
         }
+
+        [Route("api/Chart/StockChartValues")]
+        public IHttpActionResult GetStockChartValues(int gameId,int turn)
+        {
+            using (ChartService chartService = new ChartService())
+            {
+                var result = chartService.GetStocksChartValues(gameId,turn);
+                return Json(result);
+            }
+        }
     }
 }

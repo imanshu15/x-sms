@@ -107,6 +107,33 @@ namespace X_SMS_DAL.Services
 
         }
 
+        public ResultToken RemoveGame(int gameId)
+        {
+            ResultToken result = new ResultToken();
+            result.Success = true;
+            try
+            {
+                var game = gameEntities.Games.FirstOrDefault(a => a.GameId == gameId);
+                if (game != null)
+                {
+                    game.IsStarted = false;
+                    game.IsCanceled = true;
+                    game.IsActive = false;
+                    gameEntities.SaveChanges();
+                    GameDTO gameDto = Mapping.Mapper.Map<GameDTO>(game);
+                    result.Data = gameDto;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
         public List<SectorDTO> GetSectorsList()
         {
            var sectors = gameEntities.Sectors.ToList();
