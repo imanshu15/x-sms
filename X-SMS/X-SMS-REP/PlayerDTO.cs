@@ -20,5 +20,8 @@ namespace X_SMS_REP
         public List<PlayerStock> PlayerStocks { get; set; }
         public int NoOfTransactions { get; set; }
         public bool IsPlayerAI { get; set; }
+
+        public decimal SpendAmount { get; set; }
+        public decimal GainAmount { get; set; }
     }
 }

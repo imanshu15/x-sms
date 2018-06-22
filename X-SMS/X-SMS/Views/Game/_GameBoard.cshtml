@@ -98,7 +98,7 @@
                 <img class="avatar" alt="Alphabet" src="~/Content/images/user.png">
             </div>
             <div class="stock-info ">
-                <span class="user-name d-inline">Shey De Woony</span>
+                <span class="user-name d-inline" id="lblPlayerNameDisplay"></span>
                 <button class="btn blue-button" style="margin-left:40px;"><span class="fa fa-user-circle"></span>  Profilo</button>
 
             </div>
@@ -160,11 +160,11 @@
         </div>
 
         <div class="footer-unit balance">
-            <i class="fa fa-plus-circle" style="font-size:40px;color:#3dbdec; padding-top:5px;"></i>
+            <i class="fa fa-minus-circle" style="font-size:40px;color:#3dbdec; padding-top:5px;"></i>
         </div>
 
         <div class="footer-unit balance">
-            <span class="footer-unit-value">Rs <span id="playerAllocatedBalance"> </span></span>
+            <span class="footer-unit-value">Rs <span id="playerAllocatedBalance"> 0.00</span></span>
             <span class="footer-unit-label">Total Allocated</span>
         </div>
 
@@ -173,7 +173,7 @@
         </div>
 
         <div class="footer-unit balance">
-            <span class="footer-unit-value ">Rs <span id="playerProfiBalance"> </span></span>
+            <span class="footer-unit-value ">Rs <span id="playerProfitBalance"> 0.00</span></span>
             <span class="footer-unit-label">Profit</span>
         </div>
 
@@ -182,7 +182,7 @@
         </div>
 
         <div class="footer-unit balance">
-            <span class="footer-unit-value ">Rs <span id="playerAccountBalance"> </span></span>
+            <span class="footer-unit-value ">Rs <span id="playerAccountBalance"> 1000.00</span></span>
             <span class="footer-unit-label">Balance</span>
         </div>
     </nav>

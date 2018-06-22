@@ -33,6 +33,8 @@ namespace X_SMS.Hubs
                     player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
                     if (player != null)
                     {
+                        player.GainAmount = 0;
+                        player.SpendAmount = 0;
                         player.GameCode = game.GameCode;
                         player.NoOfTransactions = 0;
                         game.Players.Add(player);
@@ -97,6 +99,8 @@ namespace X_SMS.Hubs
 
                         if (player != null)
                         {
+                            player.SpendAmount = 0;
+                            player.GainAmount = 0;
                             player.GameCode = game.GameCode;
                             player.NoOfTransactions = 0;
                             game.Players.Add(player);
@@ -313,9 +317,16 @@ namespace X_SMS.Hubs
                                     player.PlayerStocks.Add(pStock);
                                     player.BankAccount.Balance -= (quantity * stock.CurrentPrice);
                                     player.NoOfTransactions += 1;
+                                    player.SpendAmount += quantity * stock.CurrentPrice;
 
-                                    if(!player.IsPlayerAI)
-                                        Clients.Client(Context.ConnectionId).stockBuySuccess(player.BankAccount.Balance);
+                                    BalanceDTO balance = new BalanceDTO();
+                                    balance.OpeningBalance = 1000;
+                                    balance.AllocatedPrice = player.SpendAmount;
+                                    balance.ProfitPrice = player.GainAmount;
+                                    balance.Balance = player.BankAccount.Balance;
+
+                                    if (!player.IsPlayerAI)
+                                        Clients.Client(Context.ConnectionId).stockBuySuccess(balance);
 
                                     Clients.Group(game.GameCode).playerBoughtStock(temp);
 
@@ -352,7 +363,7 @@ namespace X_SMS.Hubs
                     temp.Percentage = ((temp.CurrentPrice - temp.BoughtPrice)/ temp.BoughtPrice) * 100;
                     temp.Profit = (temp.CurrentPrice * temp.Quantity) - (temp.BoughtPrice * temp.Quantity);
                 }
-                Clients.Client(Context.ConnectionId).loadPlayerStocksList(playerStocks.GroupBy(x => x.StockId).ToList());
+                Clients.Client(Context.ConnectionId).loadPlayerStocksList(playerStocks);
             }
         }
 
@@ -407,9 +418,17 @@ namespace X_SMS.Hubs
                                     }
 
                                     player.BankAccount.Balance += (quantity * stock.CurrentPrice);
+                                    player.GainAmount = quantity * stock.CurrentPrice;
                                     temp.PlayerAccBalance = player.BankAccount.Balance;
-                                    if(!player.IsPlayerAI)
-                                        Clients.Client(Context.ConnectionId).stockSellSuccess(player.BankAccount.Balance);
+
+                                    BalanceDTO balance = new BalanceDTO();
+                                    balance.OpeningBalance = 1000;
+                                    balance.AllocatedPrice = player.SpendAmount;
+                                    balance.ProfitPrice = player.GainAmount;
+                                    balance.Balance = player.BankAccount.Balance;
+
+                                    if (!player.IsPlayerAI)
+                                        Clients.Client(Context.ConnectionId).stockSellSuccess(balance);
                                     Clients.Group(game.GameCode).playerSoldStock(temp);
 
                                     GetGameLeaders(game.GameId);

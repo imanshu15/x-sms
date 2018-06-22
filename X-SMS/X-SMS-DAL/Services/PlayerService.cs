@@ -299,7 +299,6 @@ namespace X_SMS_DAL.Services
 
         }
 
-        //sales history
         public ResultToken getSalesByPlayer(int playerId)
         {
             ResultToken result = new ResultToken();

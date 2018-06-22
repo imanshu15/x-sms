@@ -15,8 +15,8 @@ function generateBarChart(currentTurn, stockValues, stockName) {
             labels: labels,
             datasets: [{
                 label: stockName,
-                backgroundColor: color(window.chartColors.red).alpha(0.5).rgbString(),
-                borderColor: window.chartColors.red,
+                backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
+                borderColor: window.chartColors.blue,
                 borderWidth: 1,
                 data: stockValues
             }]

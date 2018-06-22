@@ -6,6 +6,9 @@ function setUpStocks(data) {
     if (currentTurn != 1) {
         getPlayerStock();
     }
+    else {
+            $('#lblPlayerNameDisplay').text($('#hdnPlayerName').val());
+    }
     generateSectorChart(currentTurn);
     generateTrendChart(currentTurn);
 
@@ -37,13 +40,13 @@ function setUpStocks(data) {
             var tempStock = stocks[i];
             stock.stockId = tempStock.StockId;
             stock.stockName = tempStock.StockName;
-            stock.price = tempStock.CurrentPrice;
-            stock.previousPrice = tempStock.StartingPrice;
+            stock.price = tempStock.CurrentPrice.toFixed(2);
+            stock.previousPrice = tempStock.StartingPrice.toFixed(2);
             if (tempStock.CurrentPrice > tempStock.StartingPrice)
                 stock.isIncreased = true;
 
             if (stock.isIncreased) {
-                stock.percentage = (tempStock.CurrentPrice / tempStock.StartingPrice) * 100;
+                stock.percentage = ((tempStock.CurrentPrice - tempStock.StartingPrice) / tempStock.StartingPrice) * 100;
                 stock.percentage = stock.percentage.toFixed(2);
             }
             stocksList.push(stock);
@@ -63,13 +66,35 @@ function loadStocksTable(stocks) {
 
 function AddToStocksTable(stock) {
 
-    var appendStr = '<tr class="table-row"><td> <div class="stock-img" > <img class="avatar" alt="Alphabet" src="https://etoro-cdn.etorostatic.com/market-avatars/goog/150x150.png"></div>'
+    var percentage = stock.percentage;
+    if (percentage > 0) {
+        percentageClass = 'profit-color';
+    } else if (percentage < 0) {
+        percentageClass = 'loss-color';
+    } else {
+        percentageClass = 'neutral-color ';
+    }
+
+    var profit = stock.price - stock.previousPrice;
+    if (profit > 0) {
+        profitClass = 'profit-color';
+        profitClassIcon = 'fa fa-arrow-up';
+    } else if (profit < 0) {
+        profitClass = 'loss-color';
+        profitClassIcon = 'fa fa-arrow-down';
+    } else {
+        profitClass = 'neutral-color';
+        profitClassIcon = 'fa fa-arrows';
+    }
+
+    //<div class="stock-img" > <img class="avatar" alt="Alphabet" src="https://etoro-cdn.etorostatic.com/market-avatars/goog/150x150.png"></div>
+    var appendStr = '<tr class="table-row"><td>'
         + '<div class="stock-info"><span class="stock-name">' + stock.stockName + '</span>'
-        + '<span class="sector-name">' + stock.sectorName + '</span></div></td><td><div class="red ">'
+        + '<span class="sector-name">' + stock.sectorName + '</span></div></td><td><div class="' + percentageClass +'">'
         + '<span class="change-num-amount ">' + stock.percentage + ' %</span></div></td><td>'
         + '<div class="stock-trade-button"><div class="left-price-name">P</div><div class="price-value"><span>' + stock.previousPrice + '</span> </div></div></td>'
         + '<td><div class="stock-trade-button"><div class="left-price-name">C</div><div class="price-value"><span>' + stock.price + '</span> </div></div ></td>'
-        + '<td style="text-align:center;"><i class="fa fa-arrow-up green" style="font-size:20px;top:5px;"></i></td>'
+        + '<td style="text-align:center;"><i class="' + profitClassIcon + ' ' + profitClass+'" style="font-size:20px;top:5px;"></i></td>'
         + ' <td style="text-align:center;"><div class="trade-button "><div class="sell-botton  d-inline victoria-sell" onclick = "showStockChart(' + stock.sectorId + ', ' + stock.stockId +')"><span>VIEW</span> </div>'
         + '<div class="sell-botton d-inline victoria-buy" onclick= "buyStockPopUp(' + stock.sectorId + ',' + stock.stockId + ',\'' + stock.stockName +'\')"><span>BUY</span> </div></div></td></tr>';
 
@@ -164,7 +189,7 @@ function AddToMyStocksTable(stock) {
         profitClassIcon = 'fa fa-arrow-down';
     } else {
         profitClass = 'neutral-color';
-        profitClassIcon = 'fa fa-arrows-h';
+        profitClassIcon = 'fa fa-arrows';
     }
 
     var appendStr = '<tr class="table-row"><td><div class="stock-img"><img class="avatar" alt="Alphabet" src="https://etoro-cdn.etorostatic.com/market-avatars/goog/150x150.png"></div>'
@@ -243,4 +268,107 @@ function addRowToLeaderBoard(row,rank) {
     appendStr += '<td> <div class="score"><span>' + row.BankAccount.Balance +'</span> </div> </td> </tr>';
 
     $('#leaderBoardList > tbody:last-child').append(appendStr);
+}
+
+
+function getGameTransactions() {
+    var gameId = $('#hdnGameId').val();
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: getAPIUrl() + "History/GetGameTransactions?gameId=" + gameId,
+        success: function (res) {
+            setUpTransactions(res);
+        }
+    });
+}
+
+function setUpTransactions(data) {
+    var playerId = $("#hdnPlayerId").val();
+
+    for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        if (row.PlayerId == playerId) {
+            drawPlayerTransactions(row,true);
+            break;
+        }
+    }
+
+    for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        if (row.PlayerId != playerId) {
+            drawPlayerTransactions(row,false);
+        }
+    }
+}
+
+function drawPlayerTransactions(player,isCurrentPlayer) {
+
+    var divId = "plyTrans" + player.PlayerId;
+
+    var appendStr = '<div><div class=" navbar-light bg-light players-name-bar " data-toggle="collapse" data-target="#' + divId + '"'
+        + '<span style=" margin-left:5px; ">' + player.PlayerName + '</span><span style=" margin-left:20px; ">' + player.Balance.toFixed(2) + '</span><i class="fas fa-chevron-down d-inline"></i></div>'
+        + '<div id="' + divId + '" class="collapse"><table class=" table"><thead>'
+        + '<tr class="table-head table-sm "><th scope="col" style="text-align:left;padding-left:14px;">Markets</th>'
+        + '<th scope="col" class="col">Type</th><th scope="col" class="col">Units</th>'
+        + '<th scope="col" class="col">Price</th><th scope="col" class="col">Cost</th>'
+        +'<th scope="col" class="col">Action</th> </tr ></thead > <tbody>';
+
+    var tableRows = '';
+    var data = player.Transactions;
+
+    if (isCurrentPlayer)
+        $("#miniStatementList > tbody").html("");
+
+    for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        tableRows += drawrPlayerTransactionLine(row);
+        if (isCurrentPlayer)
+            drawBankTableRow(row,i+1);
+        console.log(tableRows);
+    }
+    console.log('FULL');
+    console.log(tableRows);
+    appendStr += tableRows;
+    appendStr += '</tbody></table></div></div>';
+    debugger
+    $('#gameTransactionsDiv').append(appendStr);
+    console.log(appendStr);
+}
+
+function drawrPlayerTransactionLine(trans) {
+
+    var transType = 'BUY';
+    var transClass = 'profit-color';
+    var units = trans.Quantity;
+
+    if (trans.Quantity < 0) {
+        transType = 'SELL';
+        transClass = 'loss-color';
+        units = -(trans.Quantity);
+    }
+    
+    var appendStr = '<tr class="table-row"><td><div class="stock-info"><span class="stock-name">' + trans.StockName + '</span><span class="sector-name"> ' + trans.SectorName + '</span ></div></td>'
+        + '<td><div class="' + transClass + '" style="padding-top:5px;"><span class="profit-amount ">' + transType + '</span></div></td><td><div class="units"><span>' + units + '</span> </div></td>'
+        + '<td><div class="stock-trade-button"><div class="left-price-name">O</div><div class="price-value"><span> ' + trans.UnitPrice.toFixed(2) + ' </span> </div></div></td>'
+        + '<td><div class="stock-trade-button"><div class="left-price-name">C</div><div class="price-value"><span> ' + trans.Amount.toFixed(2) + ' </span> </div> </div></td>'
+        + '<td style="text-align:center;"> <div class="trade-button "><div class="sell-botton  d-inline victoria-sell" onclick="showStockChart(' + trans.SectorId + ', ' + trans.StockId + ')"><span>VIEW</span> </div></div></tr >';
+    //console.log(appendStr);
+    return appendStr;
+}
+
+function drawBankTableRow(row,id) {
+
+    var transactionType = 'WITHDRAW';
+    var transClass = 'profit-color';
+    if (row.Quantity < 0) {
+        transactionType = 'DEPOSIT';
+        transClass = 'loss-color';
+    }
+
+    var appendStr = '<tr class="table-row"><td> <div class="rank"><span>' + id + '</span> </div> </td>'
+        + ' <td><center><div class="stock-info transClass"><span class="stock-name">' + transactionType + '</span></div> </center> </td>'
+        + '<td> <div class="orders"><span> ' + row.Amount.toFixed(2) + '</span> </div></td> </tr>';
+
+    $('#miniStatementList > tbody:last-child').append(appendStr);
 }
