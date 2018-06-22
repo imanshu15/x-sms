@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using X_SMS_REP;
 using X_SMS_DAL.Database;
 using X_SMS_DAL.Services;
-using X_SMS.Hubs;
 
 namespace X_SMS_API.AIHelper
 {
@@ -17,14 +16,12 @@ namespace X_SMS_API.AIHelper
         PlayerService playerService = null;
         XSmsEntities aiEntities = null;
         GameDTO curGame = null;
-        GameHub hub = null;
         List<AIBuySellDetails> list = null;
 
         public PlayerAILogics()
         {
             aiEntities = new XSmsEntities();
             playerService = new PlayerService();
-            hub = new GameHub();
             list = new List<AIBuySellDetails>();
         }
 
@@ -35,6 +32,7 @@ namespace X_SMS_API.AIHelper
 
         public void BuyStocksForFirstTime(int playerID)
         {
+            list.Clear();
             List<Stock> stocks = playerService.getAllStocks();
             List<Stock> firstThree = new List<Stock>(stocks.OrderBy(c => c.StartingPrice).Take(3));
             decimal totPrice = 0;
@@ -141,6 +139,7 @@ namespace X_SMS_API.AIHelper
 
         public void SetBuySellForAI(List<StockDetail> ownStocks, int playerID)
         {
+            list.Clear();
             List<StockDetail> currentStocks = CheckHistoryWithCurrent(ownStocks, shouldBuy, shouldSell);
 
             if(currentStocks != null)
@@ -209,7 +208,6 @@ namespace X_SMS_API.AIHelper
                             }
                             catch (Exception e)
                             {
-                                //return null;
                             }
                         }
                     }
