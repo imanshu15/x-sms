@@ -38,8 +38,9 @@ namespace X_SMS.Hubs
                         game.Players.Add(player);
 
                         //CREATE PLAYER AI
-                        JoinGame("COMPUTER_AI", game.GameId, "", true);
-                        game.IsPlayerAIAvailable = true;
+                        
+                        //JoinGame("COMPUTER_AI", game.GameId, "", false);
+                        game.IsPlayerAIAvailable = false;
 
                         EntityStateManager.CurrentGames.Add(game);
                         AddPlayer(player);
@@ -87,13 +88,13 @@ namespace X_SMS.Hubs
 
                     if ((game != null && !game.IsPlayerAIAvailable && game.Players.Count < game.PlayersCount) || (game != null && game.IsPlayerAIAvailable && game.Players.Count < game.PlayersCount + 1))
                     {
-                        player.IsPlayerAI = isPlayerAI;
-                        if (isPlayerAI)
+                        if (!isPlayerAI)
                             player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
                         else
                             player = gameManager.CreatePlayer(playerName, game.GameId, "NO CONNECTION");
 
-                        
+                        player.IsPlayerAI = isPlayerAI;
+
                         if (player != null)
                         {
                             player.GameCode = game.GameCode;
@@ -261,8 +262,8 @@ namespace X_SMS.Hubs
 
                 //PlayerAI player = new PlayerAI(gameObj);
                 GameLogicManager gameLogic = new GameLogicManager();
-                var playerAIData = gameLogic.GetPlayerAIData(gameObj);
-                decideBuySellForAI(playerAIData);
+               // var playerAIData = gameLogic.GetPlayerAIData(gameObj);
+                //decideBuySellForAI(playerAIData);
 
                 GetGameLeaders(gameObj.GameId);
             }
