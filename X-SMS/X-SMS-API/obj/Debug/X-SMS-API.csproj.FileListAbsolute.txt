@@ -434,3 +434,7 @@ C:\Git\X-SMS\X-SMS-API\bin\Microsoft.Owin.xml
 C:\Git\X-SMS\X-SMS-API\bin\Microsoft.AspNet.SignalR.Core.xml
 C:\Git\X-SMS\X-SMS-API\bin\Microsoft.Owin.Security.xml
 C:\Git\X-SMS\X-SMS-API\obj\Debug\X-SMS-API.csproj.CopyComplete
+C:\Git update 6 21\X-SMS\X-SMS-API\obj\Debug\X-SMS-API.csprojAssemblyReference.cache
+C:\Git update 6 21\X-SMS\X-SMS-API\obj\Debug\X-SMS-API.csproj.CoreCompileInputs.cache
+C:\Git update 6 21\X-SMS\X-SMS-API\obj\Debug\X-SMS-API.dll
+C:\Git update 6 21\X-SMS\X-SMS-API\obj\Debug\X-SMS-API.pdb
