@@ -327,11 +327,13 @@
     <Content Include="Views\Game\_Bank.cshtml" />
     <Content Include="Views\Game\_Transactions.cshtml" />
     <Content Include="Views\Game\_Graphs.cshtml" />
+    <Content Include="Views\Game\_Winner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\logs\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Winner\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

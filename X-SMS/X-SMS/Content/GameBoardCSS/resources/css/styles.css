@@ -884,3 +884,102 @@ display: block;
     margin-bottom: 60px;
     background-color: rgba(250,250,250,0.5);
 }
+
+.winner-panel {
+    width: 63.5%;
+    position: absolute;
+    left: 218px;
+    top: 100px;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 60px;
+    background-color: rgba(0,0,0,0.5);
+}
+.winner-table {
+    margin-top: 60px;
+    color: rgb(255,255,255);
+    width: 64%;
+    right: 33px;
+    position: absolute;
+    text-align:center;
+}
+    .winner-table  > table > tbody  {
+        text-align: center;
+    }
+.winner-info {
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 40px;
+    padding-top: 5px;
+    text-align: center;
+    color: rgb(255,255,255);
+}
+.game-winner-name {
+   
+    line-height: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display:block;
+     
+}
+.table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+    padding: 7px;
+    line-height: 1.42857143;
+    vertical-align: center;
+    border-top: 1px solid #ddd;
+    text-align: center;
+}
+.winner-table-head {
+    font: bold 100%/1.5 'Open Sans',ariel,sans-serif;
+    /* background-color: #f7f7f7; */
+    border-bottom: 1px solid #d8d8d8;
+    color: #fff;
+    font-size: 11px;
+    height: 11px;
+    padding: 5px 0;
+    text-transform: uppercase;
+    /* box-shadow: inset 0 1px 2px 0 rgba(0,0,0,0.1); */
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: visible;
+    text-align: center;
+}
+.winner-info-img {
+    position: absolute;
+    /* padding-left: 20px; */
+    /* padding-bottom: 10px; */
+    /* border-bottom: 1px solid #d7d7d7; */
+    top: 62px;
+    left: 85px;
+}
+.winner-img {
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    margin-left: 40px;
+}
+.winner-value {
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 25px;
+    padding-top: 5px;
+    text-align: center;
+}
+.winner-bar {
+    background-color: rgba(0,0,0,0.7);
+    
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.15);
+    height: 54px;
+    padding: 9px;
+    position: absolute;
+    text-align: center;
+    font-size: 26px;
+    z-index: 1;
+    width: 100%;
+    border-top: 1px solid #d7d7d7;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+}
