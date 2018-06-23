@@ -216,6 +216,7 @@ namespace X_SMS_DAL.Services
         public decimal amountSpentForStocks(int playerID, int stockID)
         {
             decimal amount = 0;
+            decimal quan = 0;
 
             try
             {
@@ -224,7 +225,10 @@ namespace X_SMS_DAL.Services
                     if (item == null)
                         break;
                     else
+                    {
                         amount += item.Quantity * item.UnitPrice;
+                        quan += item.Quantity;
+                    }     
                 }
             }
             catch (Exception e)
@@ -232,7 +236,10 @@ namespace X_SMS_DAL.Services
                 return 0;
             }
 
-            return amount;
+            if (amount != 0 && quan != 0)
+                return amount / quan;
+            else
+                return 0;
         }
 
         public decimal checkBankBalance(int playerID)

@@ -37,13 +37,14 @@ namespace X_SMS.Hubs
                         player.NoOfTransactions = 0;
                         game.Players.Add(player);
 
-                        //CREATE PLAYER AI
-                        
-                        //JoinGame("COMPUTER_AI", game.GameId, "", false);
-                        game.IsPlayerAIAvailable = false;
-
                         EntityStateManager.CurrentGames.Add(game);
                         AddPlayer(player);
+                        //CREATE PLAYER AI
+                        JoinGame("COMPUTER_AI", game.GameId, "", true);
+                        game.IsPlayerAIAvailable = true;
+
+                        //EntityStateManager.CurrentGames.Add(game);
+                        //AddPlayer(player);
                         isSuccess = true;
                     }
                 }
@@ -232,7 +233,7 @@ namespace X_SMS.Hubs
                 }
             }));
 
-            timer.Change(TimeSpan.Zero, TimeSpan.FromMinutes(1));
+            timer.Change(TimeSpan.Zero, TimeSpan.FromMinutes(4));
         }
 
         private bool NextRound(int gameId) {
@@ -262,8 +263,8 @@ namespace X_SMS.Hubs
 
                 //PlayerAI player = new PlayerAI(gameObj);
                 GameLogicManager gameLogic = new GameLogicManager();
-               // var playerAIData = gameLogic.GetPlayerAIData(gameObj);
-                //decideBuySellForAI(playerAIData);
+                var playerAIData = gameLogic.GetPlayerAIData(gameObj);
+                decideBuySellForAI(playerAIData);
 
                 GetGameLeaders(gameObj.GameId);
             }

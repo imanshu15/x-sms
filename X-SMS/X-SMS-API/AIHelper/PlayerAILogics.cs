@@ -13,6 +13,8 @@ namespace X_SMS_API.AIHelper
     {
         StockDetail shouldBuy;
         StockDetail shouldSell;
+        int shouldntBuy;
+        int shouldntSell;
         PlayerService playerService = null;
         XSmsEntities aiEntities = null;
         GameDTO curGame = null;
@@ -51,7 +53,7 @@ namespace X_SMS_API.AIHelper
                 try
                 {
                     int avgPrice = (int)((item.StartingPrice / totPrice) * 100);
-                    int quanCategory = CheckQuanAmount(avgPrice);
+                    int quanCategory = CheckQuanAmountForFirstTime(avgPrice);
                     int buyingQuanRange = CalcQuantityForFirstTime(quanCategory); //buying for first time
                     int buyingQuan = (int)(buyingQuanRange / item.StartingPrice);
 
@@ -74,9 +76,38 @@ namespace X_SMS_API.AIHelper
             }                
         }
 
+        public void SellAllStocks(int playerId, List<StockDetail> ownStocks)
+        {
+            list.Clear();
+            
+            foreach (StockDetail item in ownStocks)
+            {
+                try
+                {
+                    int quan = playerService.checkStockQuantity(playerId, item.StockId);
+
+                    AIBuySellDetails itemBuySell = new AIBuySellDetails();
+                    if (quan > 0)
+                    {
+                        itemBuySell.GameId = curGame.GameId;
+                        itemBuySell.PlayerId = playerId;
+                        itemBuySell.SectorId = item.SectorId;
+                        itemBuySell.Quantity = quan;
+                        itemBuySell.Stock = item;
+                        itemBuySell.Buy = false;
+                        list.Add(itemBuySell);
+                    }
+                    //playerService.buyStocks(playerID, buyingQuan, stockDetail, item.StartingPrice);
+                }
+                catch (Exception e)
+                {
+                }
+            }
+        }
+
         public void CheckHistoryForBuy(List<TurnDetail> prevTurns, List<StockDetail> currentStocks)
         {
-            shouldBuy = new StockDetail();
+            //shouldBuy = new StockDetail();
             //List<TurnDetail> prevTurns = prevTurnsArray.Cast<TurnDetail>().ToList();
 
             foreach (TurnDetail turn in prevTurns)
@@ -111,7 +142,7 @@ namespace X_SMS_API.AIHelper
 
         public void CheckHistoryForSell(List<TurnDetail> prevTurns, List<StockDetail> currentStocks)
         {
-            shouldSell = new StockDetail();
+            //shouldSell = new StockDetail();
             //List<TurnDetail> prevTurns = prevTurnsArray.Cast<TurnDetail>().ToList();
 
             foreach (TurnDetail turn in prevTurns)
@@ -140,21 +171,18 @@ namespace X_SMS_API.AIHelper
         public void SetBuySellForAI(List<StockDetail> ownStocks, int playerID)
         {
             list.Clear();
-            List<StockDetail> currentStocks = CheckHistoryWithCurrent(ownStocks, shouldBuy, shouldSell);
+            CheckHistoryWithCurrent(ownStocks);
 
-            if(currentStocks != null)
+            if(ownStocks != null)
             {
-                foreach (StockDetail item in currentStocks)
+                foreach (StockDetail item in ownStocks)
                 {
                     AIBuySellDetails itemBuySell = new AIBuySellDetails();
                     decimal averagePrice = 0;
-                    decimal shouldSellIF = 0;
-                    decimal shoulBuyIF = 0;
+
                     try
                     {
-                        averagePrice = playerService.amountSpentForStocks(playerID, item.StockId) / playerService.checkStockQuantity(playerID, item.StockId);
-                        shoulBuyIF = (averagePrice * 35) / 100;
-                        shouldSellIF = (averagePrice * 635) / 100;
+                        averagePrice = playerService.amountSpentForStocks(playerID, item.StockId);
                     }
                     catch (Exception)
                     {
@@ -162,11 +190,11 @@ namespace X_SMS_API.AIHelper
                     }
                     if (averagePrice > 0)
                     {
-                        if (item.CurrentPrice >= shouldSellIF)
+                        if (((item.CurrentPrice - averagePrice) >= (decimal)0.2) && item.StockId != shouldntSell) //sell
                         {
                             try
                             {
-                                int decidingPrice = (int)(averagePrice / item.CurrentPrice) * 100;
+                                int decidingPrice = (int)((averagePrice * 100) / item.CurrentPrice);
                                 int quanCategory = CheckQuanAmount(decidingPrice);
                                 int sellingQuan = CalcQuantity(quanCategory, playerService.checkStockQuantity(playerID, item.StockId));
                                 if (quanCategory > 0 && sellingQuan > 0 && curGame != null)
@@ -186,11 +214,11 @@ namespace X_SMS_API.AIHelper
                             {
                             }
                         }
-                        else if (item.CurrentPrice < shoulBuyIF)
+                        else if (((item.CurrentPrice - averagePrice) < (decimal)0.2) && item.StockId != shouldntBuy)//buy
                         {
                             try
                             {
-                                int decidingPrice = (int)(item.CurrentPrice / averagePrice) * 100;
+                                int decidingPrice = (int)((item.CurrentPrice * 100)/ averagePrice);
                                 int quanCategory = CheckQuanAmount(decidingPrice);
                                 int buyingQuan = CalcQuantity(quanCategory, playerService.checkStockQuantity(playerID, item.StockId));
                                 if (quanCategory > 0 && buyingQuan > 0)
@@ -211,62 +239,62 @@ namespace X_SMS_API.AIHelper
                             }
                         }
                     }
-                    else if (averagePrice == 0) //AI never bought this stock
-                    {
-                    }
                 }
             }
         }
 
-        private List<StockDetail> CheckHistoryWithCurrent(List<StockDetail> ownStocks, StockDetail shouldBuy, StockDetail shouldSell)
+        private void CheckHistoryWithCurrent(List<StockDetail> ownStocks)
         {
-            if (shouldSell != null && shouldSell != null)
+            if (shouldSell != null && shouldBuy != null && ownStocks != null)
             {
                 foreach (StockDetail item in ownStocks)
                 {
-                    if (ownStocks != null)
+                    if (item.StockId != shouldBuy.StockId)
+                        continue;
+                    else
                     {
-                        if (item.StockId != shouldBuy.StockId)
-                            continue;
-                        else
-                        {
-                            if (item.CurrentPrice > shouldBuy.CurrentPrice)
-                                ownStocks.Remove(item);
-                        } 
+                        if (item.CurrentPrice > shouldBuy.CurrentPrice)
+                            shouldntBuy = item.StockId;
                     }
                 }
 
                 foreach (StockDetail item in ownStocks)
                 {
-                    if (ownStocks != null)
+                    if (item.StockId != shouldSell.StockId)
+                        continue;
+                    else
                     {
-                        if (item.StockId != shouldSell.StockId)
-                            continue;
-                        else
-                        {
-                            if (item.CurrentPrice < shouldSell.CurrentPrice)
-                                ownStocks.Remove(item);
-                        } 
+                        if (item.CurrentPrice < shouldSell.CurrentPrice)
+                            shouldntSell = item.StockId;
                     }
                 }
-                return ownStocks;
             }
-            else
-                return ownStocks;
         }
 
         private int CheckQuanAmount(int decidingPrice)
         {
             switch (decidingPrice)
             {
-                case int n when (n >= 1 && n <= 25):
+                case int n when (n >= 104 && n <= 107): //1 - max buying side should buy
                     return 1;
-                case int n when (n > 25 && n <= 50):
+                case 103:
                     return 2;
-                case int n when (n > 50 && n <= 75):
+                case 102:
                     return 3;
-                case int n when (n > 75 && n <= 99):
+                case 101:
                     return 4;
+                case 100:       //lowest should buy
+                    return 5;
+                case int n when (n >= 90 && n <= 95): // selling should sell max
+                    return 10;  
+                case 96:
+                    return 9;
+                case 97:
+                    return 8;
+                case 98:
+                    return 7;
+                case 99:
+                    return 6;   //lowest should sell
                 default:
                     return 0;
             }
@@ -277,16 +305,57 @@ namespace X_SMS_API.AIHelper
             switch (category)
             {
                 case 1:
-                    return currentStockQuan;
+                    return ((currentStockQuan * 90) / 100);               //buy start
                 case 2:
-                    return (currentStockQuan * 75) / 100;
+                    return ((currentStockQuan * 80) / 100);
                 case 3:
-                    return (currentStockQuan * 50) / 100;
+                    return ((currentStockQuan * 70) / 100);
                 case 4:
-                    return (currentStockQuan * 25) / 100;
+                    return ((currentStockQuan * 60) / 100);
+                case 5:
+                    return ((currentStockQuan * 50) / 100); //buy calc end
+                case 6:
+                    return ((currentStockQuan * 50) / 100);   //sell start
+                case 7:
+                    return ((currentStockQuan * 60) / 100);
+                case 8:
+                    return ((currentStockQuan * 70) / 100);
+                case 9:
+                    return ((currentStockQuan * 80) / 100);
+                case 10:
+                    return ((currentStockQuan * 90) / 100);    //sell max end
                 default:
                     return 0;
             } 
+        }
+
+        private int CheckQuanAmountForFirstTime(int decidingPrice)
+        {
+            switch (decidingPrice)
+            {
+                case int n when (n >= 1 && n <= 10):
+                    return 1;
+                case int n when (n > 10 && n <= 20):
+                    return 2;
+                case int n when (n > 20 && n <= 30):
+                    return 3;
+                case int n when (n > 30 && n <= 40):
+                    return 4;
+                case int n when (n > 40 && n <= 50):
+                    return 5;
+                case int n when (n > 50 && n <= 60):
+                    return 6;
+                case int n when (n > 60 && n <= 70):
+                    return 7;
+                case int n when (n > 70 && n <= 80):
+                    return 8;
+                case int n when (n > 80 && n <= 90):
+                    return 9;
+                case int n when (n > 90 && n <= 100):
+                    return 10;
+                default:
+                    return 0;
+            }
         }
 
         private int CalcQuantityForFirstTime(int category)
@@ -294,13 +363,26 @@ namespace X_SMS_API.AIHelper
             switch (category)
             {
                 case 1:
-                    return (500 * 75) / 100;
-                case 2:
                     return (500 * 50) / 100;
+                case 2:
+                    return (500 * 40) / 100;
                 case 3:
-                    return (500 * 25) / 100;
+                    return (500 * 30) / 100;
                 case 4:
-                    return 0;
+                    return (500 * 25) / 100;
+                case 5:
+                    return (500 * 20) / 100;
+                case 6:
+                    return (500 * 15) / 100;
+                case 7:
+                    return (500 * 10) / 100;
+                case 8:
+                    return (500 * 5) / 100;
+                case 9:
+                    return (500 * 3) / 100;
+                case 10:
+                    return (500 * 1) / 100;
+
                 default:
                     return 0;
             }
