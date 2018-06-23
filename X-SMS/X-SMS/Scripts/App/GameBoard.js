@@ -143,7 +143,7 @@ function buyStocks() {
 
 function addStockBoughtNews(details) {
 
-    var appendStr = '<li class="left clearfix"><span class="chat-img pull-left"><img src="~/Content/images/user-chat.png" alt="User Avatar" class="img-circle" /></span>';
+    var appendStr = '<li class="left clearfix"><span class="chat-img pull-left"><img src="/Content/images/user-chat.png" alt="User Avatar" class="img-circle" /></span>';
     appendStr += '<div class="chat-body clearfix"><div class="header"><strong class="primary-font">' + details.PlayerName + '</strong></div>';
     appendStr += '<p class = "green">Type: Buy Stock: ' + details.StockName + ' StockPrice: ' + details.Price + ' Units:' + details.Quantity + ' Balance:' + details.PlayerAccBalance + ' </p> </div></li>';
 
@@ -236,7 +236,7 @@ function sellStocks() {
 
 function addStockSoldNews(details) {
 
-    var appendStr = '<li class="left clearfix"><span class="chat-img pull-left"><img src="~/Content/images/user-chat.png" alt="User Avatar" class="img-circle" /></span>';
+    var appendStr = '<li class="left clearfix"><span class="chat-img pull-left"><img src="/Content/images/user-chat.png" alt="User Avatar" class="img-circle" /></span>';
     appendStr += '<div class="chat-body clearfix"><div class="header"><strong class="primary-font">' + details.PlayerName +'</strong></div>';
     appendStr += '<p class = "red">Type: Sell Stock: ' + details.StockName + ' StockPrice: ' + details.Price + ' Units:' + details.Quantity + ' Balance:' + details.PlayerAccBalance +' </p> </div></li>';
 

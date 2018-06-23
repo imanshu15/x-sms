@@ -805,7 +805,7 @@ display: block;
 
         .chat li .chat-body p {
             margin: 0;
-            color: #777777;
+            
         }
 
     .panel .slidedown .glyphicon, .chat .glyphicon {
@@ -982,4 +982,13 @@ display: block;
     color: #fff;
     text-transform: uppercase;
     font-weight: bold;
+}
+.graphs-panel {
+    
+    top: 35px;
+}
+#canvas, #sectorCanvas, #stockCanvas {
+    display: block !important;
+    width: 800px !important;
+    height: 415px !important;
 }
