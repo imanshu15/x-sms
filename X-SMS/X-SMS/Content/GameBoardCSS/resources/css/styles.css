@@ -832,7 +832,7 @@ display: block;
     background-color: #555;
 }
 .news-feed {
-    top: 240px;
+    top: 160px;
     position: absolute;
     width:100%;
 }
@@ -841,7 +841,7 @@ display: block;
     /* box-shadow: 0 1px 1px 0 rgba(0,0,0,0.15); */
     /* height: 25px; */
     padding: 1px;
-    top: 200px;
+    top: 120px;
     position: absolute;
     text-align: center;
     font-size: 20px;
@@ -991,4 +991,7 @@ display: block;
     display: block !important;
     width: 800px !important;
     height: 415px !important;
+}
+.modal-color {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
