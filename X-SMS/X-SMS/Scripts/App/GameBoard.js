@@ -11,6 +11,7 @@ function setUpStocks(data) {
     }
     generateSectorChart(currentTurn);
     generateTrendChart(currentTurn);
+    updateStockChart();
 
     $('#hdnCurrentTurn').val(currentTurn);
     $('#gameScrnCurntTurn').text(currentTurn);
@@ -109,7 +110,7 @@ function showStockChart(sectorId,stockId) {
         type: "GET",
         dataType: 'json',
         url: getAPIUrl() + "Chart/StockValues?gameId=" + gameId + "&sectorId=" + sectorId + "&stockId=" + stockId + '&turn=' + turn,
-        async: false,
+        async: true,
         success: function (res) {
                 data = res;
         }
@@ -157,15 +158,18 @@ function getPlayerStock() {
 }
 
 function loadPlayerStocksGrid(data) {
-    $("#myStockMarketTable > tbody").html("");
     for (var i = 0; i < data.length; i++) {
+    $("#myStockMarketTable > tbody").html("");
         var stock = data[i];
         AddToMyStocksTable(stock);
     }
 }
 
 function AddToMyStocksTable(stock) {
-    var percentage = stock[0].Percentage;
+    debugger
+    console.log('STOCK');
+    console.log(stock[0]);
+    var percentage = stock.Percentage;
     percentage = percentage.toFixed(2);
 
     var percentageClass = '';
@@ -180,7 +184,7 @@ function AddToMyStocksTable(stock) {
         percentageClass = 'neutral-color ';
     }
 
-    var profit = stock[0].Profit;
+    var profit = stock.Profit;
     if (profit > 0) {
         profitClass = 'profit-color';
         profitClassIcon = 'fa fa-arrow-up';
@@ -192,16 +196,16 @@ function AddToMyStocksTable(stock) {
         profitClassIcon = 'fa fa-arrows';
     }
 
-    var appendStr = '<tr class="table-row"><td><div class="stock-img"><img class="avatar" alt="Alphabet" src="https://etoro-cdn.etorostatic.com/market-avatars/goog/150x150.png"></div>'
-        + '<div class="stock-info"><span class="stock-name">' + stock[0].StockName + '</span><span class="sector-name">' + stock[0].SectorName + '</span></div></td>'
-        + ' <td><div class="units"><span>' + stock[0].Quantity + '</span> </div></td>'
-        + ' <td><div class="stock-trade-button"><div class="left-price-name">O</div><div class="price-value"><span>' + stock[0].BoughtPrice + '</span> </div></div></td>'
-        + '<td><div class="stock-trade-button"><div class="left-price-name">C</div><div class="price-value"><span>' + stock[0].CurrentPrice + '</span> </div></div></td>'
-        + '<td><div class="' + percentageClass+'"><span class="change-num-amount ">' + percentage + '</span></div></td>'
+    var appendStr = '<tr class="table-row"><td>'
+        + '<div class="stock-info"><span class="stock-name">' + stock.StockName + '</span><span class="sector-name">' + stock.SectorName + '</span></div></td>'
+        + ' <td><div class="units"><span>' + stock.Quantity + '</span> </div></td>'
+        + ' <td><div class="stock-trade-button"><div class="left-price-name">O</div><div class="price-value"><span>' + stock.BoughtPrice + '</span> </div></div></td>'
+        + '<td><div class="stock-trade-button"><div class="left-price-name">C</div><div class="price-value"><span>' + stock.CurrentPrice + '</span> </div></div></td>'
+        + '<td><div class="' + percentageClass+'"><span class="change-num-amount ">' + percentage + '%</span></div></td>'
         + '<td style="text-align:center;"><i class="' + profitClassIcon + ' ' + profitClass +'" style="font-size:20px;top:5px;"></i></td>'
-        + '<td><div class="' + profitClass+'"><span class="profit-amount ">' + stock[0].Profit + '</span></div></td>'
-        + ' <td style="text-align:center;"><div class="trade-button "><div class="sell-botton  d-inline victoria-sell" onclick = "showStockChart(' + stock[0].SectorId + ', ' + stock[0].StockId + ')"><span>VIEW</span> </div>'
-        + '<div class="trade-button "><div class="sell-botton d-inline victoria-buy" onclick="sellStockPopUp(' + stock[0].SectorId + ',' + stock[0].StockId + ',' + stock[0].Quantity + ',\'' + stock[0].StockName +'\')"><span> SELL </span> </div></div></td> </tr>';
+        + '<td><div class="' + profitClass+'"><span class="profit-amount ">' + stock.Profit + '</span></div></td>'
+        + ' <td style="text-align:center;"><div class="trade-button "><div class="sell-botton  d-inline victoria-sell" onclick = "showStockChart(' + stock.SectorId + ', ' + stock.StockId + ')"><span>VIEW</span> </div>'
+        + '<div class="trade-button "><div class="sell-botton d-inline victoria-buy" onclick="sellStockPopUp(' + stock.SectorId + ',' + stock.StockId + ',' + stock.Quantity + ',\'' + stock.StockName +'\')"><span> SELL </span> </div></div></td> </tr>';
 
     $('#myStockMarketTable > tbody:last-child').append(appendStr);
 }
@@ -371,4 +375,23 @@ function drawBankTableRow(row,id) {
         + '<td> <div class="orders"><span> ' + row.Amount.toFixed(2) + '</span> </div></td> </tr>';
 
     $('#miniStatementList > tbody:last-child').append(appendStr);
+}
+
+function updateStockChart() {
+
+    var gameId = $('#hdnGameId').val();
+    var turn = $('#hdnCurrentTurn').val();
+
+    var data;
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: getAPIUrl() + "Chart/StockChartValues?gameId=" + gameId + '&turn=' + turn,
+        async: true,
+        success: function (res) {
+            data = res;
+        }
+    });
+
+    generateSectorChart(data);
 }

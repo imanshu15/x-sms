@@ -66,8 +66,8 @@ function setUpGameTable(data) {
     gameTable.clear().draw();
     data.forEach(function (entry) {
         if (entry !== null) {
-            gameTable.row.add([entry.GameId, entry.GameCode, entry.CreatedPlayer, entry.PlayersCount, entry.JoinedPlayerCount,
-                dateFormat(entry.StartTime, "mm/dd/yy, h:MM:ss TT")]).draw();
+            //var date = dateFormat(entry.StartTime, "mm/dd/yy, h:MM:ss TT");
+            gameTable.row.add([entry.GameId, entry.GameCode, entry.CreatedPlayer, entry.PlayersCount, entry.JoinedPlayerCount, entry.StartTime]).draw();
         }
     });
 }

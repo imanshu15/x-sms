@@ -134,6 +134,34 @@ namespace X_SMS_DAL.Services
             return result;
         }
 
+        public object GameOver(PlayerDTO winner)
+        {
+            ResultToken result = new ResultToken();
+            result.Success = true;
+            try
+            {
+                var game = gameEntities.Games.FirstOrDefault(a => a.GameId == winner.GameId);
+                if (game != null)
+                {
+                    game.IsStarted = false;
+                    game.IsCanceled = false;
+                    game.IsActive = false;
+                    game.Winner = winner.PlayerName;
+                    gameEntities.SaveChanges();
+                    GameDTO gameDto = Mapping.Mapper.Map<GameDTO>(game);
+                    result.Data = gameDto;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
         public List<SectorDTO> GetSectorsList()
         {
            var sectors = gameEntities.Sectors.ToList();

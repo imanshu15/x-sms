@@ -181,7 +181,7 @@ function generateSectorChart(currentTurn) {
                 }
             }
         };
-        debugger
+
         var ctx = document.getElementById('sectorCanvas').getContext('2d');
         if (window.myLine1 != undefined)
             window.myLine1.destroy();
@@ -270,3 +270,79 @@ function getDataArray(key) {
     return data;
 }
 
+function generateStockValueChart(stocksArr) {
+
+    var datasetStock = JSON.parse(stocksArr);
+
+    //generate lables
+    var labels = [];
+    for (i = 0; i < datasetStock[0].PriceList.length; i++) {
+        labels[i] = i + 1;
+    }
+
+    var config = {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: []
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Stock Value Chart'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Turn'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Value'
+                    }
+                }]
+            }
+        }
+    };
+
+    var ctx = document.getElementById('stockCanvas').getContext('2d');
+    if (window.myLine4 != undefined)
+        window.myLine4.destroy();
+    window.myLine4 = new Chart(ctx, config);
+
+    var colorNames = Object.keys(window.chartColors);
+
+    for (j = 0; j < datasetStock.length; j++) {
+
+        var stockName = datasetStock[j].StockName;
+        var stockValue = datasetStock[j].PriceList;
+
+        var colorName = colorNames[config.data.datasets.length % colorNames.length];
+        var newColor = window.chartColors[colorName];
+        var newDataset = {
+            label: stockName,
+            backgroundColor: newColor,
+            borderColor: newColor,
+            data: stockValue,
+            fill: false
+        };
+
+        config.data.datasets.push(newDataset);
+        window.myLine4.update();
+
+    }
+}

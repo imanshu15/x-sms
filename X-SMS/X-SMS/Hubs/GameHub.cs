@@ -205,8 +205,7 @@ namespace X_SMS.Hubs
                 }
                 gameManager.DisconnectGame(game.GameId);
                 EntityStateManager.CurrentGames.Remove(game);
-                Clients.Group(gameCode).playerDisconnected();
-                              
+                Clients.Group(gameCode).playerDisconnected();                    
             }
         }
 
@@ -248,23 +247,37 @@ namespace X_SMS.Hubs
 
         private bool NextRound(int gameId) {
 
-             bool isFinished = false;
+            GameManager gameManager = new GameManager();
+            bool isFinished = false;
             var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
 
             if (gameObj.CurrentRound > EntityStateManager.NumberOfRounds)
             {
-                isFinished = true;
                 //GAME OVER
+                isFinished = true;
+                var players = gameObj.Players.ToList();
+                var gameCode = gameObj.GameCode;
+                var winner = players.OrderBy(a => a.BankAccount.Balance).ThenBy(b => b.NoOfTransactions).FirstOrDefault();
+                
+                if (players != null)
+                {
+                    foreach (var player in players)
+                    {
+                        EntityStateManager.Players.Remove(player);
+                        gameManager.DisconnectPlayer(player.PlayerId);
+                        gameObj.Players.Remove(player);
+                    }
+                    gameManager.GameEnded(winner);
+                    EntityStateManager.CurrentGames.Remove(gameObj);
+                    Clients.Group(gameCode).playerDisconnected();
+                }
+
             }
             else {
                gameObj.CurrentRound += 1;
                 if (gameObj.CurrentRound == 1)
                 {
                     System.Threading.Thread.Sleep(3000);
-                }
-                else
-                {
-
                 }
 
                 var turnDetails = gameObj.GameDetail.TurnDetail.FirstOrDefault(x => x.Turn == gameObj.CurrentRound);
