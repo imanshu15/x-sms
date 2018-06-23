@@ -20,8 +20,7 @@ Open X-SMS.sln file in Visual Studio 2017.
 
 ### How to run
 
-Once you opended the solution right click on the solution and click on Set StartUpProjects.
-In the popup select Multiple Projects and set X-SMS & X-SMS-API to Start then click OK. If you are using a local database change the "XSmsEntities" Connection string in the App.config file in X-SMS-DAL, if not you will be connected to our testing databse. Try and run the project.
+Once you opended the solution right click on the solution and click on Set StartUpProjects.In the popup select Multiple Projects and set X-SMS & X-SMS-API to Start then click OK. If you are using a local database change the "XSmsEntities" Connection string in the App.config file in X-SMS-DAL, if not you will be connected to our testing databse. Try and run the project.
 
 ### Troubleshoot
 
@@ -31,7 +30,7 @@ In the popup select Multiple Projects and set X-SMS & X-SMS-API to Start then cl
   
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/imanshu15/x-sms/blob/master/LICENSE) file for details
 
 ## Acknowledgments
 
