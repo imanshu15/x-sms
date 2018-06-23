@@ -1,0 +1,48 @@
+﻿<div class="winner-panel">
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <div class=" navbar-light bg-light winner-bar d-inline" style=" ">
+        <i class="fas fa-chart-line d-inline"></i>
+        <span>GAME SUMMARY</span>
+    </div>
+    <div class="winner-info-img">
+        <div style="text-align:center;">
+            WiNNER
+        </div>
+        <div class="winner-img">
+            <img class="avatar" alt="Alphabet" src="~/Content/images/winner1.png">
+        </div>
+        <div style="text-align:center;">
+            <span class="user-name " id="lblPlayerNameDisplay"></span>
+        </div>
+        <div class=" d-block" style="text-align:center;">
+            <span class="winner-value green" id="lblWinnerProfit">0.00</span>
+            <span class="game-winner-name" style="font-weight:normal;color:#fff;">Profit</span>
+        </div>
+        <div class=" d-block " style="text-align:center;">
+            <span class="winner-value green" id="lblWinnerBalance">0.00</span>
+            <span class="game-winner-name" style="font-weight:normal;color:#fff;">Total</span>
+        </div>
+    </div>
+
+    <div class="winner-table">
+        <table class=" table" id="winnerList">
+            <thead>
+                <tr class="winner-table-head table-sm ">
+                    <th scope="col" style="text-align:left;padding-left:14px;">Rank</th>
+                    <th scope="col" class="col">Player</th>
+                    <th scope="col" class="col">Transactions</th>
+                    <th scope="col" class="col">Profit</th>
+                    <th scope="col" class="col">Balance</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+    </div>
+
+</div>
+<script src="~/Scripts/App/Winner.js"></script>

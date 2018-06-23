@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AIBuySellDetails.cs" />
+    <Compile Include="AnalystDetail.cs" />
     <Compile Include="BalanceDTO.cs" />
     <Compile Include="BankAccountDTO.cs" />
     <Compile Include="ChartStock.cs" />

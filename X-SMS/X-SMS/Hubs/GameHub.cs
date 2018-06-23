@@ -44,11 +44,14 @@ namespace X_SMS.Hubs
                         EntityStateManager.CurrentGames.Add(game);
                         AddPlayer(player);
                         //CREATE PLAYER AI
-                        JoinGame("COMPUTER_AI", game.GameId, "", true);
-                        game.IsPlayerAIAvailable = true;
-
-                        //EntityStateManager.CurrentGames.Add(game);
-                        //AddPlayer(player);
+                        if (isPlayerAi)
+                        {
+                            JoinGame("COMPUTER_AI", game.GameId, "", true);
+                            game.IsPlayerAIAvailable = true;
+                        }
+                        else {
+                            game.IsPlayerAIAvailable = false;
+                        }
                         isSuccess = true;
                     }
                 }
@@ -253,7 +256,7 @@ namespace X_SMS.Hubs
             bool isFinished = false;
             var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
 
-            if (gameObj.CurrentRound > 1)
+            if (gameObj.CurrentRound >= EntityStateManager.NumberOfRounds)
             {
                 //GAME OVER
                 isFinished = true;
@@ -280,16 +283,23 @@ namespace X_SMS.Hubs
                 {
                     System.Threading.Thread.Sleep(3000);
                 }
+                else {
+                    foreach (var ply in gameObj.Players) {
+                        GetPlayerStocks(gameObj.GameId,ply.PlayerId);
+                    }
+                }
 
                 var turnDetails = gameObj.GameDetail.TurnDetail.FirstOrDefault(x => x.Turn == gameObj.CurrentRound);
                 if(turnDetails != null)
                     Clients.Group(gameObj.GameCode).startRound(turnDetails);
 
                 //PlayerAI player = new PlayerAI(gameObj);
-                GameLogicManager gameLogic = new GameLogicManager();
-                var playerAIData = gameLogic.GetPlayerAIData(gameObj);
-                decideBuySellForAI(playerAIData);
-
+                if (gameObj.IsPlayerAIAvailable)
+                {
+                    GameLogicManager gameLogic = new GameLogicManager();
+                    var playerAIData = gameLogic.GetPlayerAIData(gameObj);
+                    decideBuySellForAI(playerAIData);
+                }
                 GetGameLeaders(gameObj.GameId);
             }
 
@@ -384,7 +394,7 @@ namespace X_SMS.Hubs
                     temp.Percentage = ((temp.CurrentPrice - temp.BoughtPrice)/ temp.BoughtPrice) * 100;
                     temp.Profit = (temp.CurrentPrice * temp.Quantity) - (temp.BoughtPrice * temp.Quantity);
                 }
-                Clients.Client(Context.ConnectionId).loadPlayerStocksList(playerStocks);
+                Clients.Client(player.ConnectionId).loadPlayerStocksList(playerStocks);
             }
         }
 

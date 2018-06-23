@@ -1,5 +1,5 @@
 ﻿var clock;
-
+var analyst;
 function setUpStocks(data) {
 
     var currentTurn = data.Turn;
@@ -18,6 +18,23 @@ function setUpStocks(data) {
     var sectorList = data.Sectors;
     var stocksList = [];
 
+    analyst = null;
+    analyst = getAnlystData(currentTurn);
+    var isAnalystAvailable = false;
+    var isSectorAnalyst = false;
+    var isSell = false;
+    var duration = 0;
+    var analystId = 0;
+    if (analyst != null && analyst != undefined && analyst[0] != null && analyst != undefined)
+        isAnalystAvailable = true;
+
+    if (isAnalystAvailable) {
+        isSectorAnalyst = analyst[0].Type == 'sector' ? true : false;
+        isSell = analyst[0].Action == 'SELL' ? true : false;
+        duration = analyst[0].Duration;
+        analystId = analyst[0].Id;
+    }
+    console.log(analyst);
     for (var x = 0; x < sectorList.length; x++) {
         var sector = sectorList[x];
         var stocks = sector.Stocks;
@@ -32,12 +49,18 @@ function setUpStocks(data) {
                 sectorName: "",
                 isIncreased: false,
                 previousPrice: "",
-                percentage:0
+                percentage: 0,
+                analyst: false,
+                message:""
             };
 
             stock.sectorName = sector.Sector.SectorName;
             stock.sectorId = sector.Sector.SectorId;
 
+            if (isAnalystAvailable && isSectorAnalyst && !isSell && analystId == stock.sectorId) {
+                stock.analyst = true;
+                stock.message = "Buy stocks from this sector in next " + duration + " rounds";
+            }
             var tempStock = stocks[i];
             stock.stockId = tempStock.StockId;
             stock.stockName = tempStock.StockName;
@@ -50,10 +73,15 @@ function setUpStocks(data) {
                 stock.percentage = ((tempStock.CurrentPrice - tempStock.StartingPrice) / tempStock.StartingPrice) * 100;
                 stock.percentage = stock.percentage.toFixed(2);
             }
-            stocksList.push(stock);
-        }
-    }
 
+            if (isAnalystAvailable && !isSectorAnalyst && !isSell && analystId == stock.stockId) {
+                stock.analyst = true;
+                stock.message = "Buy this stock in next " + duration + " rounds";
+            }
+            stocksList.push(stock);
+        } 
+    }
+    console.log(stocksList);
     loadStocksTable(stocksList);  
 }
 
@@ -66,7 +94,7 @@ function loadStocksTable(stocks) {
 }
 
 function AddToStocksTable(stock) {
-
+    debugger
     var percentage = stock.percentage;
     if (percentage > 0) {
         percentageClass = 'profit-color';
@@ -87,10 +115,15 @@ function AddToStocksTable(stock) {
         profitClass = 'neutral-color';
         profitClassIcon = 'fa fa-arrows';
     }
-
+  
     //<div class="stock-img" > <img class="avatar" alt="Alphabet" src="https://etoro-cdn.etorostatic.com/market-avatars/goog/150x150.png"></div>
-    var appendStr = '<tr class="table-row"><td>'
-        + '<div class="stock-info"><span class="stock-name">' + stock.stockName + '</span>'
+    var appendStr = '<tr class="table-row"><td>';
+
+    if (stock.analyst == true) {
+       // appendStr += '<i class="fa-check-circle-o" rel="tooltip" title="' + stock.message + '" id="analyst' + stock.stockId + '"aria-hidden="true"></i>';
+        appendStr += '<i class="fa fa-check profit-color" rel="tooltip" title="' + stock.message + '" style="font-size:20px;top:5px;"></i>';
+    }
+    appendStr += '<div class="stock-info"><span class="stock-name">' + stock.stockName + '</span>'
         + '<span class="sector-name">' + stock.sectorName + '</span></div></td><td><div class="' + percentageClass +'">'
         + '<span class="change-num-amount ">' + stock.percentage + ' %</span></div></td><td>'
         + '<div class="stock-trade-button"><div class="left-price-name">P</div><div class="price-value"><span>' + stock.previousPrice + '</span> </div></div></td>'
@@ -112,7 +145,7 @@ function showStockChart(sectorId,stockId) {
         url: getAPIUrl() + "Chart/StockValues?gameId=" + gameId + "&sectorId=" + sectorId + "&stockId=" + stockId + '&turn=' + turn,
         async: true,
         success: function (res) {
-            generateBarChart(turn, res.PriceList, data.StockName);
+            generateBarChart(turn, res.PriceList, res.StockName);
             $('#mdlStockChart').modal('show');
         }
     });
@@ -142,9 +175,9 @@ function buyStocks() {
 
 function addStockBoughtNews(details) {
 
-    var appendStr = '<li class="left clearfix"><span class="chat-img pull-left"><img src="/Content/images/user-chat.png" alt="User Avatar" class="img-circle" /></span>';
+    var appendStr = '<li class="clearfix">';
     appendStr += '<div class="chat-body clearfix"><div class="header"><strong class="primary-font">' + details.PlayerName + '</strong></div>';
-    appendStr += '<p class = "green">Type: Buy Stock: ' + details.StockName + ' StockPrice: ' + details.Price + ' Units:' + details.Quantity + ' Balance:' + details.PlayerAccBalance + ' </p> </div></li>';
+    appendStr += '<p class = "profit-color">Type: Buy Stock: ' + details.StockName + ' StockPrice: ' + details.Price + ' Units:' + details.Quantity + ' Balance:' + details.PlayerAccBalance + ' </p> </div></li>';
 
     $("#stocksNewsFeed").prepend(appendStr);
 }
@@ -193,8 +226,41 @@ function AddToMyStocksTable(stock) {
         profitClassIcon = 'fa fa-arrows';
     }
 
-    var appendStr = '<tr class="table-row"><td>'
-        + '<div class="stock-info"><span class="stock-name">' + stock.StockName + '</span><span class="sector-name">' + stock.SectorName + '</span></div></td>'
+    var isAnalystAvailable = false;
+    var isSectorAnalyst = false;
+    var isSell = false;
+    var duration = 0;
+    var analystId = 0;
+    if (analyst != null && analyst != undefined && analyst[0] != null && analyst != undefined)
+        isAnalystAvailable = true;
+
+    if (isAnalystAvailable) {
+        isSectorAnalyst = analyst[0].Type == 'sector' ? true : false;
+        isSell = analyst[0].Action == 'SELL' ? true : false;
+        duration = analyst[0].Duration;
+        analystId = analyst[0].Id;
+    }
+    var message = '';
+    var analyst = false;
+    if (isAnalystAvailable && !isSectorAnalyst && !isSell && analystId == stock.StockId) {
+        analyst = true;
+        message = "Sell this stock in next " + duration + " rounds";
+    }
+
+    if (isAnalystAvailable && isSectorAnalyst && !isSell && analystId == stock.SectorId) {
+        analyst = true;
+        message = "Sell stocks from this sector in next " + duration + " rounds";
+    }
+
+    var appendStr = '<tr class="table-row"><td>';
+
+    debugger
+    if (analyst)
+    {
+        appendStr += '<i class="fa fa-times loss-color" rel="tooltip" title="' + message + '" style="font-size:20px;top:5px;"></i>';
+    }
+
+    appendStr += '<div class="stock-info"><span class="stock-name">' + stock.StockName + '</span><span class="sector-name">' + stock.SectorName + '</span></div></td>'
         + ' <td><div class="units"><span>' + stock.Quantity + '</span> </div></td>'
         + ' <td><div class="stock-trade-button"><div class="left-price-name">O</div><div class="price-value"><span>' + stock.BoughtPrice + '</span> </div></div></td>'
         + '<td><div class="stock-trade-button"><div class="left-price-name">C</div><div class="price-value"><span>' + stock.CurrentPrice + '</span> </div></div></td>'
@@ -233,9 +299,9 @@ function sellStocks() {
 
 function addStockSoldNews(details) {
 
-    var appendStr = '<li class="left clearfix"><span class="chat-img pull-left"><img src="/Content/images/user-chat.png" alt="User Avatar" class="img-circle" /></span>';
+    var appendStr = '<li class="clearfix">';
     appendStr += '<div class="chat-body clearfix"><div class="header"><strong class="primary-font">' + details.PlayerName +'</strong></div>';
-    appendStr += '<p class = "red">Type: Sell Stock: ' + details.StockName + ' StockPrice: ' + details.Price + ' Units:' + details.Quantity + ' Balance:' + details.PlayerAccBalance +' </p> </div></li>';
+    appendStr += '<p class = "loss-color">Type: Sell Stock: ' + details.StockName + ' StockPrice: ' + details.Price + ' Units:' + details.Quantity + ' Balance:' + details.PlayerAccBalance +' </p> </div></li>';
 
     $("#stocksNewsFeed").prepend(appendStr);
 }
@@ -390,3 +456,17 @@ function updateStockChart(currentTurn) {
 
 }
 
+function getAnlystData(currentTurn) {
+    var gameId = $('#hdnGameId').val();
+    var analystData;
+    $.ajax({
+        type: "GET",
+        dataType: 'json',
+        url: getAPIUrl() + "Analyst/GetAnalyst?gameId=" + gameId + '&currentTurn=' + currentTurn,
+        async: false,
+        success: function (res) {
+            analystData = res;
+        }
+    });
+    return analystData;
+}
