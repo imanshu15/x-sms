@@ -74,8 +74,6 @@ function setupJoinClientMethods() {
     // JOIN - GameCreated
     game.client.gameCreated = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "JOIN") {
-            console.log("Game Created Response");
-            console.log(response);
             if (response !== null) {
                 $("#hdnGameId").val(response.GameId);
                 $("#hdnGameCode").val(response.GameCode);
@@ -103,8 +101,6 @@ function setupJoinClientMethods() {
     // JOIN - JoinSuccess
     game.client.joinSuccess = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "JOIN") {
-            console.log("Join Success Response");
-            console.log(response);
             if (response !== null) {
                 $("#hdnGameId").val(response.GameId);
                 $("#hdnPlayerId").val(response.PlayerId);
@@ -141,8 +137,6 @@ function setUpWaitClientMethods() {
     //WAIT - PlayerList
     game.client.playerList = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
-            console.log("Player List");
-            console.log(response);
             if (response != null)
                 setUpPlayerTable(response);
         }
@@ -150,7 +144,6 @@ function setUpWaitClientMethods() {
 
     //WAIT - GameStarted
     game.client.gameStarted = function () {
-        console.log("Game Started");
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
             $("#msgTitle").text("Game Starting..");
             $("#msgBody").text("All players connected. Please wait till we get everything ready");
@@ -212,7 +205,6 @@ function setUpGameClientMethods() {
 
     game.client.startRound = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
-            console.log(response);
             setUpStocks(response);
 
             // -- Clock
@@ -230,7 +222,6 @@ function setUpGameClientMethods() {
 
     game.client.stockBuySuccess = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
-            console.log(response);
             $('#playerAccountBalance').text(response.Balance.toFixed(2));
             $('#bankWindowBalance').text(response.Balance.toFixed(2));
             $('#playerAllocatedBalance').text(response.AllocatedPrice.toFixed(2));
@@ -240,7 +231,6 @@ function setUpGameClientMethods() {
 
     game.client.playerBoughtStock = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
-            console.log(response);
             addStockBoughtNews(response);
             getPlayerStock();
             getGameTransactions();
@@ -257,14 +247,12 @@ function setUpGameClientMethods() {
 
     game.client.loadPlayerStocksList = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
-            console.log(response);
             loadPlayerStocksGrid(response);
         }
     };
 
     game.client.stockSellSuccess = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
-            console.log(response);
             $('#playerAccountBalance').text(response.Balance.toFixed(2));
             $('#bankWindowBalance').text(response.Balance.toFixed(2));
             $('#playerAllocatedBalance').text(response.AllocatedPrice.toFixed(2));
@@ -274,7 +262,7 @@ function setUpGameClientMethods() {
 
     game.client.playerSoldStock = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
-            console.log(response);
+
             addStockSoldNews(response);
             getPlayerStock();
             getGameTransactions();
@@ -292,6 +280,12 @@ function setUpGameClientMethods() {
     game.client.loadGameLeaders = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
             setUpLeaderBoard(response);
+        }
+    };
+
+    game.client.gameOver = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+                window.location.href = 'Game/Summary?gameId=' + response;
         }
     };
 }

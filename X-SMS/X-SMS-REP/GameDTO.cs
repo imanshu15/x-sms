@@ -23,7 +23,7 @@ namespace X_SMS_REP
         public int JoinedPlayerCount { get; set; }
 
         public bool IsPlayerAIAvailable { get; set; }
-        public GameDetail GameDetail { get; set; }
+        public GameDetailDTO GameDetail { get; set; }
         public List<PlayerDTO> Players { get; set; }
     }
 }

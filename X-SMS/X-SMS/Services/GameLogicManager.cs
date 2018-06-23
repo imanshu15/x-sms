@@ -10,9 +10,9 @@ namespace X_SMS.Services
 {
     public class GameLogicManager
     {
-        public GameDetail GetGameData(int gameId)
+        public GameDetailDTO GetGameData(int gameId)
         {
-            GameDetail returnObj = new GameDetail();
+            GameDetailDTO returnObj = new GameDetailDTO();
             try
             {
                 using (APIService apiClient = new APIService())
@@ -21,7 +21,7 @@ namespace X_SMS.Services
                     ResultToken result = apiClient.ConvertObjectToToken(temp);
                     if (result.Success && result.Data != null)
                     {
-                        returnObj = JsonConvert.DeserializeObject<GameDetail>(result.Data.ToString());
+                        returnObj = JsonConvert.DeserializeObject<GameDetailDTO>(result.Data.ToString());
                     }
                 }
             }

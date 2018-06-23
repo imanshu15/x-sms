@@ -132,8 +132,7 @@ function getEventArr(currentTurn) {
 }
 
 
-function generateSectorChart(currentTurn) {
-    debugger    
+function generateSectorChart(currentTurn) {    
     if (currentTurn <= noOfTurns) {
         //generate lables
         var labels = [];
@@ -190,7 +189,6 @@ function generateSectorChart(currentTurn) {
         var colorNames = Object.keys(window.chartColors);
         var currentMinValue = 999;
         var currentMaxValue = -999;
-        console.log(sectorTrends);
         for (i = 0; i < sectorTrends.length; i++) {
 
             var sectorTrendsKeys = Object.keys(sectorTrends[i]);
@@ -272,8 +270,8 @@ function getDataArray(key) {
 
 function generateStockValueChart(stocksArr) {
 
-    var datasetStock = JSON.parse(stocksArr);
-
+    var datasetStock = stocksArr;
+    console.log(datasetStock);
     //generate lables
     var labels = [];
     for (i = 0; i < datasetStock[0].PriceList.length; i++) {

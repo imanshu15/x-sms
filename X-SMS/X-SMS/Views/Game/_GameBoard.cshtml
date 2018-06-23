@@ -8,89 +8,89 @@
 
 }
 <div class="change-panel">
-<nav class=" navbar-light bg-light inner-header">
-    <a href="#" class="button title" data-toggle="tab" data-target="#stock">MARKETS</a>
-    <a href="#" class="button title" data-toggle="tab" data-target="#graphs">GRAPHS</a>
-    <a href="#" class="button title" data-toggle="tab" data-target="#transactions">TRANSACTIONS</a>
-    <a href="#" class="button title" data-toggle="tab" data-target="#leaderBoard">LEADERBOARD</a>
+    <nav class=" navbar-light bg-light inner-header">
+        <a href="#" class="button title" data-toggle="tab" data-target="#stock">MARKETS</a>
+        <a href="#" class="button title" data-toggle="tab" data-target="#graphs">GRAPHS</a>
+        <a href="#" class="button title" data-toggle="tab" data-target="#transactions">TRANSACTIONS</a>
+        <a href="#" class="button title" data-toggle="tab" data-target="#leaderBoard">LEADERBOARD</a>
 
-</nav>
+    </nav>
 
-<div class="panel panel-default" id="togglePanel">
+    <div class="panel panel-default" id="togglePanel">
 
-    <div class="tab-content">
-        <div class="tab-pane active" id="stock">
-            <div class="table-custom">
-                <div class="table-responsive">
-                    @{
-                        Html.RenderPartial("_MarketWindow");
-                        //Html.RenderPartial("_LeaderBoard");
-                        Html.RenderPartial("_Orders");
-                        // Html.RenderPartial("_StockInfo");
-                        // Html.RenderPartial("_Transactions");
-                        // Html.RenderPartial("_Bank");
-                    }
+        <div class="tab-content">
+            <div class="tab-pane active" id="stock">
+                <div class="table-custom">
+                    <div class="table-responsive">
+                        @{
+                            Html.RenderPartial("_MarketWindow");
+                            //Html.RenderPartial("_LeaderBoard");
+                            Html.RenderPartial("_Orders");
+                            // Html.RenderPartial("_StockInfo");
+                            // Html.RenderPartial("_Transactions");
+                            // Html.RenderPartial("_Bank");
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="tab-pane" id="graphs">
-            <div class="table-custom">
-                <div class="table-responsive">
-                    @{
-                        Html.RenderPartial("_Graphs");
-                    }
+            <div class="tab-pane" id="graphs">
+                <div class="table-custom">
+                    <div class="table-responsive">
+                        @{
+                            Html.RenderPartial("_Graphs");
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="tab-pane " id="transactions">
-            <div class="table-custom">
-                <div class="table-responsive">
-                    @{
-                        //Html.RenderPartial("_MarketWindow");
-                        //Html.RenderPartial("_LeaderBoard");
-                        // Html.RenderPartial("_Orders");
-                        // Html.RenderPartial("_StockInfo");
-                        Html.RenderPartial("_Transactions");
-                        // Html.RenderPartial("_Bank");
-                    }
+            <div class="tab-pane " id="transactions">
+                <div class="table-custom">
+                    <div class="table-responsive">
+                        @{
+                            //Html.RenderPartial("_MarketWindow");
+                            //Html.RenderPartial("_LeaderBoard");
+                            // Html.RenderPartial("_Orders");
+                            // Html.RenderPartial("_StockInfo");
+                            Html.RenderPartial("_Transactions");
+                            // Html.RenderPartial("_Bank");
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="tab-pane " id="bank-window">
-            <div class="table-custom">
-                <div class="table-responsive">
-                    @{
-                        //Html.RenderPartial("_MarketWindow");
-                        //Html.RenderPartial("_LeaderBoard");
-                        // Html.RenderPartial("_Orders");
-                        // Html.RenderPartial("_StockInfo");
-                        // Html.RenderPartial("_Transactions");
-                        Html.RenderPartial("_Bank");
-                    }
+            <div class="tab-pane " id="bank-window">
+                <div class="table-custom">
+                    <div class="table-responsive">
+                        @{
+                            //Html.RenderPartial("_MarketWindow");
+                            //Html.RenderPartial("_LeaderBoard");
+                            // Html.RenderPartial("_Orders");
+                            // Html.RenderPartial("_StockInfo");
+                            // Html.RenderPartial("_Transactions");
+                            Html.RenderPartial("_Bank");
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="tab-pane " id="leaderBoard">
-            <div class="table-custom">
-                <div class="table-responsive">
-                    @{
-                        //Html.RenderPartial("_MarketWindow");
-                        Html.RenderPartial("_LeaderBoard");
-                        // Html.RenderPartial("_Orders");
-                        // Html.RenderPartial("_StockInfo");
-                        // Html.RenderPartial("_Transactions");
-                        // Html.RenderPartial("_Bank");
-                    }
+            <div class="tab-pane " id="leaderBoard">
+                <div class="table-custom">
+                    <div class="table-responsive">
+                        @{
+                            //Html.RenderPartial("_MarketWindow");
+                            Html.RenderPartial("_LeaderBoard");
+                            // Html.RenderPartial("_Orders");
+                            // Html.RenderPartial("_StockInfo");
+                            // Html.RenderPartial("_Transactions");
+                            // Html.RenderPartial("_Bank");
+                        }
+                    </div>
                 </div>
             </div>
+
         </div>
-        
     </div>
 </div>
-</div>
 
 
- 
+
 
 <!-- Left-Side Bar!-->
 
@@ -123,7 +123,7 @@
     </div>
 </div>
 
- 
+
 <!-- Right-Side Bar!-->
 
 <div class="a-menu-right closed ">
@@ -134,10 +134,10 @@
     </div>
     <div class="clock">
     </div>
-        <div class=" rounds " style=" ">
-            <span>Round - </span><span id="gameScrnCurntTurn"> </span>
-        </div>
-   
+    <div class=" rounds " style=" ">
+        <span>Round - </span><span id="gameScrnCurntTurn"> </span>
+    </div>
+
 
 
     <div class="news-feed">
@@ -263,3 +263,23 @@
         </div>
     </div>
 </div>
+
+@*<div id="mdlWinner" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"> Game Over </h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("_Winner");
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="gameOverConfirm()">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+

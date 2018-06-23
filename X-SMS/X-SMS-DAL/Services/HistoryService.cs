@@ -29,7 +29,7 @@ namespace X_SMS_DAL.Services
                 StartTime = g.StartTime,
                 Winner = g.Winner,
                 PlayersCount = g.PlayersCount
-            }).ToList();
+            }).OrderBy(a => a.StartTime).ToList();
 
             return gameList;
         }

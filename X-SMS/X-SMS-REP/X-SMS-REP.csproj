@@ -47,7 +47,7 @@
     <Compile Include="ChartStock.cs" />
     <Compile Include="EventDetail.cs" />
     <Compile Include="EventDTO.cs" />
-    <Compile Include="GameDetail.cs" />
+    <Compile Include="GameDetailDTO.cs" />
     <Compile Include="GameDTO.cs" />
     <Compile Include="PlayerDTO.cs" />
     <Compile Include="PlayerPortfolioDTO.cs" />
