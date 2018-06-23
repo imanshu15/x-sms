@@ -40,13 +40,15 @@ namespace X_SMS.Hubs
                         player.NoOfTransactions = 0;
                         game.Players.Add(player);
                         game.JoinedPlayerCount += 1;
-                        //CREATE PLAYER AI
-
-                        //JoinGame("COMPUTER_AI", game.GameId, "", false);
-                        game.IsPlayerAIAvailable = false;
 
                         EntityStateManager.CurrentGames.Add(game);
                         AddPlayer(player);
+                        //CREATE PLAYER AI
+                        JoinGame("COMPUTER_AI", game.GameId, "", true);
+                        game.IsPlayerAIAvailable = true;
+
+                        //EntityStateManager.CurrentGames.Add(game);
+                        //AddPlayer(player);
                         isSuccess = true;
                     }
                 }
@@ -214,7 +216,7 @@ namespace X_SMS.Hubs
         }
 
         public void GetCurrentGameList() {
-            var games = EntityStateManager.CurrentGames.Where(a => a.IsPublic == true).ToList();
+            var games = EntityStateManager.CurrentGames.Where(a => a.IsPublic == true).OrderBy(b => b.StartTime).ToList();
             Clients.Client(Context.ConnectionId).currentGameList(games);
         }
 
@@ -251,14 +253,14 @@ namespace X_SMS.Hubs
             bool isFinished = false;
             var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
 
-            if (gameObj.CurrentRound > EntityStateManager.NumberOfRounds)
+            if (gameObj.CurrentRound > 1)
             {
                 //GAME OVER
                 isFinished = true;
                 var players = gameObj.Players.ToList();
                 var gameCode = gameObj.GameCode;
-                var winner = players.OrderBy(a => a.BankAccount.Balance).ThenBy(b => b.NoOfTransactions).FirstOrDefault();
-                
+                var winner = players.OrderByDescending(a => a.BankAccount.Balance).ThenByDescending(b => b.NoOfTransactions).FirstOrDefault();
+                GetGameLeaders(gameObj.GameId);
                 if (players != null)
                 {
                     foreach (var player in players)
@@ -267,11 +269,10 @@ namespace X_SMS.Hubs
                         gameManager.DisconnectPlayer(player.PlayerId);
                         gameObj.Players.Remove(player);
                     }
-                    gameManager.GameEnded(winner);
-                    EntityStateManager.CurrentGames.Remove(gameObj);
-                    Clients.Group(gameCode).playerDisconnected();
                 }
-
+                gameManager.GameEnded(winner);
+                EntityStateManager.CurrentGames.Remove(gameObj);
+                Clients.Group(gameCode).gameOver(winner.GameId);
             }
             else {
                gameObj.CurrentRound += 1;
@@ -286,8 +287,8 @@ namespace X_SMS.Hubs
 
                 //PlayerAI player = new PlayerAI(gameObj);
                 GameLogicManager gameLogic = new GameLogicManager();
-               // var playerAIData = gameLogic.GetPlayerAIData(gameObj);
-                //decideBuySellForAI(playerAIData);
+                var playerAIData = gameLogic.GetPlayerAIData(gameObj);
+                decideBuySellForAI(playerAIData);
 
                 GetGameLeaders(gameObj.GameId);
             }

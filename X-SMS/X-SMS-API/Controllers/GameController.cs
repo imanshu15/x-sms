@@ -124,5 +124,15 @@ namespace X_SMS_API.Controllers
                 return Json(token);
             }
         }
+
+        [Route("api/Game/GetWinner")]
+        [HttpGet]
+        public IHttpActionResult GetWinner(int gameId)
+        {
+            using (GameService gameService = new GameService())
+            {                
+                return Json(gameService.GetWinner(gameId));
+            }
+        }
     }
 }

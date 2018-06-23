@@ -17,7 +17,7 @@ namespace X_SMS_DAL.Services
 
         public ChartStock GetStocksValues(int gameId, int sectorId, int stockId, int turn)
         {
-            var game = (GameDetail)GameDataManager.gameDetails[gameId];
+            var game = (GameDetailDTO)GameDataManager.gameDetails[gameId];
             var turnDetails = game.TurnDetail.Where(x => x.Turn <= turn).ToList();
 
             List<decimal> stockPrices = new List<decimal>();
@@ -39,7 +39,7 @@ namespace X_SMS_DAL.Services
         public List<ChartStock> GetStocksChartValues(int gameId, int turn)
         {
             List<ChartStock> stockCharts = new List<ChartStock>();
-            var game = (GameDetail)GameDataManager.gameDetails[gameId];
+            var game = (GameDetailDTO)GameDataManager.gameDetails[gameId];
             var turnDetails = game.TurnDetail.Where(x => x.Turn <= turn).ToList();
             var tempTurn = turnDetails.FirstOrDefault();
 
@@ -57,7 +57,7 @@ namespace X_SMS_DAL.Services
 
         public List<ChartStock> GetSectorStockValues(int gameId, int sectorId, int turn)
         {
-            var game = (GameDetail)GameDataManager.gameDetails[gameId];
+            var game = (GameDetailDTO)GameDataManager.gameDetails[gameId];
             var turnDetails = game.TurnDetail.Where(x => x.Turn <= turn).ToList();
 
             List<ChartStock> sectorStocks = new List<ChartStock>();

@@ -30,7 +30,7 @@ namespace X_SMS_DAL.Services
             {
                 if (!GameDataManager.gameDetails.ContainsKey(gameId))
                 {
-                    GameDetail gameDetail = new GameDetail();
+                    GameDetailDTO gameDetail = new GameDetailDTO();
                     using (TrendService trendService = new TrendService())
                     {
                         gameDetail.RandomTrend = trendService.GenerateRandomTrends();
@@ -46,7 +46,7 @@ namespace X_SMS_DAL.Services
                     GameDataManager.gameDetails.Add(gameId, gameDetail);
                 }
                 result.Message = "Success! Game Turn Details Generated Successfully.";
-                result.Data = (GameDetail)GameDataManager.gameDetails[gameId];
+                result.Data = (GameDetailDTO)GameDataManager.gameDetails[gameId];
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace X_SMS_DAL.Services
             return result;
         }
 
-        private List<TurnDetail> calculateTurnScore(GameDetail gameDetail)
+        private List<TurnDetail> calculateTurnScore(GameDetailDTO gameDetail)
         {
             List<TurnDetail> turnDetails = new List<TurnDetail>();
             int[] randomTrend = (int[])gameDetail.RandomTrend;

@@ -17,13 +17,16 @@ namespace X_SMS.AIHelper
         PlayerDTO player = null;
         List<TurnDetail> prevTurnDetails = null;
         List<StockDetail> ownStocks = null;
+        List<StockDetail> allStocks = null;
+        List<SectorDetail> allSectors = null;
         List<AIBuySellDetails> list = null;
 
         public PlayerAI(GameDTO gameObj)
         {
+            prevTurnDetails = new List<TurnDetail>();
             aiLogics = new PlayerAILogics();
-            initiateCalculation(gameObj);
             list = new List<AIBuySellDetails>();
+            initiateCalculation(gameObj);
         }
 
         private void initiateCalculation(GameDTO gameObj)
@@ -32,16 +35,15 @@ namespace X_SMS.AIHelper
             player = gameObj.Players.Where(c => c.PlayerName.Contains(name)).FirstOrDefault();
             //get all turns in game
             List<TurnDetail> allTurnDetails = gameObj.GameDetail.TurnDetail.ToList();
-            //get only passed turns in game to check historicol data
-            for (int i = 1; i < gameObj.CurrentRound; i++)
-            {
-                TurnDetail turn = allTurnDetails.Where(c => c.Turn == i).FirstOrDefault();
-                prevTurnDetails.Add(turn);
-            }
+            prevTurnDetails.Clear();
             //get AI's stocks n convert to suitable obj type
             ownStocks = map_StockDetail_PlayerStock(player.PlayerStocks);
+            //set cur price in owned stokcs
+            if(gameObj.CurrentRound > 1)
+                ownStocks = setCurrentPriceForStock(ownStocks, allTurnDetails.Where(c => c.Turn == gameObj.CurrentRound).FirstOrDefault());
+            
             //validation
-            if(player != null && prevTurnDetails != null && ownStocks != null)
+            if(player != null && prevTurnDetails != null)
             {
                 game = gameObj;
                 aiLogics.setGame(game);
@@ -51,17 +53,25 @@ namespace X_SMS.AIHelper
                     try
                     {
                         aiLogics.BuyStocksForFirstTime(player.PlayerId); 
-                        //check for null own stocks ?
-                        aiLogics.SetBuySellForAI(ownStocks, player.PlayerId);
                         list = aiLogics.returnBuySellList();
                     }
                     catch (Exception)
                     {
                     }
                 }
-                else
+                else if (gameObj.CurrentRound > 1 && gameObj.CurrentRound < 10 && ownStocks != null)
                 {
+                    for (int i = 1; i < gameObj.CurrentRound; i++)
+                    {
+                        TurnDetail turn = allTurnDetails.Where(c => c.Turn == i).FirstOrDefault();
+                        prevTurnDetails.Add(turn);
+                    }
                     startCalculations(player.PlayerId, prevTurnDetails, ownStocks);
+                }
+                else if (gameObj.CurrentRound == 10) // last round
+                {
+                    aiLogics.SellAllStocks(player.PlayerId, ownStocks);
+                    list = aiLogics.returnBuySellList();
                 }
             }      
         }
@@ -70,12 +80,13 @@ namespace X_SMS.AIHelper
         {
             try
             {
+                list.Clear();
                 aiLogics.CheckHistoryForBuy(prevTurns, ownStocks);
                 aiLogics.CheckHistoryForSell(prevTurns, ownStocks);
                 aiLogics.SetBuySellForAI(ownStocks, playerID);
                 list = aiLogics.returnBuySellList();
             }
-            catch (Exception)
+            catch (Exception e)
             {
             }
         }
@@ -129,6 +140,28 @@ namespace X_SMS.AIHelper
                 stocks.Add(stock);
             }
             return stocks;
+        }
+
+        private List<StockDetail> setCurrentPriceForStock(List<StockDetail> playerStocks, TurnDetail curTurn)
+        {
+            foreach (SectorDetail sector in curTurn.Sectors)
+            {
+                foreach(StockDetail stock in sector.Stocks)
+                {
+                    foreach (StockDetail own in playerStocks)
+                    {
+                        if (own.StockId == stock.StockId)
+                        {
+                            own.CurrentPrice = stock.CurrentPrice;
+                        }
+                        else
+                        {
+                            continue;
+                        } 
+                    }
+                }
+            }
+            return playerStocks;
         }
 
         public List<AIBuySellDetails> returnBuySellList()

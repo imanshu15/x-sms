@@ -111,7 +111,6 @@ function joinGameAction() {
 
     $("#btnJoinPrivateGame").click(function (e) {
         e.preventDefault();
-        debugger
         var playerName = $("#txtJoinPrivatePlayer").val();
         var gameCode = $("#txtJoinGameCode").val();
         if (playerName != null && playerName != undefined && playerName != "") {

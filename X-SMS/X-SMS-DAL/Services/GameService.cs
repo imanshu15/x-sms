@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using X_SMS_DAL.Database;
+using X_SMS_DAL.Global;
 using X_SMS_DAL.Mapper;
 using X_SMS_REP;
 using X_SMS_REP.RequestModel;
@@ -120,8 +121,8 @@ namespace X_SMS_DAL.Services
                     game.IsCanceled = true;
                     game.IsActive = false;
                     gameEntities.SaveChanges();
-                    GameDTO gameDto = Mapping.Mapper.Map<GameDTO>(game);
-                    result.Data = gameDto;
+                   // GameDTO gameDto = Mapping.Mapper.Map<GameDTO>(game);
+                    //result.Data = gameDto;
                 }
             }
             catch (Exception ex)
@@ -132,6 +133,29 @@ namespace X_SMS_DAL.Services
             }
 
             return result;
+        }
+
+        public List<PlayerDTO> GetWinner(int gameId)
+        {
+            List<PlayerDTO> returnList = new List<PlayerDTO>();
+
+            var players = gameEntities.Players.Where(a => a.GameId == gameId).ToList();
+
+            foreach (var player in players) {
+                PlayerDTO temp = new PlayerDTO();
+                temp.PlayerId = player.PlayerId;
+                temp.PlayerName = player.PlayerName;
+
+                var bank = gameEntities.BankAccounts.FirstOrDefault(x => x.PlayerId == player.PlayerId);
+                var transCount = gameEntities.Transcations.Where(a => a.AccountId == bank.AccountId).Count();
+                BankAccountDTO bankAcc = Mapping.Mapper.Map<BankAccountDTO>(bank);
+                temp.BankAccount = bankAcc;
+                temp.NoOfTransactions = transCount;
+
+                returnList.Add(temp);
+            }
+
+            return returnList.OrderByDescending(a => a.BankAccount.Balance).ThenByDescending(x => x.NoOfTransactions).ToList();
         }
 
         public object GameOver(PlayerDTO winner)
@@ -147,9 +171,20 @@ namespace X_SMS_DAL.Services
                     game.IsCanceled = false;
                     game.IsActive = false;
                     game.Winner = winner.PlayerName;
+                    game.EndTime = DateTime.Now;
                     gameEntities.SaveChanges();
-                    GameDTO gameDto = Mapping.Mapper.Map<GameDTO>(game);
-                    result.Data = gameDto;
+                    //GameDTO gameDto = Mapping.Mapper.Map<GameDTO>(game);
+                   // result.Data = gameDto;
+                }
+                var details = GameDataManager.gameDetails.FirstOrDefault(a => a.Key == winner.GameId);
+                if (details.Value != null)
+                {
+                    Database.GameDetail temp = new Database.GameDetail();
+                    temp.GameId = winner.GameId;
+                    temp.Details = details.Value.ToString();
+                    gameEntities.GameDetails.Add(temp);
+                    gameEntities.SaveChanges();
+                    GameDataManager.gameDetails.Remove(details.Key);
                 }
             }
             catch (Exception ex)
@@ -207,8 +242,8 @@ namespace X_SMS_DAL.Services
                 {
                     player.IsActive = false;
                     gameEntities.SaveChanges();
-                    PlayerDTO playerDTO = Mapping.Mapper.Map<PlayerDTO>(player);
-                    result.Data = playerDTO;
+                    //PlayerDTO playerDTO = Mapping.Mapper.Map<PlayerDTO>(player);
+                   // result.Data = playerDTO;
                 }
             }
             catch (Exception ex)

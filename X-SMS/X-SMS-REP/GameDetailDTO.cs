@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace X_SMS_REP
 {
-    public class GameDetail
+    public class GameDetailDTO
     {
         public int[] RandomTrend { get; set; }
         public int[] MarketTrend { get; set; }

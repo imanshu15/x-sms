@@ -34,6 +34,7 @@ namespace X_SMS_DAL.Mapper
             CreateMap<PlayerDTO, Player>();
             CreateMap<List<Game>, List<GameDTO>>();
             CreateMap< List<ViewPlayerPortfolio>, List<PlayerPortfolioDTO>>();
+            CreateMap<BankAccount, BankAccountDTO>();
             // Additional mappings here...
         }
     }

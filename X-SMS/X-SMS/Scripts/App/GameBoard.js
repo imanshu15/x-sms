@@ -11,7 +11,7 @@ function setUpStocks(data) {
     }
     generateSectorChart(currentTurn);
     generateTrendChart(currentTurn);
-    updateStockChart();
+    updateStockChart(currentTurn);
 
     $('#hdnCurrentTurn').val(currentTurn);
     $('#gameScrnCurntTurn').text(currentTurn);
@@ -112,12 +112,11 @@ function showStockChart(sectorId,stockId) {
         url: getAPIUrl() + "Chart/StockValues?gameId=" + gameId + "&sectorId=" + sectorId + "&stockId=" + stockId + '&turn=' + turn,
         async: true,
         success: function (res) {
-                data = res;
+            generateBarChart(turn, res.PriceList, data.StockName);
+            $('#mdlStockChart').modal('show');
         }
     });
 
-    generateBarChart(turn, data.PriceList, data.StockName);
-    $('#mdlStockChart').modal('show');
 }
 
 function buyStockPopUp(sectorId,stockId,stockName) {
@@ -158,17 +157,15 @@ function getPlayerStock() {
 }
 
 function loadPlayerStocksGrid(data) {
-    for (var i = 0; i < data.length; i++) {
     $("#myStockMarketTable > tbody").html("");
+    for (var i = 0; i < data.length; i++) {
         var stock = data[i];
         AddToMyStocksTable(stock);
     }
 }
 
 function AddToMyStocksTable(stock) {
-    debugger
-    console.log('STOCK');
-    console.log(stock[0]);
+
     var percentage = stock.Percentage;
     percentage = percentage.toFixed(2);
 
@@ -247,7 +244,7 @@ function setUpLeaderBoard(data) {
     $("#leaderBoardList > tbody").html("");
     for (var i = 0; i < data.length; i++) {
         var row = data[i];
-        addRowToLeaderBoard(row,i+1);
+        addRowToLeaderBoard(row, i + 1);
     }
 }
 
@@ -274,7 +271,6 @@ function addRowToLeaderBoard(row,rank) {
     $('#leaderBoardList > tbody:last-child').append(appendStr);
 }
 
-
 function getGameTransactions() {
     var gameId = $('#hdnGameId').val();
     $.ajax({
@@ -289,6 +285,8 @@ function getGameTransactions() {
 
 function setUpTransactions(data) {
     var playerId = $("#hdnPlayerId").val();
+
+    $('#gameTransactionsDiv').html("");
 
     for (var i = 0; i < data.length; i++) {
         var row = data[i];
@@ -329,15 +327,13 @@ function drawPlayerTransactions(player,isCurrentPlayer) {
         tableRows += drawrPlayerTransactionLine(row);
         if (isCurrentPlayer)
             drawBankTableRow(row,i+1);
-        console.log(tableRows);
+
     }
-    console.log('FULL');
-    console.log(tableRows);
+
     appendStr += tableRows;
     appendStr += '</tbody></table></div></div>';
-    debugger
+
     $('#gameTransactionsDiv').append(appendStr);
-    console.log(appendStr);
 }
 
 function drawrPlayerTransactionLine(trans) {
@@ -357,7 +353,7 @@ function drawrPlayerTransactionLine(trans) {
         + '<td><div class="stock-trade-button"><div class="left-price-name">O</div><div class="price-value"><span> ' + trans.UnitPrice.toFixed(2) + ' </span> </div></div></td>'
         + '<td><div class="stock-trade-button"><div class="left-price-name">C</div><div class="price-value"><span> ' + trans.Amount.toFixed(2) + ' </span> </div> </div></td>'
         + '<td style="text-align:center;"> <div class="trade-button "><div class="sell-botton  d-inline victoria-sell" onclick="showStockChart(' + trans.SectorId + ', ' + trans.StockId + ')"><span>VIEW</span> </div></div></tr >';
-    //console.log(appendStr);
+
     return appendStr;
 }
 
@@ -377,21 +373,20 @@ function drawBankTableRow(row,id) {
     $('#miniStatementList > tbody:last-child').append(appendStr);
 }
 
-function updateStockChart() {
+function updateStockChart(currentTurn) {
 
     var gameId = $('#hdnGameId').val();
-    var turn = $('#hdnCurrentTurn').val();
 
     var data;
     $.ajax({
         type: "GET",
         dataType: 'json',
-        url: getAPIUrl() + "Chart/StockChartValues?gameId=" + gameId + '&turn=' + turn,
+        url: getAPIUrl() + "Chart/StockChartValues?gameId=" + gameId + '&turn=' + currentTurn,
         async: true,
         success: function (res) {
-            data = res;
+            generateStockValueChart(res);
         }
     });
 
-    generateSectorChart(data);
 }
+

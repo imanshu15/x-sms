@@ -5,6 +5,8 @@ $(document).ready(function () {
     historyTable = $('#gameHistoyTable').DataTable({
         select: true
     });
+
+    setUpHistoryTableSelect();
 });
 
 function loadGameHistoryList() {
@@ -21,8 +23,21 @@ function loadGameHistoryList() {
 function drawGameHistoryTable(dataList) {
     dataList.forEach(function (entry) {
         if (entry !== null) {
-            console.log(entry);
             historyTable.row.add([entry.GameId, entry.CreatedPlayer, entry.PlayersCount, entry.EndTime, entry.Winner]).draw();
+        }
+    });
+}
+
+function setUpHistoryTableSelect() {
+    $('#gameHistoyTable tbody').on('click', 'tr', function () {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        }
+        else {
+            historyTable.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+            var gameId = historyTable.rows('.selected').data()[0][0];
+            window.location.href = '../Game/Summary?gameId=' + gameId;
         }
     });
 }
