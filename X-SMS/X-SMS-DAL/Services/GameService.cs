@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using X_SMS_DAL.Database;
+using X_SMS_DAL.Global;
 using X_SMS_DAL.Mapper;
 using X_SMS_REP;
 using X_SMS_REP.RequestModel;
@@ -150,6 +151,16 @@ namespace X_SMS_DAL.Services
                     gameEntities.SaveChanges();
                     GameDTO gameDto = Mapping.Mapper.Map<GameDTO>(game);
                     result.Data = gameDto;
+                }
+                var details = GameDataManager.gameDetails.FirstOrDefault(a => a.Key == winner.GameId);
+                if (details.Value != null)
+                {
+                    Database.GameDetail temp = new Database.GameDetail();
+                    temp.GameId = winner.GameId;
+                    temp.Details = details.Value.ToString();
+                    gameEntities.GameDetails.Add(temp);
+                    gameEntities.SaveChanges();
+                    GameDataManager.gameDetails.Remove(details.Key);
                 }
             }
             catch (Exception ex)

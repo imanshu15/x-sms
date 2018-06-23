@@ -68,6 +68,9 @@
     <Compile Include="Database\Game.cs">
       <DependentUpon>XSmsContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Database\GameDetail.cs">
+      <DependentUpon>XSmsContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Database\Player.cs">
       <DependentUpon>XSmsContext.tt</DependentUpon>
     </Compile>
