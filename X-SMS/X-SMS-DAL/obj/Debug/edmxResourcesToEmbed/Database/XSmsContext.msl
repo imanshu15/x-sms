@@ -111,6 +111,8 @@
     <EntitySetMapping Name="ViewPlayerPortfolios">
       <EntityTypeMapping TypeName="XSmsModel.ViewPlayerPortfolio">
         <MappingFragment StoreEntitySet="ViewPlayerPortfolio">
+          <ScalarProperty Name="SectorName" ColumnName="SectorName" />
+          <ScalarProperty Name="SectorId" ColumnName="SectorId" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
           <ScalarProperty Name="IsDeposit" ColumnName="IsDeposit" />
           <ScalarProperty Name="IsWithdraw" ColumnName="IsWithdraw" />

@@ -7,7 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
+<div class="change-panel">
 <nav class=" navbar-light bg-light inner-header">
     <a href="#" class="button title" data-toggle="tab" data-target="#stock">MARKETS</a>
     <a href="#" class="button title" data-toggle="tab" data-target="#graphs">GRAPHS</a>
@@ -18,7 +18,7 @@
 
 <div class="panel panel-default" id="togglePanel">
 
-    <div class="panel-body tab-content">
+    <div class="tab-content">
         <div class="tab-pane active" id="stock">
             <div class="table-custom">
                 <div class="table-responsive">
@@ -84,10 +84,13 @@
                 </div>
             </div>
         </div>
+        
     </div>
+</div>
 </div>
 
 
+ 
 
 <!-- Left-Side Bar!-->
 
@@ -98,7 +101,7 @@
                 <img class="avatar" alt="Alphabet" src="~/Content/images/user.png">
             </div>
             <div class="stock-info ">
-                <span class="user-name d-inline">Shey De Woony</span>
+                <span class="user-name d-inline" id="lblPlayerNameDisplay"></span>
                 <button class="btn blue-button" style="margin-left:40px;"><span class="fa fa-user-circle"></span>  Profilo</button>
 
             </div>
@@ -113,7 +116,7 @@
         <a class="i-menu-link">
             <span class=" fa fa-history"></span>&nbsp;History
         </a>
-        <a class="i-menu-link">
+        <a class="i-menu-link" data-toggle="tab" data-target="#winner">
             <span class=" fa fa-history"></span>&nbsp;Leader Board
         </a>
 
@@ -124,16 +127,25 @@
 <!-- Right-Side Bar!-->
 
 <div class="a-menu-right closed ">
+
+    <div class=" navbar-light bg-light transaction-bar d-inline" style=" ">
+        <i class="fas fa-chart-line d-inline"></i>
+        <span>Clock</span>
+    </div>
     <div class="clock">
     </div>
-    <div>ROUND - <span id="gameScrnCurntTurn"> </span></div>
+        <div class=" rounds " style=" ">
+            <span>Round - </span><span id="gameScrnCurntTurn"> </span>
+        </div>
+   
+
 
     <div class="news-feed">
         <div class=" navbar-light bg-light transaction-bar d-inline" style=" ">
             <i class="fas fa-chart-line d-inline"></i>
             <span>Activities</span>
         </div>
-        <div class="panel " style="margin-top:20px;">
+        <div class="panel " style="margin-top:20px;background-color:rgba(250,250,250,0.5);">
 
             <div class="panel-collapse " id="collapseOne">
                 <div class="panel-body">
@@ -160,11 +172,11 @@
         </div>
 
         <div class="footer-unit balance">
-            <i class="fa fa-plus-circle" style="font-size:40px;color:#3dbdec; padding-top:5px;"></i>
+            <i class="fa fa-minus-circle" style="font-size:40px;color:#3dbdec; padding-top:5px;"></i>
         </div>
 
         <div class="footer-unit balance">
-            <span class="footer-unit-value">Rs <span id="playerAllocatedBalance"> </span></span>
+            <span class="footer-unit-value">Rs <span id="playerAllocatedBalance"> 0.00</span></span>
             <span class="footer-unit-label">Total Allocated</span>
         </div>
 
@@ -173,7 +185,7 @@
         </div>
 
         <div class="footer-unit balance">
-            <span class="footer-unit-value ">Rs <span id="playerProfiBalance"> </span></span>
+            <span class="footer-unit-value ">Rs <span id="playerProfitBalance"> 0.00</span></span>
             <span class="footer-unit-label">Profit</span>
         </div>
 
@@ -182,7 +194,7 @@
         </div>
 
         <div class="footer-unit balance">
-            <span class="footer-unit-value ">Rs <span id="playerAccountBalance"> </span></span>
+            <span class="footer-unit-value ">Rs <span id="playerAccountBalance"> 1000.00</span></span>
             <span class="footer-unit-label">Balance</span>
         </div>
     </nav>

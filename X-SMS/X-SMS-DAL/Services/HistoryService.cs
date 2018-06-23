@@ -40,6 +40,41 @@ namespace X_SMS_DAL.Services
             var players = gameEntities.Players.Where(a => a.GameId == gameId).ToList();
         }
 
+        public List<PortfolioDTO> GetGameTransactions(int gameId) {
+
+            var players = gameEntities.Players.Where(x => x.GameId == gameId && x.IsActive == true).ToList();
+
+            var list = gameEntities.ViewPlayerPortfolios.Where(a => a.GameId == gameId).ToList();
+
+            var returnList = new List<PortfolioDTO>();
+
+            foreach (var player in players) {
+
+                var temp = new PortfolioDTO();
+                temp.PlayerId = player.PlayerId;
+                temp.PlayerName = player.PlayerName;
+                temp.Balance = player.BankAccounts.FirstOrDefault() != null ? player.BankAccounts.FirstOrDefault().Balance : 0;
+                temp.Transactions = list.Where(a => a.PlayerId == player.PlayerId).Select(g => new PlayerPortfolioDTO()
+                {
+                    StockName = g.StockName,
+                    Quantity = g.Quantity,
+                    PlayerId = g.PlayerId,
+                    StockId = g.StockId,
+                    GameId = g.GameId,
+                    UnitPrice = g.UnitPrice,
+                    IsWithdraw = g.IsWithdraw,
+                    IsDeposit = g.IsDeposit,
+                    Amount = g.Amount,
+                    SectorId = g.SectorId,
+                    SectorName = g.SectorName
+                }).ToList();
+
+                returnList.Add(temp);
+            }
+
+            return returnList;
+        }
+
         public void Dispose()
         {
             if (gameEntities != null)

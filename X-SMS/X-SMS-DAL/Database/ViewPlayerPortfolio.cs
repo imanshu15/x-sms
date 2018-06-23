@@ -26,5 +26,7 @@ namespace X_SMS_DAL.Database
         public bool IsWithdraw { get; set; }
         public bool IsDeposit { get; set; }
         public decimal Amount { get; set; }
+        public Nullable<int> SectorId { get; set; }
+        public string SectorName { get; set; }
     }
 }

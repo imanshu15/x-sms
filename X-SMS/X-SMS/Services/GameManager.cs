@@ -152,5 +152,53 @@ namespace X_SMS.Services
             return success;
         }
 
+        public bool DisconnectGame(int gameId)
+        {
+
+            bool success = true;
+            try
+            {
+                using (APIService apiClient = new APIService())
+                {
+                    var temp = apiClient.MakePostRequest("api/Game/EndGame", gameId);
+                    ResultToken result = apiClient.ConvertObjectToToken(temp);
+                    if (!result.Success)
+                    {
+                        success = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex);
+            }
+
+            return success;
+        }
+
+        public bool GameEnded(PlayerDTO winner)
+        {
+            bool success = true;
+            try
+            {
+                using (APIService apiClient = new APIService())
+                {
+                    var temp = apiClient.MakePostRequest("api/Game/GameOver", winner);
+                    ResultToken result = apiClient.ConvertObjectToToken(temp);
+                    if (!result.Success)
+                    {
+                        success = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex);
+            }
+
+            return success;
+        }
     }
 }

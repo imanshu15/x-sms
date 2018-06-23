@@ -9,6 +9,23 @@ $(document).ready(function () {
         console.log("ConId : %o", $.connection.hub.id);
     });
     clPreloader();
+
+    $(document).on('click', function () {
+        $('.collapse').collapse('hide');
+    })
+
+    $(window).bind('beforeunload', function (eventObject) {
+        var gameId = $("#hdnSelectedGameId").val();
+        if(gameId != null)
+            game.server.disconnectPlayer(gameId);
+    }); 
+
+    $(window).on('beforeunload', function () {
+        var gameId = $("#hdnSelectedGameId").val();
+        if(gameId != null)
+            game.server.disconnectPlayer(gameId);
+    });
+
 });
 
 function getAPIUrl() {
@@ -20,11 +37,6 @@ function showErrorMsg(title,msg) {
     $('#msgBody').text(msg);
     $('#mdlMessage').modal('show');
 }
-
-$(window).on('beforeunload', function () {
-    var gameId = $("#hdnSelectedGameId").val();
-    game.server.disconnectPlayer(gameId);
-});
 
 var clPreloader = function () {
 
@@ -68,6 +80,7 @@ function setupJoinClientMethods() {
                 $("#hdnGameId").val(response.GameId);
                 $("#hdnGameCode").val(response.GameCode);
                 $("#hdnPlayerId").val(response.PlayerId);
+                $("#hdnPlayerName").val(response.PlayerName);
                 loadMainScreen("Join/Wait");
             }
         }
@@ -96,6 +109,8 @@ function setupJoinClientMethods() {
                 $("#hdnGameId").val(response.GameId);
                 $("#hdnPlayerId").val(response.PlayerId);
                 $("#hdnGameCode").val(response.GameCode);
+                $("#hdnPlayerName").val(response.PlayerName);
+                
                 loadMainScreen("Join/Wait");
             }
         }
@@ -153,21 +168,22 @@ function setUpWaitClientMethods() {
     };
 
     game.client.setUpGameData = function (data) {
-        debugger
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
-            console.log(data);
             dataset = data;
         }
     };
 
     game.client.setUpSectors = function (data) {
-        debugger
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
-            console.log(data);
             sectors = data;
         }
     };
-    
+
+    game.client.allPlayersConnected = function () {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "WAIT") {
+            $('#lblWaitingNotify').text('Please wait till we get things ready');
+        }
+    };
 
     //WAIT - NotifyPlayers
     game.client.notifyJoinedPlayers = function (data) {
@@ -215,7 +231,10 @@ function setUpGameClientMethods() {
     game.client.stockBuySuccess = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
             console.log(response);
-            $('#playerAccountBalance').text(response);
+            $('#playerAccountBalance').text(response.Balance.toFixed(2));
+            $('#bankWindowBalance').text(response.Balance.toFixed(2));
+            $('#playerAllocatedBalance').text(response.AllocatedPrice.toFixed(2));
+            $('#playerProfitBalance').text(response.ProfitPrice.toFixed(2));
         }
     };
 
@@ -224,6 +243,7 @@ function setUpGameClientMethods() {
             console.log(response);
             addStockBoughtNews(response);
             getPlayerStock();
+            getGameTransactions();
         }
     };
 
@@ -245,7 +265,10 @@ function setUpGameClientMethods() {
     game.client.stockSellSuccess = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
             console.log(response);
-            $('#playerAccountBalance').text(response);
+            $('#playerAccountBalance').text(response.Balance.toFixed(2));
+            $('#bankWindowBalance').text(response.Balance.toFixed(2));
+            $('#playerAllocatedBalance').text(response.AllocatedPrice.toFixed(2));
+            $('#playerProfitBalance').text(response.ProfitPrice.toFixed(2));
         }
     };
 
@@ -254,6 +277,7 @@ function setUpGameClientMethods() {
             console.log(response);
             addStockSoldNews(response);
             getPlayerStock();
+            getGameTransactions();
         }
     };
 

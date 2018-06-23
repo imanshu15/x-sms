@@ -1,6 +1,4 @@
-﻿
-
-<div class="bank-head">
+﻿<div class="bank-head">
 
     <div class=" " style="margin-left:20px;">
         <div class="stock-info-img">
@@ -10,21 +8,24 @@
             <span class="stock-name-lg d-inline">Bank</span>
             <span class="sector-name d-inline">Balance</span>
             <div class="d-block">
-                <div class="stock-value d-inline green"><span>$25000.0</span> </div>
+                <div class="stock-value d-inline green"><span id="bankWindowBalance">1000.0</span> </div>
 
             </div>
         </div>
-
-
-    </div>
-    
+    </div> 
 </div>
 
+<table class=" table" style="margin-top: 30px;margin-bottom: 0px;" id="miniStatementList">
+    <thead>
+        <tr class="table-head table-sm ">
+            <th scope="col" style="text-align:left;padding-left:14px;">Transaction id</th>
+            <th scope="col" class="col">Transaction Type</th>
+            <th scope="col" class="col">Amount</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
 
-@{
-    
-    Html.RenderPartial("_Transactions");
-}
 
 
 

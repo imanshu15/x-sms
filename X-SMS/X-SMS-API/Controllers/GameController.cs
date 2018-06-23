@@ -88,6 +88,16 @@ namespace X_SMS_API.Controllers
             }
         }
 
+        [Route("api/Game/EndGame")]
+        [HttpPost]
+        public ResultToken EndGame([FromBody] int gameId)
+        {
+            using (GameService gameService = new GameService())
+            {
+                var result = gameService.RemoveGame(gameId);
+                return result;
+            }
+        }
 
         [Route("api/game/sectors")]
         [HttpGet]
@@ -98,6 +108,19 @@ namespace X_SMS_API.Controllers
                 ResultToken token = new ResultToken();
                 token.Success = true;
                 token.Data = gameService.GetSectorsList();
+                return Json(token);
+            }
+        }
+
+        [Route("api/Game/GameOver")]
+        [HttpPost]
+        public IHttpActionResult GameOver(PlayerDTO winner)
+        {
+            using (GameService gameService = new GameService())
+            {
+                ResultToken token = new ResultToken();
+                token.Success = true;
+                token.Data = gameService.GameOver(winner);
                 return Json(token);
             }
         }

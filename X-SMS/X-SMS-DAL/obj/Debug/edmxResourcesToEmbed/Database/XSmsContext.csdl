@@ -268,5 +268,7 @@
     <Property Name="IsWithdraw" Type="Boolean" Nullable="false" />
     <Property Name="IsDeposit" Type="Boolean" Nullable="false" />
     <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+    <Property Name="SectorId" Type="Int32" />
+    <Property Name="SectorName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
 </Schema>

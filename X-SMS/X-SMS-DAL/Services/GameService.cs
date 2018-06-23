@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using X_SMS_DAL.Database;
+using X_SMS_DAL.Global;
 using X_SMS_DAL.Mapper;
 using X_SMS_REP;
 using X_SMS_REP.RequestModel;
@@ -105,6 +106,71 @@ namespace X_SMS_DAL.Services
 
             return result;
 
+        }
+
+        public ResultToken RemoveGame(int gameId)
+        {
+            ResultToken result = new ResultToken();
+            result.Success = true;
+            try
+            {
+                var game = gameEntities.Games.FirstOrDefault(a => a.GameId == gameId);
+                if (game != null)
+                {
+                    game.IsStarted = false;
+                    game.IsCanceled = true;
+                    game.IsActive = false;
+                    gameEntities.SaveChanges();
+                    GameDTO gameDto = Mapping.Mapper.Map<GameDTO>(game);
+                    result.Data = gameDto;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex);
+            }
+
+            return result;
+        }
+
+        public object GameOver(PlayerDTO winner)
+        {
+            ResultToken result = new ResultToken();
+            result.Success = true;
+            try
+            {
+                var game = gameEntities.Games.FirstOrDefault(a => a.GameId == winner.GameId);
+                if (game != null)
+                {
+                    game.IsStarted = false;
+                    game.IsCanceled = false;
+                    game.IsActive = false;
+                    game.Winner = winner.PlayerName;
+                    gameEntities.SaveChanges();
+                    GameDTO gameDto = Mapping.Mapper.Map<GameDTO>(game);
+                    result.Data = gameDto;
+                }
+                var details = GameDataManager.gameDetails.FirstOrDefault(a => a.Key == winner.GameId);
+                if (details.Value != null)
+                {
+                    Database.GameDetail temp = new Database.GameDetail();
+                    temp.GameId = winner.GameId;
+                    temp.Details = details.Value.ToString();
+                    gameEntities.GameDetails.Add(temp);
+                    gameEntities.SaveChanges();
+                    GameDataManager.gameDetails.Remove(details.Key);
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                Logger logger = LogManager.GetLogger("excpLogger");
+                logger.Error(ex);
+            }
+
+            return result;
         }
 
         public List<SectorDTO> GetSectorsList()

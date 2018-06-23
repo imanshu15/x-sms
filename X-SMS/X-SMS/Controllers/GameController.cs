@@ -18,6 +18,10 @@ namespace X_SMS.Controllers
         {
             return PartialView("_GameBoard");
         }
-
+        [Route("Game/Winner")]
+        public ActionResult Winner()
+        {
+            return PartialView("_Winner");
+        }
     }
 }

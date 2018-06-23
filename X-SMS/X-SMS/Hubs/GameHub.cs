@@ -18,7 +18,7 @@ namespace X_SMS.Hubs
         
         private object _syncRoot = new object();
 
-        public void CreateGame(string playerName, int playerCount, bool isPrivate)
+        public void CreateGame(string playerName, int playerCount, bool isPrivate,bool isPlayerAi)
         {
 
             bool isSuccess = false;
@@ -30,12 +30,16 @@ namespace X_SMS.Hubs
                 GameDTO game = gameManager.CreateGame(playerName, playerCount, isPrivate);
                 if (game != null)
                 {
+                    game.JoinedPlayerCount = 0;
                     player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
                     if (player != null)
                     {
+                        player.GainAmount = 0;
+                        player.SpendAmount = 0;
                         player.GameCode = game.GameCode;
                         player.NoOfTransactions = 0;
                         game.Players.Add(player);
+                        game.JoinedPlayerCount += 1;
 
                         EntityStateManager.CurrentGames.Add(game);
                         AddPlayer(player);
@@ -53,7 +57,7 @@ namespace X_SMS.Hubs
                 {
                     Groups.Add(Context.ConnectionId, game.GameCode);
                     Clients.Client(Context.ConnectionId).gameCreated(player); // Call method on created players view
-                    var games = EntityStateManager.CurrentGames.ToList();
+                    var games = EntityStateManager.CurrentGames.Where(a => a.IsPublic == true).ToList();
                     var connectedIds = EntityStateManager.Players.Select(a => a.ConnectionId).ToArray();
                     Clients.AllExcept(connectedIds).updateGameList(games);
                 }
@@ -90,14 +94,20 @@ namespace X_SMS.Hubs
                     if ((game != null && !game.IsPlayerAIAvailable && game.Players.Count < game.PlayersCount) || (game != null && game.IsPlayerAIAvailable && game.Players.Count < game.PlayersCount + 1))
                     {
                         if (!isPlayerAI)
+                        {
+                            game.JoinedPlayerCount += 1;
                             player = gameManager.CreatePlayer(playerName, game.GameId, Context.ConnectionId);
+                        }
                         else
+                        {
                             player = gameManager.CreatePlayer(playerName, game.GameId, "NO CONNECTION");
-
+                        }
                         player.IsPlayerAI = isPlayerAI;
 
                         if (player != null)
                         {
+                            player.SpendAmount = 0;
+                            player.GainAmount = 0;
                             player.GameCode = game.GameCode;
                             player.NoOfTransactions = 0;
                             game.Players.Add(player);
@@ -142,6 +152,7 @@ namespace X_SMS.Hubs
                     {
                         var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == game.GameId);
                         gameObj.IsStarted = true;
+                        Clients.Group(game.GameCode).allPlayersConnected();
 
                         // SET UP GAME DATA
                         var sectors = gameLogic.GetSectors();
@@ -180,23 +191,23 @@ namespace X_SMS.Hubs
 
         public void DisconnectPlayer(int gameId)
         {
+            string gameCode = "";
             GameManager gameManager = new GameManager();
-            var player = EntityStateManager.Players.FirstOrDefault(a => a.ConnectionId == Context.ConnectionId);
+            //var player = EntityStateManager.Players.FirstOrDefault(a => a.ConnectionId == Context.ConnectionId);
             var game = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
-            if (player != null)
+            gameCode = game.GameCode;
+            var players = game.Players; 
+            if (players != null)
             {
-                bool isGameOver = false;
-                EntityStateManager.Players.Remove(player);
-                gameManager.DisconnectPlayer(player.PlayerId);
-
-                if (game != null)
-                {
-                    EntityStateManager.CurrentGames.Remove(game);
+                foreach (var player in players)
+                {               
+                    EntityStateManager.Players.Remove(player);
+                    gameManager.DisconnectPlayer(player.PlayerId);
                     game.Players.Remove(player);
                 }
-
-                Clients.Group(game.GameCode).playerDisconnected(player.PlayerName);
-                              
+                gameManager.DisconnectGame(game.GameId);
+                EntityStateManager.CurrentGames.Remove(game);
+                Clients.Group(gameCode).playerDisconnected();                    
             }
         }
 
@@ -205,7 +216,7 @@ namespace X_SMS.Hubs
         }
 
         public void GetCurrentGameList() {
-            var games = EntityStateManager.CurrentGames.ToList();
+            var games = EntityStateManager.CurrentGames.Where(a => a.IsPublic == true).ToList();
             Clients.Client(Context.ConnectionId).currentGameList(games);
         }
 
@@ -233,28 +244,42 @@ namespace X_SMS.Hubs
                 }
             }));
 
-            timer.Change(TimeSpan.Zero, TimeSpan.FromMinutes(4));
+            timer.Change(TimeSpan.Zero, TimeSpan.FromMinutes(1));
         }
 
         private bool NextRound(int gameId) {
 
-             bool isFinished = false;
+            GameManager gameManager = new GameManager();
+            bool isFinished = false;
             var gameObj = EntityStateManager.CurrentGames.FirstOrDefault(a => a.GameId == gameId);
 
             if (gameObj.CurrentRound > EntityStateManager.NumberOfRounds)
             {
-                isFinished = true;
                 //GAME OVER
+                isFinished = true;
+                var players = gameObj.Players.ToList();
+                var gameCode = gameObj.GameCode;
+                var winner = players.OrderBy(a => a.BankAccount.Balance).ThenBy(b => b.NoOfTransactions).FirstOrDefault();
+                
+                if (players != null)
+                {
+                    foreach (var player in players)
+                    {
+                        EntityStateManager.Players.Remove(player);
+                        gameManager.DisconnectPlayer(player.PlayerId);
+                        gameObj.Players.Remove(player);
+                    }
+                    gameManager.GameEnded(winner);
+                    EntityStateManager.CurrentGames.Remove(gameObj);
+                    Clients.Group(gameCode).playerDisconnected();
+                }
+
             }
             else {
                gameObj.CurrentRound += 1;
                 if (gameObj.CurrentRound == 1)
                 {
                     System.Threading.Thread.Sleep(3000);
-                }
-                else
-                {
-
                 }
 
                 var turnDetails = gameObj.GameDetail.TurnDetail.FirstOrDefault(x => x.Turn == gameObj.CurrentRound);
@@ -314,9 +339,16 @@ namespace X_SMS.Hubs
                                     player.PlayerStocks.Add(pStock);
                                     player.BankAccount.Balance -= (quantity * stock.CurrentPrice);
                                     player.NoOfTransactions += 1;
+                                    player.SpendAmount += quantity * stock.CurrentPrice;
 
-                                    if(!player.IsPlayerAI)
-                                        Clients.Client(Context.ConnectionId).stockBuySuccess(player.BankAccount.Balance);
+                                    BalanceDTO balance = new BalanceDTO();
+                                    balance.OpeningBalance = 1000;
+                                    balance.AllocatedPrice = player.SpendAmount;
+                                    balance.ProfitPrice = player.GainAmount;
+                                    balance.Balance = player.BankAccount.Balance;
+
+                                    if (!player.IsPlayerAI)
+                                        Clients.Client(Context.ConnectionId).stockBuySuccess(balance);
 
                                     Clients.Group(game.GameCode).playerBoughtStock(temp);
 
@@ -353,7 +385,7 @@ namespace X_SMS.Hubs
                     temp.Percentage = ((temp.CurrentPrice - temp.BoughtPrice)/ temp.BoughtPrice) * 100;
                     temp.Profit = (temp.CurrentPrice * temp.Quantity) - (temp.BoughtPrice * temp.Quantity);
                 }
-                Clients.Client(Context.ConnectionId).loadPlayerStocksList(playerStocks.GroupBy(x => x.StockId).ToList());
+                Clients.Client(Context.ConnectionId).loadPlayerStocksList(playerStocks);
             }
         }
 
@@ -408,9 +440,17 @@ namespace X_SMS.Hubs
                                     }
 
                                     player.BankAccount.Balance += (quantity * stock.CurrentPrice);
+                                    player.GainAmount = quantity * stock.CurrentPrice;
                                     temp.PlayerAccBalance = player.BankAccount.Balance;
-                                    if(!player.IsPlayerAI)
-                                        Clients.Client(Context.ConnectionId).stockSellSuccess(player.BankAccount.Balance);
+
+                                    BalanceDTO balance = new BalanceDTO();
+                                    balance.OpeningBalance = 1000;
+                                    balance.AllocatedPrice = player.SpendAmount;
+                                    balance.ProfitPrice = player.GainAmount;
+                                    balance.Balance = player.BankAccount.Balance;
+
+                                    if (!player.IsPlayerAI)
+                                        Clients.Client(Context.ConnectionId).stockSellSuccess(balance);
                                     Clients.Group(game.GameCode).playerSoldStock(temp);
 
                                     GetGameLeaders(game.GameId);

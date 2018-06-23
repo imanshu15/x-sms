@@ -27,14 +27,19 @@ function createGameAction() {
         var playerName = $("#txtPlayerName").val();
         var playersCount = $("#txtPlayerCount").val();
         var isPrivate = false;
+        var isPlayerAi = false;
         if ($('#chkIsPrivateGame').is(":checked")) {
             isPrivate = true;
         }
+        if ($('#chkIsPlayerAI').is(":checked")) {
+            isPlayerAi = true;
+        }
+
         if (playerName != null && playerName != undefined && playerName != "") {
             if (!DoesPlayerExist(playerName)) {
                 if (playersCount != null && playersCount != undefined && $.isNumeric(playersCount)) {
                     if (playersCount <= 4) {
-                        game.server.createGame(playerName, playersCount, isPrivate);
+                        game.server.createGame(playerName, playersCount, isPrivate, isPlayerAi);
                     } else {                  
                         showErrorMsg('Validation', 'Maximum players count is 4');
                     }
@@ -61,7 +66,8 @@ function setUpGameTable(data) {
     gameTable.clear().draw();
     data.forEach(function (entry) {
         if (entry !== null) {
-            gameTable.row.add([entry.GameId, entry.GameCode, entry.CreatedPlayer, entry.PlayersCount, 0, entry.StartTime]).draw();
+            //var date = dateFormat(entry.StartTime, "mm/dd/yy, h:MM:ss TT");
+            gameTable.row.add([entry.GameId, entry.GameCode, entry.CreatedPlayer, entry.PlayersCount, entry.JoinedPlayerCount, entry.StartTime]).draw();
         }
     });
 }

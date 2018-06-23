@@ -15,6 +15,13 @@
           <Property Name="Balance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="GameDetails">
+          <Key>
+            <PropertyRef Name="GameId" />
+          </Key>
+          <Property Name="GameId" Type="int" Nullable="false" />
+          <Property Name="Details" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="PlayerStock">
           <Key>
             <PropertyRef Name="PlayerStockId" />
@@ -111,17 +118,19 @@ warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not h
             <PropertyRef Name="IsDeposit" />
             <PropertyRef Name="Amount" />
           </Key>
-          <Property Name="StockName" Type="nvarchar" MaxLength="100" />
-          <Property Name="StartingPrice" Type="decimal" Precision="18" Scale="2" />
-          <Property Name="Quantity" Type="int" />
+          <Property Name="GameId" Type="int" />
           <Property Name="PlayerId" Type="int" />
           <Property Name="PlayerName" Type="nvarchar" MaxLength="100" />
-          <Property Name="StockId" Type="int" />
           <Property Name="IsActive" Type="bit" />
-          <Property Name="GameId" Type="int" />
-          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="StockId" Type="int" />
+          <Property Name="StockName" Type="nvarchar" MaxLength="100" />
+          <Property Name="SectorId" Type="int" />
+          <Property Name="SectorName" Type="nvarchar" MaxLength="100" />
+          <Property Name="StartingPrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="IsWithdraw" Type="bit" Nullable="false" />
           <Property Name="IsDeposit" Type="bit" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
         </EntityType>
         <Association Name="FK_Account">
@@ -224,6 +233,7 @@ warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not h
         </Function>
         <EntityContainer Name="XSmsModelStoreContainer">
           <EntitySet Name="BankAccount" EntityType="Self.BankAccount" Schema="Detail" store:Type="Tables" />
+          <EntitySet Name="GameDetails" EntityType="Self.GameDetails" Schema="Detail" store:Type="Tables" />
           <EntitySet Name="PlayerStock" EntityType="Self.PlayerStock" Schema="Detail" store:Type="Tables" />
           <EntitySet Name="Transcation" EntityType="Self.Transcation" Schema="Detail" store:Type="Tables" />
           <EntitySet Name="Game" EntityType="Self.Game" Schema="Game" store:Type="Tables" />
@@ -234,17 +244,19 @@ warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not h
           <EntitySet Name="Trend" EntityType="Self.Trend" Schema="Master" store:Type="Tables" />
           <EntitySet Name="ViewPlayerPortfolio" EntityType="Self.ViewPlayerPortfolio" store:Type="Views" store:Schema="Detail">
             <DefiningQuery>SELECT 
-    [ViewPlayerPortfolio].[StockName] AS [StockName], 
-    [ViewPlayerPortfolio].[StartingPrice] AS [StartingPrice], 
-    [ViewPlayerPortfolio].[Quantity] AS [Quantity], 
+    [ViewPlayerPortfolio].[GameId] AS [GameId], 
     [ViewPlayerPortfolio].[PlayerId] AS [PlayerId], 
     [ViewPlayerPortfolio].[PlayerName] AS [PlayerName], 
-    [ViewPlayerPortfolio].[StockId] AS [StockId], 
     [ViewPlayerPortfolio].[IsActive] AS [IsActive], 
-    [ViewPlayerPortfolio].[GameId] AS [GameId], 
-    [ViewPlayerPortfolio].[UnitPrice] AS [UnitPrice], 
+    [ViewPlayerPortfolio].[StockId] AS [StockId], 
+    [ViewPlayerPortfolio].[StockName] AS [StockName], 
+    [ViewPlayerPortfolio].[SectorId] AS [SectorId], 
+    [ViewPlayerPortfolio].[SectorName] AS [SectorName], 
+    [ViewPlayerPortfolio].[StartingPrice] AS [StartingPrice], 
     [ViewPlayerPortfolio].[IsWithdraw] AS [IsWithdraw], 
     [ViewPlayerPortfolio].[IsDeposit] AS [IsDeposit], 
+    [ViewPlayerPortfolio].[Quantity] AS [Quantity], 
+    [ViewPlayerPortfolio].[UnitPrice] AS [UnitPrice], 
     [ViewPlayerPortfolio].[Amount] AS [Amount]
     FROM [Detail].[ViewPlayerPortfolio] AS [ViewPlayerPortfolio]</DefiningQuery>
           </EntitySet>
@@ -334,6 +346,7 @@ warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not h
             <Parameter Name="stockID" Mode="In" Type="Int32" />
             <Parameter Name="price" Mode="In" Type="Decimal" />
           </FunctionImport>
+          <EntitySet Name="GameDetails" EntityType="XSmsModel.GameDetail" />
         </EntityContainer>
         <EntityType Name="BankAccount">
           <Key>
@@ -549,6 +562,15 @@ warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not h
           <Property Name="IsWithdraw" Type="Boolean" Nullable="false" />
           <Property Name="IsDeposit" Type="Boolean" Nullable="false" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="SectorId" Type="Int32" />
+          <Property Name="SectorName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="GameDetail">
+          <Key>
+            <PropertyRef Name="GameId" />
+          </Key>
+          <Property Name="GameId" Type="Int32" Nullable="false" />
+          <Property Name="Details" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -666,6 +688,8 @@ warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not h
           <EntitySetMapping Name="ViewPlayerPortfolios">
             <EntityTypeMapping TypeName="XSmsModel.ViewPlayerPortfolio">
               <MappingFragment StoreEntitySet="ViewPlayerPortfolio">
+                <ScalarProperty Name="SectorName" ColumnName="SectorName" />
+                <ScalarProperty Name="SectorId" ColumnName="SectorId" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="IsDeposit" ColumnName="IsDeposit" />
                 <ScalarProperty Name="IsWithdraw" ColumnName="IsWithdraw" />
@@ -683,6 +707,14 @@ warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not h
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="BuyStocks" FunctionName="XSmsModel.Store.BuyStocks" />
           <FunctionImportMapping FunctionImportName="SellStocks" FunctionName="XSmsModel.Store.SellStocks" />
+          <EntitySetMapping Name="GameDetails">
+            <EntityTypeMapping TypeName="XSmsModel.GameDetail">
+              <MappingFragment StoreEntitySet="GameDetails">
+                <ScalarProperty Name="Details" ColumnName="Details" />
+                <ScalarProperty Name="GameId" ColumnName="GameId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
