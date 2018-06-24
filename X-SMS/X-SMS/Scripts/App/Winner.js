@@ -28,8 +28,8 @@ function setUpWinnerBoard(winner) {
     if (profit < 0)
         profit = 0.00;
     $('#lblPlayerNameDisplay').text(winner.PlayerName);
-    $('#lblWinnerProfit').text(profit);
-    $('#lblWinnerBalance').text(winner.BankAccount.Balance);
+    $('#lblWinnerProfit').text(profittoFixed(2));
+    $('#lblWinnerBalance').text(winner.BankAccount.BalancetoFixed(2));
     $('#mdlWinner').modal('show');
 }
 

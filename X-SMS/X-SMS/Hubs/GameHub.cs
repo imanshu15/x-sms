@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Web;
 using Microsoft.AspNet.SignalR;
@@ -46,7 +47,7 @@ namespace X_SMS.Hubs
                         //CREATE PLAYER AI
                         if (isPlayerAi)
                         {
-                            JoinGame("COMPUTER_AI", game.GameId, "", true);
+                            JoinGame("PLAYER_AI", game.GameId, "", true);
                             game.IsPlayerAIAvailable = true;
                         }
                         else {
@@ -54,6 +55,12 @@ namespace X_SMS.Hubs
                         }
                         isSuccess = true;
                     }
+
+                    Task.Factory.StartNew(() =>
+                    {
+                        System.Threading.Thread.Sleep(1200000);
+                        CheckGameEnded(game.GameId);
+                    });
                 }
 
                 if (isSuccess)
@@ -219,8 +226,18 @@ namespace X_SMS.Hubs
         }
 
         public void GetCurrentGameList() {
-            var games = EntityStateManager.CurrentGames.Where(a => a.IsPublic == true).OrderBy(b => b.StartTime).ToList();
+            var games = EntityStateManager.CurrentGames.Where(a => a.IsPublic == true && a.IsStarted == false).OrderBy(b => b.StartTime).ToList();
             Clients.Client(Context.ConnectionId).currentGameList(games);
+        }
+
+        private void CheckGameEnded(int gameId) {
+
+            var game = EntityStateManager.CurrentGames.FirstOrDefault(x => x.GameId == gameId);
+
+            if (game != null)
+            {
+                DisconnectPlayer(game.GameId);
+            }
         }
 
         //---------------------------------------------------------------------------------------------------------------------------
@@ -258,10 +275,12 @@ namespace X_SMS.Hubs
 
             if (gameObj.CurrentRound >= EntityStateManager.NumberOfRounds)
             {
+                var gameCode = gameObj.GameCode;
+                Clients.Group(gameCode).gameIsOver();
                 //GAME OVER
                 isFinished = true;
                 var players = gameObj.Players.ToList();
-                var gameCode = gameObj.GameCode;
+                
                 var winner = players.OrderByDescending(a => a.BankAccount.Balance).ThenByDescending(b => b.NoOfTransactions).FirstOrDefault();
                 GetGameLeaders(gameObj.GameId);
                 if (players != null)

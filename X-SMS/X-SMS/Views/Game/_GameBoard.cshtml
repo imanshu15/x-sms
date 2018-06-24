@@ -24,11 +24,7 @@
                     <div class="table-responsive">
                         @{
                             Html.RenderPartial("_MarketWindow");
-                            //Html.RenderPartial("_LeaderBoard");
                             Html.RenderPartial("_Orders");
-                            // Html.RenderPartial("_StockInfo");
-                            // Html.RenderPartial("_Transactions");
-                            // Html.RenderPartial("_Bank");
                         }
                     </div>
                 </div>
@@ -46,12 +42,7 @@
                 <div class="table-custom">
                     <div class="table-responsive">
                         @{
-                            //Html.RenderPartial("_MarketWindow");
-                            //Html.RenderPartial("_LeaderBoard");
-                            // Html.RenderPartial("_Orders");
-                            // Html.RenderPartial("_StockInfo");
                             Html.RenderPartial("_Transactions");
-                            // Html.RenderPartial("_Bank");
                         }
                     </div>
                 </div>
@@ -60,11 +51,7 @@
                 <div class="table-custom">
                     <div class="table-responsive">
                         @{
-                            //Html.RenderPartial("_MarketWindow");
-                            //Html.RenderPartial("_LeaderBoard");
-                            // Html.RenderPartial("_Orders");
-                            // Html.RenderPartial("_StockInfo");
-                            // Html.RenderPartial("_Transactions");
+
                             Html.RenderPartial("_Bank");
                         }
                     </div>
@@ -74,12 +61,7 @@
                 <div class="table-custom">
                     <div class="table-responsive">
                         @{
-                            //Html.RenderPartial("_MarketWindow");
                             Html.RenderPartial("_LeaderBoard");
-                            // Html.RenderPartial("_Orders");
-                            // Html.RenderPartial("_StockInfo");
-                            // Html.RenderPartial("_Transactions");
-                            // Html.RenderPartial("_Bank");
                         }
                     </div>
                 </div>
@@ -102,21 +84,16 @@
             </div>
             <div class="stock-info ">
                 <span class="user-name d-inline" id="lblPlayerNameDisplay"></span>
-                <button class="btn blue-button" style="margin-left:40px;"><span class="fa fa-user-circle"></span>  Profilo</button>
-
             </div>
         </div>
 
         <a class="i-menu-link" data-toggle="tab" data-target="#bank-window">
             <span class="	fa fa-calendar"></span>&nbsp; Bank
         </a>
-        <a class="i-menu-link">
+        <a class="i-menu-link" data-toggle="tab" data-target="#stock">
             <span class="	fa fa-calendar"></span>&nbsp; Markets
         </a>
-        <a class="i-menu-link">
-            <span class=" fa fa-history"></span>&nbsp;History
-        </a>
-        <a class="i-menu-link" data-toggle="tab" data-target="#winner">
+        <a class="i-menu-link" data-toggle="tab" data-target="#leaderBoard">
             <span class=" fa fa-history"></span>&nbsp;Leader Board
         </a>
 

@@ -178,9 +178,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JoinController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -317,15 +317,11 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Join\_Join.cshtml" />
     <Content Include="Views\Join\_Wait.cshtml" />
     <Content Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Game\_GameBoardOld.cshtml" />
     <Content Include="Views\Shared\_GameBoardLayout.cshtml" />
-    <Content Include="Views\Home\GameBoard.cshtml" />
     <Content Include="Views\History\Index.cshtml" />
     <Content Include="Views\Shared\_HistoryLayout.cshtml" />
     <Content Include="Views\Game\_LeaderBoard.cshtml" />
@@ -337,12 +333,12 @@
     <Content Include="Views\Game\_Transactions.cshtml" />
     <Content Include="Views\Game\_Graphs.cshtml" />
     <Content Include="Views\Game\Winner.cshtml" />
+    <Content Include="Views\About\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\logs\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Winner\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

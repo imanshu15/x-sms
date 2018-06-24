@@ -28,6 +28,12 @@ $(document).ready(function () {
 
 });
 
+$(window).bind('beforeunload', function (eventObject) {
+    var gameId = $("#hdnSelectedGameId").val();
+    if (gameId != null)
+        game.server.disconnectPlayer(gameId);
+});
+
 function getAPIUrl() {
     return "http://localhost:1597/api/";
 }
@@ -286,6 +292,14 @@ function setUpGameClientMethods() {
     game.client.gameOver = function (response) {
         if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
                 window.location.href = 'Game/Summary?gameId=' + response;
+        }
+    };
+
+    game.client.gameIsOver = function (response) {
+        if ($("#hdnScreen").val() != undefined && $("#hdnScreen").val() == "GAME") {
+            $("#msgTitle").text("Game Over");
+            $("#msgBody").text("You will be redirected to game summary");
+            $("#mdlMessage").modal("show");
         }
     };
 }
