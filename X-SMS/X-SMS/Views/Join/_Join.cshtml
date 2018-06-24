@@ -1,7 +1,7 @@
-﻿<div class=" login"  >
+﻿<div class=" login">
     <ul class="nav nav-tabs login-title">
-        <li class="active"  ><a data-toggle="tab" href="#home" style="padding:10px 65px 10px 65px; background-color: transparent;color: #fff;">Create</a></li>
-        <li  ><a data-toggle="tab" href="#menu1" style="padding:10px 82px 10px 82px;background-color: transparent;color: #fff;">Join</a></li>
+        <li class="active"><a data-toggle="tab" href="#home" style="padding:10px 65px 10px 65px; background-color: transparent;color: #fff;">Create</a></li>
+        <li><a data-toggle="tab" href="#menu1" style="padding:10px 82px 10px 82px;background-color: transparent;color: #fff;">Join</a></li>
     </ul>
 
     <div class="tab-content" style="border-top: 1px solid #e4e4e4;">
@@ -29,24 +29,51 @@
                             <label class="form-check-label" for="chkIsPlayerAI"> Player AI? </label>
                         </div>
                     </div>
-                    <button class="btn btn-primary" id="btnCreateGame">Create</button>
+                    <button class="btn btn-primary d-inline" id="btnCreateGame"  onclick="loader()">Create</button>
+                    <div class="create-game-loader" id="connect-loader">
+                        <div id="preloader1" class="d-inline">
+                            <div id="loader1">
+                                <div class="line-scale-pulse-out">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
+
             </div>
         </div>
-        <div id="menu1" class="tab-pane fade players-table-info">
+        <div id="menu1" class="tab-pane fade join-table-info">
             <div class="row ">
                 <span class="login-head">Join a private game</span>
-                    <form>
-                        <div class="form-group">
-                            <label for="txtJoinPrivatePlayer"> Player Name </label>
-                            <input type="text" class="form-control" id="txtJoinPrivatePlayer" placeholder="Enter your name" required>
+                <form>
+                    <div class="form-group">
+                        <label for="txtJoinPrivatePlayer"> Player Name </label>
+                        <input type="text" class="form-control" id="txtJoinPrivatePlayer" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtJoinGameCode"> Game Code </label>
+                        <input type="text" class="form-control" id="txtJoinGameCode" placeholder="Enter the game code" required>
+                    </div>
+                    <button class="btn btn-primary" id="btnJoinPrivateGame" onclick="join_loader()">Join</button>
+                    <div class="create-game-loader" id="join-loader">
+                        <div id="preloader1" class="d-inline">
+                            <div id="loader1">
+                                <div class="line-scale-pulse-out">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="txtJoinGameCode"> Game Code </label>
-                            <input type="text" class="form-control" id="txtJoinGameCode" placeholder="Enter the game code" required>
-                        </div>
-                        <button class="btn btn-primary" id="btnJoinPrivateGame">Join</button>
-                    </form>
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -100,9 +127,14 @@
 
     </div>
 </div>
-
-
-
+<script>
+    function loader() {
+        document.getElementById("connect-loader").style.display = "block";
+    }
+    function join_loader() {
+        document.getElementById("join-loader").style.display = "block";
+    }
+</script>
 
 
 

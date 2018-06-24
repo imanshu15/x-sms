@@ -130,5 +130,13 @@
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="BuyStocks" FunctionName="XSmsModel.Store.BuyStocks" />
     <FunctionImportMapping FunctionImportName="SellStocks" FunctionName="XSmsModel.Store.SellStocks" />
+    <EntitySetMapping Name="GameDetails">
+      <EntityTypeMapping TypeName="XSmsModel.GameDetail">
+        <MappingFragment StoreEntitySet="GameDetails">
+          <ScalarProperty Name="Details" ColumnName="Details" />
+          <ScalarProperty Name="GameId" ColumnName="GameId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -10,6 +10,13 @@
     <Property Name="Balance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
     <Property Name="IsActive" Type="bit" Nullable="false" />
   </EntityType>
+  <EntityType Name="GameDetails">
+    <Key>
+      <PropertyRef Name="GameId" />
+    </Key>
+    <Property Name="GameId" Type="int" Nullable="false" />
+    <Property Name="Details" Type="nvarchar(max)" />
+  </EntityType>
   <EntityType Name="PlayerStock">
     <Key>
       <PropertyRef Name="PlayerStockId" />
@@ -221,6 +228,7 @@ warning 6002: The table/view 'teamx_x_sms.Detail.ViewPlayerPortfolio' does not h
   </Function>
   <EntityContainer Name="XSmsModelStoreContainer">
     <EntitySet Name="BankAccount" EntityType="Self.BankAccount" Schema="Detail" store:Type="Tables" />
+    <EntitySet Name="GameDetails" EntityType="Self.GameDetails" Schema="Detail" store:Type="Tables" />
     <EntitySet Name="PlayerStock" EntityType="Self.PlayerStock" Schema="Detail" store:Type="Tables" />
     <EntitySet Name="Transcation" EntityType="Self.Transcation" Schema="Detail" store:Type="Tables" />
     <EntitySet Name="Game" EntityType="Self.Game" Schema="Game" store:Type="Tables" />

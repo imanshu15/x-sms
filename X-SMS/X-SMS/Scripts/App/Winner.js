@@ -37,7 +37,7 @@ function addRowsToWinnerBoard(row, rank) {
     var profit = ((row.BankAccount.Balance - 1000) / 1000) * 100;
     profit = profit.toFixed(2);
 
-    var appendStr = '<tr class="winner-info" style="background-color:#3dbdec"><td>' + rank + '</td><td><center>'
+    var appendStr = '<tr class="winner-info" ><td>' + rank + '</td><td><center>'
         + '<div class="stock-img"><img class="avatar" alt="Alphabet" src="https://png.icons8.com/color/50/000000/person-male.png">'
         + '</div > <div class="stock-info"><span class="game-winner-name">' + row.PlayerName + '</span></div></center ></td >'
         + '<td> <div class="orders"><span> ' + row.NoOfTransactions + '</span> </div></td>';

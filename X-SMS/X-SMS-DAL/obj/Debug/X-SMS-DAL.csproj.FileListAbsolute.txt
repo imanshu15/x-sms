@@ -93,3 +93,22 @@ C:\Git update 6 21\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CoreCompileInputs.
 C:\Git update 6 21\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CopyComplete
 C:\Git update 6 21\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.dll
 C:\Git update 6 21\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.pdb
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\NLog.config
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll.config
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.dll
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-DAL.pdb
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\AutoMapper.dll
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.dll
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\NLog.dll
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-REP.dll
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\X-SMS-REP.pdb
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\AutoMapper.xml
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.xml
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\New folder\X-SMS\X-SMS-DAL\bin\Debug\NLog.xml
+C:\New folder\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csprojAssemblyReference.cache
+C:\New folder\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CoreCompileInputs.cache
+C:\New folder\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.csproj.CopyComplete
+C:\New folder\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.dll
+C:\New folder\X-SMS\X-SMS-DAL\obj\Debug\X-SMS-DAL.pdb

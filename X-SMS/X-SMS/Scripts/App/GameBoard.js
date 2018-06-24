@@ -244,7 +244,7 @@ function AddToMyStocksTable(stock) {
         + '<td style="text-align:center;"><i class="' + profitClassIcon + ' ' + profitClass +'" style="font-size:20px;top:5px;"></i></td>'
         + '<td><div class="' + profitClass+'"><span class="profit-amount ">' + stock.Profit + '</span></div></td>'
         + ' <td style="text-align:center;"><div class="trade-button "><div class="sell-botton  d-inline victoria-sell" onclick = "showStockChart(' + stock.SectorId + ', ' + stock.StockId + ')"><span>VIEW</span> </div>'
-        + '<div class="trade-button "><div class="sell-botton d-inline victoria-buy" onclick="sellStockPopUp(' + stock.SectorId + ',' + stock.StockId + ',' + stock.Quantity + ',\'' + stock.StockName +'\')"><span> SELL </span> </div></div></td> </tr>';
+        + '<div class="sell-botton d-inline victoria-buy" onclick="sellStockPopUp(' + stock.SectorId + ',' + stock.StockId + ',' + stock.Quantity + ',\'' + stock.StockName +'\')"><span> SELL </span> </div></td> </tr>';
 
     $('#myStockMarketTable > tbody:last-child').append(appendStr);
 }
@@ -351,7 +351,7 @@ function drawPlayerTransactions(player,isCurrentPlayer) {
     var divId = "plyTrans" + player.PlayerId;
 
     var appendStr = '<div><div class=" navbar-light bg-light players-name-bar " data-toggle="collapse" data-target="#' + divId + '"'
-        + '<span style=" margin-left:5px; ">' + player.PlayerName + '</span><span style=" margin-left:20px; ">' + player.Balance.toFixed(2) + '</span><i class="fas fa-chevron-down d-inline"></i></div>'
+        + '<span style="">' + player.PlayerName + '</span><span style=" margin-left:20px; ">' + player.Balance.toFixed(2) + '</span><i class="fas fa-chevron-down d-inline"></i></div>'
         + '<div id="' + divId + '" class="collapse"><table class=" table"><thead>'
         + '<tr class="table-head table-sm "><th scope="col" style="text-align:left;padding-left:14px;">Markets</th>'
         + '<th scope="col" class="col">Type</th><th scope="col" class="col">Units</th>'

@@ -28,3 +28,9 @@ C:\Git update 6 21\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csproj.CoreCompileInputs.
 C:\Git update 6 21\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.dll
 C:\Git update 6 21\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.pdb
 C:\Git update 6 21\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csprojAssemblyReference.cache
+C:\New folder\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.dll
+C:\New folder\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.pdb
+C:\New folder\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csprojAssemblyReference.cache
+C:\New folder\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csproj.CoreCompileInputs.cache
+C:\New folder\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.dll
+C:\New folder\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.pdb
