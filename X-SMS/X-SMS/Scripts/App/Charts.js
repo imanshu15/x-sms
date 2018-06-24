@@ -271,7 +271,6 @@ function getDataArray(key) {
 function generateStockValueChart(stocksArr) {
 
     var datasetStock = stocksArr;
-    console.log(datasetStock);
     //generate lables
     var labels = [];
     for (i = 0; i < datasetStock[0].PriceList.length; i++) {

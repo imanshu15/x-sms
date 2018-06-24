@@ -34,7 +34,6 @@ function setUpStocks(data) {
         duration = analyst[0].Duration;
         analystId = analyst[0].Id;
     }
-    console.log(analyst);
     for (var x = 0; x < sectorList.length; x++) {
         var sector = sectorList[x];
         var stocks = sector.Stocks;
@@ -51,7 +50,8 @@ function setUpStocks(data) {
                 previousPrice: "",
                 percentage: 0,
                 analyst: false,
-                message:""
+                message: "",
+                analystBuy: false
             };
 
             stock.sectorName = sector.Sector.SectorName;
@@ -60,6 +60,11 @@ function setUpStocks(data) {
             if (isAnalystAvailable && isSectorAnalyst && !isSell && analystId == stock.sectorId) {
                 stock.analyst = true;
                 stock.message = "Buy stocks from this sector in next " + duration + " rounds";
+                stock.analystBuy = true;
+            } else if (isAnalystAvailable && isSectorAnalyst && isSell && analystId == stock.sectorId) {
+                stock.analyst = true;
+                stock.message = "Sell stocks from this sector in next " + duration + " rounds";
+                stock.analystBuy = false;
             }
             var tempStock = stocks[i];
             stock.stockId = tempStock.StockId;
@@ -77,11 +82,15 @@ function setUpStocks(data) {
             if (isAnalystAvailable && !isSectorAnalyst && !isSell && analystId == stock.stockId) {
                 stock.analyst = true;
                 stock.message = "Buy this stock in next " + duration + " rounds";
+                stock.analystBuy = true;
+            } else if (isAnalystAvailable && !isSectorAnalyst && isSell && analystId == stock.stockId) {
+                stock.analyst = true;
+                stock.message = "Sell this stock in next " + duration + " rounds";
+                stock.analystBuy = false;
             }
             stocksList.push(stock);
         } 
     }
-    console.log(stocksList);
     loadStocksTable(stocksList);  
 }
 
@@ -94,7 +103,6 @@ function loadStocksTable(stocks) {
 }
 
 function AddToStocksTable(stock) {
-    debugger
     var percentage = stock.percentage;
     if (percentage > 0) {
         percentageClass = 'profit-color';
@@ -115,14 +123,15 @@ function AddToStocksTable(stock) {
         profitClass = 'neutral-color';
         profitClassIcon = 'fa fa-arrows';
     }
-  
-    //<div class="stock-img" > <img class="avatar" alt="Alphabet" src="https://etoro-cdn.etorostatic.com/market-avatars/goog/150x150.png"></div>
-    var appendStr = '<tr class="table-row"><td>';
 
-    if (stock.analyst == true) {
-       // appendStr += '<i class="fa-check-circle-o" rel="tooltip" title="' + stock.message + '" id="analyst' + stock.stockId + '"aria-hidden="true"></i>';
+    var appendStr = '<tr class="table-row"><td>';
+    
+    if (stock.analyst == true && stock.analystBuy == true) {
         appendStr += '<i class="fa fa-check profit-color" rel="tooltip" title="' + stock.message + '" style="font-size:20px;top:5px;"></i>';
+    } else if (stock.analyst == true && stock.analystBuy == false) {
+        appendStr += '<i class="fa fa-times loss-color" rel="tooltip" title="' + stock.message + '" style="font-size:20px;top:5px;"></i>';
     }
+
     appendStr += '<div class="stock-info"><span class="stock-name">' + stock.stockName + '</span>'
         + '<span class="sector-name">' + stock.sectorName + '</span></div></td><td><div class="' + percentageClass +'">'
         + '<span class="change-num-amount ">' + stock.percentage + ' %</span></div></td><td>'
@@ -226,40 +235,7 @@ function AddToMyStocksTable(stock) {
         profitClassIcon = 'fa fa-arrows';
     }
 
-    var isAnalystAvailable = false;
-    var isSectorAnalyst = false;
-    var isSell = false;
-    var duration = 0;
-    var analystId = 0;
-    if (analyst != null && analyst != undefined && analyst[0] != null && analyst != undefined)
-        isAnalystAvailable = true;
-
-    if (isAnalystAvailable) {
-        isSectorAnalyst = analyst[0].Type == 'sector' ? true : false;
-        isSell = analyst[0].Action == 'SELL' ? true : false;
-        duration = analyst[0].Duration;
-        analystId = analyst[0].Id;
-    }
-    var message = '';
-    var analyst = false;
-    if (isAnalystAvailable && !isSectorAnalyst && !isSell && analystId == stock.StockId) {
-        analyst = true;
-        message = "Sell this stock in next " + duration + " rounds";
-    }
-
-    if (isAnalystAvailable && isSectorAnalyst && !isSell && analystId == stock.SectorId) {
-        analyst = true;
-        message = "Sell stocks from this sector in next " + duration + " rounds";
-    }
-
     var appendStr = '<tr class="table-row"><td>';
-
-    debugger
-    if (analyst)
-    {
-        appendStr += '<i class="fa fa-times loss-color" rel="tooltip" title="' + message + '" style="font-size:20px;top:5px;"></i>';
-    }
-
     appendStr += '<div class="stock-info"><span class="stock-name">' + stock.StockName + '</span><span class="sector-name">' + stock.SectorName + '</span></div></td>'
         + ' <td><div class="units"><span>' + stock.Quantity + '</span> </div></td>'
         + ' <td><div class="stock-trade-button"><div class="left-price-name">O</div><div class="price-value"><span>' + stock.BoughtPrice + '</span> </div></div></td>'
