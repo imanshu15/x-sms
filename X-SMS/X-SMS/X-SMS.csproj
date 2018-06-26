@@ -232,6 +232,7 @@
     <Content Include="Content\images\sell.png" />
     <Content Include="Content\images\user-chat.png" />
     <Content Include="Content\images\user.png" />
+    <Content Include="Content\images\winner1.png" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
