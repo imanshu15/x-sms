@@ -226,7 +226,7 @@ namespace X_SMS.Hubs
         }
 
         public void GetCurrentGameList() {
-            var games = EntityStateManager.CurrentGames.Where(a => a.IsPublic == true && a.IsStarted == false).OrderBy(b => b.StartTime).ToList();
+            var games = EntityStateManager.CurrentGames.Where(a => a.IsPublic == true && a.IsStarted == false).OrderByDescending(b => b.StartTime).ToList();
             Clients.Client(Context.ConnectionId).currentGameList(games);
         }
 

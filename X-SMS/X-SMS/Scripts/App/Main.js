@@ -1,13 +1,24 @@
 ﻿var game;
 
 $(document).ready(function () {
+    //game = $.connection.gameHub;
+
+    //setUpClientMethods();
+
+    //$.connection.hub.start().done(function () {
+    //    console.log("ConId : %o", $.connection.hub.id);
+    //});
+
+    //jQuery.support.cors = true;
+
+    $.connection.hub.url = 'http://localhost:1523/signalr';
+    $.connection.hub.logging = false;
     game = $.connection.gameHub;
-
     setUpClientMethods();
-
     $.connection.hub.start().done(function () {
         console.log("ConId : %o", $.connection.hub.id);
-    });
+    })
+
     clPreloader();
 
     $(document).on('click', function () {
