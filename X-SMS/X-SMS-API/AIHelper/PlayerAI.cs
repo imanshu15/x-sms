@@ -13,7 +13,7 @@ namespace X_SMS.AIHelper
         PlayerAILogics aiLogics = null;
         GameDTO game = null;
         static Timer timer = null;
-        string name = "COMPUTER_AI";
+        string name = "PLAYER_AI";
         PlayerDTO player = null;
         List<TurnDetail> prevTurnDetails = null;
         List<StockDetail> ownStocks = null;
