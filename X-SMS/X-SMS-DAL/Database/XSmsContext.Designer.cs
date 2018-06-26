@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\New folder\X-SMS\X-SMS-DAL\Database\XSmsContext.edmx'. 
+﻿// T4 code generation is enabled for model 'F:\Final Year\x-sms\X-SMS\X-SMS-DAL\Database\XSmsContext.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

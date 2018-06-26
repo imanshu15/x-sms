@@ -10,18 +10,12 @@ E:\StockMarketSimulator\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csprojAssemblyRefere
 E:\StockMarketSimulator\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csproj.CoreCompileInputs.cache
 E:\StockMarketSimulator\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.dll
 E:\StockMarketSimulator\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.pdb
-F:\Final Year\x-sms\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.pdb
-F:\Final Year\x-sms\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csproj.CoreCompileInputs.cache
-F:\Final Year\x-sms\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.dll
-F:\Final Year\x-sms\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.pdb
 C:\Git\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.dll
 C:\Git\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.pdb
 C:\Git\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csproj.CoreCompileInputs.cache
 C:\Git\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.dll
 C:\Git\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.pdb
 C:\Git\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csprojAssemblyReference.cache
-F:\Final Year\x-sms\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csprojAssemblyReference.cache
 C:\Git update 6 21\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.dll
 C:\Git update 6 21\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.pdb
 C:\Git update 6 21\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csproj.CoreCompileInputs.cache
@@ -34,3 +28,9 @@ C:\New folder\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csprojAssemblyReference.cache
 C:\New folder\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csproj.CoreCompileInputs.cache
 C:\New folder\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.dll
 C:\New folder\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.pdb
+F:\Final Year\x-sms\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-REP\bin\Debug\X-SMS-REP.pdb
+F:\Final Year\x-sms\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csprojAssemblyReference.cache
+F:\Final Year\x-sms\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.csproj.CoreCompileInputs.cache
+F:\Final Year\x-sms\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.dll
+F:\Final Year\x-sms\X-SMS\X-SMS-REP\obj\Debug\X-SMS-REP.pdb
